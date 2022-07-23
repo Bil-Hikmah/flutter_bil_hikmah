@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_bil_hikmah/exception/exception.dart';
+import 'package:flutter_bil_hikmah/common/exception/exception.dart';
 import 'package:http/http.dart';
 
 ErrorType errorTypeFromStatusCode(int statusCode) {

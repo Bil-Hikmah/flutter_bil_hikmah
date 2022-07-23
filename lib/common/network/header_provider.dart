@@ -1,4 +1,4 @@
-import 'package:flutter_bil_hikmah/network/sn_token_provider.dart';
+import 'package:flutter_bil_hikmah/common/network/sn_token_provider.dart';
 
 abstract class HeaderProvider {
   Future<Map<String, String>> get headers;
