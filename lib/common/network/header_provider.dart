@@ -4,10 +4,10 @@ abstract class HeaderProvider {
   Future<Map<String, String>> get headers;
 }
 
-class AppHttpHeaderProvider implements HeaderProvider {
+class AppHeaderProvider implements HeaderProvider {
   final TokenProvider _tokenProvider;
 
-  AppHttpHeaderProvider(
+  AppHeaderProvider(
     this._tokenProvider,
   );
 
@@ -25,8 +25,8 @@ class AppHttpHeaderProvider implements HeaderProvider {
     }
   }
 
-  factory AppHttpHeaderProvider.create() {
+  factory AppHeaderProvider.create() {
     final tokenProvider = SNTokenProvider.create();
-    return AppHttpHeaderProvider(tokenProvider);
+    return AppHeaderProvider(tokenProvider);
   }
 }

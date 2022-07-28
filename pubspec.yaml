@@ -37,8 +37,14 @@ dependencies:
   # Flutter Secure Storage
   flutter_secure_storage: ^5.0.2
 
+  # Flutter Bloc for handle state management
+  flutter_bloc: ^8.0.1
+
   # Http Client. Used to consume API
   http: ^0.13.4
+
+  # Equatable
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
