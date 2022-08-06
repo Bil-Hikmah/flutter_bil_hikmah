@@ -9,6 +9,7 @@ class _AppTextConfig {
   static const bool softWrap = true;
   static const double height = 1.3;
   static const Color primaryColor = AppColors.darkGreyDarkest;
+  static const int maxLines = 1;
 }
 
 /// App Text Weight. This is used to set the font weight of the text.
@@ -74,6 +75,7 @@ class _AppText extends StatelessWidget {
     this.softWrap = _AppTextConfig.softWrap,
     this.overflow = _AppTextConfig.textOverflow,
     this.align = _AppTextConfig.textAlign,
+    this.maxLines = _AppTextConfig.maxLines,
     required this.style,
   });
 
@@ -82,6 +84,7 @@ class _AppText extends StatelessWidget {
   final TextOverflow overflow;
   final TextAlign align;
   final TextStyle style;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +94,7 @@ class _AppText extends StatelessWidget {
       overflow: overflow,
       textAlign: align,
       style: style,
+      maxLines: maxLines,
     );
   }
 
@@ -100,6 +104,7 @@ class _AppText extends StatelessWidget {
     TextOverflow? overflow,
     TextAlign? align,
     TextStyle? style,
+    int? maxLines,
   }) {
     return _AppText(
       text ?? this.text,
@@ -107,6 +112,7 @@ class _AppText extends StatelessWidget {
       overflow: overflow ?? this.overflow,
       align: align ?? this.align,
       style: style ?? this.style,
+      maxLines: maxLines ?? this.maxLines,
     );
   }
 }
