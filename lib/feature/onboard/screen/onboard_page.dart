@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/onboard/repository/onboard_item.dart';
+import 'package:flutter_bil_hikmah/feature/onboard/screen/section/onboard_action_button.dart';
 import 'package:flutter_bil_hikmah/feature/onboard/screen/section/onboard_content.dart';
 
 class OnboardPage extends StatefulWidget {
@@ -39,11 +40,33 @@ class _OnboardPageState extends State<OnboardPage> {
                 _pageController,
                 (page) {
                   setState(() {
-                    _scrollIndex++;
+                    _scrollIndex = page;
                   });
                 },
                 dummyOnboard,
-              )
+              ),
+              OnboardActionButton(
+                dummyOnboard.length,
+                _scrollIndex,
+                () {
+                  _pageController.jumpToPage(dummyOnboard.length - 1);
+                  setState(() {
+                    _scrollIndex = dummyOnboard.length - 1;
+                  });
+                },
+                () {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
+                  setState(() {
+                    _scrollIndex++;
+                  });
+                },
+                () {
+                  // Going to Another Page
+                },
+              ),
             ],
           ),
         ),
