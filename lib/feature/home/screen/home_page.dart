@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/home/logic/cubit/home_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/home/screen/section/home_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..onInit(),
+      create: (context) => HomeCubit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status.isError) {
@@ -29,17 +30,16 @@ class HomePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const AppTextSmallPrimary('Home'),
+          return SafeArea(
+            child: Scaffold(
+              body: state.status.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryDark,
+                      ),
+                    )
+                  : const HomeView(),
             ),
-            body: state.status.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryDark,
-                    ),
-                  )
-                : Container(),
           );
         },
       ),

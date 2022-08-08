@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/config/routes/route_name.dart';
 import 'package:flutter_bil_hikmah/feature/onboard/repository/onboard_item.dart';
 import 'package:flutter_bil_hikmah/feature/onboard/screen/section/onboard_action_button.dart';
 import 'package:flutter_bil_hikmah/feature/onboard/screen/section/onboard_content.dart';
@@ -65,6 +66,7 @@ class _OnboardPageState extends State<OnboardPage> {
                 },
                 () {
                   // Going to Another Page
+                  Navigator.of(context).pushReplacementNamed(Routes.dashboard);
                 },
               ),
             ],
