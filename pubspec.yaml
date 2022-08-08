@@ -49,6 +49,9 @@ dependencies:
   # Page Transition for animate transition when action navigate to another page
   page_transition: ^2.0.9
 
+  # Use flutter svg to consume svg file
+  flutter_svg: ^1.1.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

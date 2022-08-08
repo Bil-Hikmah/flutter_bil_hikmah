@@ -63,7 +63,7 @@ class AppTextStyle {
   );
   static const TextStyle textTripleExtraLarge = TextStyle(
     fontFamily: _AppTextConfig.fontFamily,
-    fontSize: 10,
+    fontSize: 32,
     height: _AppTextConfig.height,
     color: _AppTextConfig.primaryColor,
   );
