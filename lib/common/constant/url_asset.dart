@@ -5,6 +5,7 @@ class UrlAsset {
   static const String _baseUrlBackground = BaseUrl.baseUrlBackground;
 
   static const String logo = "$_baseUrlIcons/logo.png";
+  static const String logoWT = "$_baseUrlIcons/logo_wt.png";
 
   static const List<String> onBoardingImage = [
     "$_baseUrlBackground/onboard1.png",
@@ -29,4 +30,16 @@ class UrlAsset {
   static const String privacy = "$_baseUrlIcons/privacy.png";
   static const String star = "$_baseUrlIcons/star.png";
   static const String logout = "$_baseUrlIcons/logout.png";
+  static const String videokKajian = "$_baseUrlIcons/video_kajian.png";
+  static const String quranSaku = "$_baseUrlIcons/quran_saku.png";
+  static const String gameEdukasi = "$_baseUrlIcons/game_edukasi.png";
+  static const String dakwahDifabel = "$_baseUrlIcons/dakwah_difabel.png";
+  static const String akhlakMulia = "$_baseUrlIcons/akhlak_mulia.png";
+  static const String amalanSunnah = "$_baseUrlIcons/amalan_sunnah.png";
+  static const String bahasaIsyarat = "$_baseUrlIcons/bahasa_isyarat.png";
+  static const String posterDakwah = "$_baseUrlIcons/poster_dakwah.png";
+  static const String home = "$_baseUrlIcons/home.svg";
+  static const String video = "$_baseUrlIcons/video.svg";
+  static const String quran = "$_baseUrlIcons/quran.svg";
+  static const String profile = "$_baseUrlIcons/profile.svg";
 }
