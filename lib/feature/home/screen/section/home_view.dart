@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
+import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
@@ -75,6 +76,49 @@ class _HomeViewState extends State<HomeView> {
         ),
       ],
     );
+
+    final _headerRecommendedVideo = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          "Rekomendasi Video",
+          style: AppTextStyle.textMedium.copyWith(
+            color: AppColors.darkGreyDark,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Text(
+            "Lainnya",
+            style: AppTextStyle.textSmall.copyWith(
+              color: AppColors.primaryDark,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    final _generatedRecomendedVideo = ListView.builder(
+      itemCount: 5,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: RecommendedItem(
+            "XXX",
+            "XXX",
+            "Dakwah",
+            123456,
+            DateTime.now(),
+          ),
+        );
+      },
+    );
+
+    // Main of View
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -85,6 +129,10 @@ class _HomeViewState extends State<HomeView> {
           _banner,
           const SizedBox(height: 36.0),
           _mainFeature,
+          const SizedBox(height: 36.0),
+          _headerRecommendedVideo,
+          const SizedBox(height: 21.0),
+          _generatedRecomendedVideo,
         ],
       ),
     );
