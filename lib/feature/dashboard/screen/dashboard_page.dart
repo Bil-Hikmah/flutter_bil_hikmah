@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/dashboard/screen/section/bottom_navigation_bar.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/home_page.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -16,7 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> currentScrenList = [
     const HomePage(),
-    const HomePage(),
+    const VideoDakwahPage(),
     const HomePage(),
     const HomePage(),
   ];
@@ -59,7 +60,6 @@ class _DashboardPageState extends State<DashboardPage> {
           bottomNavigationBar: DashboardBottomNavigationBar(
             currentIndex,
             (index) {
-              print(index);
               setState(() {
                 currentIndex = index;
               });

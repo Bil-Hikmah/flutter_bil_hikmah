@@ -57,9 +57,12 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: listMainFeature.getRange(0, 4).map((item) {
-            return mainItemContainer(
-              item.url,
-              item.title,
+            return Expanded(
+              flex: 1,
+              child: mainItemContainer(
+                item.url,
+                item.title,
+              ),
             );
           }).toList(),
         ),
@@ -68,9 +71,12 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: listMainFeature.getRange(4, 8).map((item) {
-            return mainItemContainer(
-              item.url,
-              item.title,
+            return Expanded(
+              flex: 1,
+              child: mainItemContainer(
+                item.url,
+                item.title,
+              ),
             );
           }).toList(),
         ),
