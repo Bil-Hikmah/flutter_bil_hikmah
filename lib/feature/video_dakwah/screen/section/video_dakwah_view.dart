@@ -3,6 +3,7 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_g
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/genre_video.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_detail.dart/video_dakwah_detail_page.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_text_field.dart';
 
 class VideoDakwahView extends StatefulWidget {
@@ -49,6 +50,7 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
       dummyListVideoItem,
       (DummyVideoItem item) {
         // Todo : open video detail
+        Navigator.of(context).push(VideoDakwahDetailPage.route());
       },
     );
 

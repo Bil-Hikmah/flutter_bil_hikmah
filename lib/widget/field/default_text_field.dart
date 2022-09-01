@@ -96,10 +96,10 @@ class DefaultTextField extends StatelessWidget {
         focusColor: AppColors.primaryDark,
         hoverColor: AppColors.primaryDark,
         fillColor: AppColors.lightGreyDark,
-        filled: true,
+        filled: false,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: const BorderSide(color: Colors.white),
+          borderSide: const BorderSide(color: AppColors.darkGreyLight),
         ),
         hintText: hintText,
         hintStyle: AppTextStyle.textSmall.copyWith(
