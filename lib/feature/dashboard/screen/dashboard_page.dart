@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/dashboard/screen/section/bottom_navigation_bar.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/home_page.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
@@ -18,7 +19,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final List<Widget> currentScrenList = [
     const HomePage(),
     const VideoDakwahPage(),
-    const HomePage(),
+    const AlQuranPage(),
     const HomePage(),
   ];
 
@@ -53,6 +54,7 @@ class _DashboardPageState extends State<DashboardPage> {
       },
       child: SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: PageStorage(
             bucket: bucket,
             child: currentScrenList[currentIndex],
