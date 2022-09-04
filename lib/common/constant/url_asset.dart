@@ -42,4 +42,5 @@ class UrlAsset {
   static const String video = "$_baseUrlIcons/video.svg";
   static const String quran = "$_baseUrlIcons/quran.svg";
   static const String profile = "$_baseUrlIcons/profile.svg";
+  static const String bismillah = "$_baseUrlIcons/bismillah.svg";
 }
