@@ -9,6 +9,7 @@ class AlQuranPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: defaultAppBar(
+        context: context,
         title: "Al-Qur'an",
         needBack: false,
       ),

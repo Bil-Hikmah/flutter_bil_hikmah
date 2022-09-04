@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/screen/detail_surah/detail_surah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -153,9 +154,15 @@ class AlQuranView extends StatelessWidget {
     final _listSurah = ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 99,
+      itemCount: 114,
       itemBuilder: (context, index) {
-        return _surahCard(index);
+        return InkWell(
+          onTap: () {
+            // Navigate to detail surah
+            Navigator.of(context).push(DetailSurahPage.route());
+          },
+          child: _surahCard(index),
+        );
       },
     );
 
