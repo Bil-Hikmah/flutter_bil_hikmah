@@ -49,6 +49,7 @@ class OnboardContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 50.0),
               Image.asset(onboardItem[index].image),
               const SizedBox(height: 40),
               Expanded(
