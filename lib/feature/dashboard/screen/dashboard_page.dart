@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/dashboard/screen/section/bottom_navigation_bar.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/home_page.dart';
+import 'package:flutter_bil_hikmah/feature/profile/screen/profile_page.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
@@ -20,7 +21,7 @@ class _DashboardPageState extends State<DashboardPage> {
     const HomePage(),
     const VideoDakwahPage(),
     const AlQuranPage(),
-    const HomePage(),
+    const ProfilePage(),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
