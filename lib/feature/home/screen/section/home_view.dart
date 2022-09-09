@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/akhlak_mulia/screen/akhlak_mulia_page.dart';
+import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
@@ -19,34 +21,52 @@ class _HomeViewState extends State<HomeView> {
     const _upperHomeDescription = UpperHome();
     const _banner = BannerHome();
 
-    SizedBox mainItemContainer(String imageUrl, String title) {
-      return SizedBox(
-        width: 50.0,
-        child: Column(
-          children: [
-            Container(
-              height: 42.0,
-              width: 42.0,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: AppColors.primaryDark,
-                image: DecorationImage(
-                  image: AssetImage(imageUrl),
-                  fit: BoxFit.cover,
+    List<Function()> _onPressed = [
+      () => null,
+      () => null,
+      () => null,
+      () => null,
+      () => Navigator.of(context).push(AkhlakMuliaPage.route()),
+      () => Navigator.of(context).push(AmalanSunnah.route()),
+      () => null,
+      () => null,
+    ];
+
+    Widget mainItemContainer(
+      String imageUrl,
+      String title,
+      int index,
+    ) {
+      return InkWell(
+        onTap: _onPressed[index],
+        child: SizedBox(
+          width: 50.0,
+          child: Column(
+            children: [
+              Container(
+                height: 42.0,
+                width: 42.0,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: AppColors.primaryDark,
+                  image: DecorationImage(
+                    image: AssetImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              title,
-              maxLines: 2,
-              softWrap: true,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.textSmall,
-            )
-          ],
+              const SizedBox(height: 8.0),
+              Text(
+                title,
+                maxLines: 2,
+                softWrap: true,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.textSmall,
+              )
+            ],
+          ),
         ),
       );
     }
@@ -62,6 +82,7 @@ class _HomeViewState extends State<HomeView> {
               child: mainItemContainer(
                 item.url,
                 item.title,
+                item.index,
               ),
             );
           }).toList(),
@@ -76,6 +97,7 @@ class _HomeViewState extends State<HomeView> {
               child: mainItemContainer(
                 item.url,
                 item.title,
+                item.index,
               ),
             );
           }).toList(),
