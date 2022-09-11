@@ -3,7 +3,14 @@ import 'package:flutter_bil_hikmah/feature/al_quran/screen/section/al_quran_view
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
 
 class AlQuranPage extends StatelessWidget {
-  const AlQuranPage({Key? key}) : super(key: key);
+  const AlQuranPage({this.needBack = false, Key? key}) : super(key: key);
+
+  final bool needBack;
+
+  static Route route({bool needBack = false}) => MaterialPageRoute(
+      builder: (_) => AlQuranPage(
+            needBack: needBack,
+          ));
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +18,7 @@ class AlQuranPage extends StatelessWidget {
       appBar: defaultAppBar(
         context: context,
         title: "Al-Qur'an",
-        needBack: false,
+        needBack: needBack,
       ),
       body: const AlQuranView(),
     );

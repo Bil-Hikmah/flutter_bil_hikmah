@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/akhlak_mulia/screen/akhlak_mulia_page.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/poster_page.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/screen/sign_language_page.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -23,13 +26,13 @@ class _HomeViewState extends State<HomeView> {
     const _banner = BannerHome();
 
     List<Function()> _onPressed = [
-      () => null,
-      () => null,
+      () => Navigator.of(context).push(VideoDakwahPage.route(needAppBar: true)),
+      () => Navigator.of(context).push(AlQuranPage.route(needBack: true)),
       () => null,
       () => null,
       () => Navigator.of(context).push(AkhlakMuliaPage.route()),
       () => Navigator.of(context).push(AmalanSunnah.route()),
-      () => null,
+      () => Navigator.of(context).push(SignLanguagePage.route()),
       () => Navigator.of(context).push(PosterPage.route()),
     ];
 
@@ -130,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
     );
 
     final _generatedRecomendedVideo = ListView.builder(
-      itemCount: 5,
+      itemCount: 4,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
