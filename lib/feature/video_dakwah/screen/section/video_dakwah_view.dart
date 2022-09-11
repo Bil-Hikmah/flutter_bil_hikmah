@@ -7,7 +7,9 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_deta
 import 'package:flutter_bil_hikmah/widget/field/default_text_field.dart';
 
 class VideoDakwahView extends StatefulWidget {
-  const VideoDakwahView({Key? key}) : super(key: key);
+  const VideoDakwahView(this.needMoreUpperSpace, {Key? key}) : super(key: key);
+
+  final bool needMoreUpperSpace;
 
   @override
   State<VideoDakwahView> createState() => _VideoDakwahViewState();
@@ -57,7 +59,9 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 24.0),
+          widget.needMoreUpperSpace
+              ? const SizedBox(height: 24.0)
+              : const SizedBox(),
           _searchField,
           const SizedBox(height: 12.0),
           _buildGendreVideo,
