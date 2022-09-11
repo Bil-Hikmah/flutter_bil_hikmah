@@ -5,6 +5,7 @@ import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_i
 import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
+import 'package:flutter_bil_hikmah/feature/poster/screen/poster_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -29,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
       () => Navigator.of(context).push(AkhlakMuliaPage.route()),
       () => Navigator.of(context).push(AmalanSunnah.route()),
       () => null,
-      () => null,
+      () => Navigator.of(context).push(PosterPage.route()),
     ];
 
     Widget mainItemContainer(
