@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/profile/domain/model/profile_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bil_hikmah/widget/button/default_button.dart';
@@ -82,47 +83,58 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
 
-    Widget _actionItemContainer() {
-      return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 16.0,
-        ),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.favorite_border,
-              size: 24.0,
-              color: AppColors.primaryDark,
-            ),
-            const SizedBox(width: 20.0),
-            Expanded(
-              child: Text(
-                "Favorite",
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                style: AppTextStyle.textMedium.copyWith(
-                  color: AppColors.darkGreyDarkest,
+    Widget _actionItemContainer(
+      IconData icon,
+      String title,
+      void Function() onTap,
+    ) {
+      return InkWell(
+        onTap: onTap,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 16.0,
+          ),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 24.0,
+                color: AppColors.primaryDark,
+              ),
+              const SizedBox(width: 20.0),
+              Expanded(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.start,
+                  style: AppTextStyle.textMedium.copyWith(
+                    color: AppColors.darkGreyDarkest,
+                  ),
                 ),
               ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              size: 24.0,
-              color: AppColors.primaryDark,
-            ),
-          ],
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 24.0,
+                color: AppColors.primaryDark,
+              ),
+            ],
+          ),
         ),
       );
     }
 
     final _actionItem = List.generate(
-      7,
+      listProfileItemAction(context).length,
       (index) {
         return Column(
           children: [
-            _actionItemContainer(),
+            _actionItemContainer(
+              listProfileItemAction(context)[index].icon,
+              listProfileItemAction(context)[index].title,
+              listProfileItemAction(context)[index].route,
+            ),
             const Divider(
               color: AppColors.lightGreyLight,
             )
