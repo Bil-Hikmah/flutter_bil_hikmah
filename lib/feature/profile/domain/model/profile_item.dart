@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
 import 'package:flutter_bil_hikmah/feature/favorite/screen/favorite_page.dart';
 
 class ProfileItemAction {
@@ -26,8 +27,7 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
       icon: Icons.info_outline,
       title: "Tentang Aplikasi",
       route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
+        Navigator.of(context).push(AboutPage.route());
       },
     ),
     ProfileItemAction(
