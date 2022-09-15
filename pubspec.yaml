@@ -55,6 +55,12 @@ dependencies:
   # For formating number and datetime
   intl: ^0.17.0
 
+  # Carousel slider package
+  carousel_slider: ^4.0.0
+
+  # For cache the image from network
+  cached_network_image: ^3.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
