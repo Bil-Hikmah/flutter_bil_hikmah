@@ -8,32 +8,35 @@ class UpperHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Image.asset(
-          UrlAsset.logoWT,
-          width: 48,
-          height: 48,
-          fit: BoxFit.cover,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const AppTextLargePrimary("Assalamu'alaikum").copyWith(
-              style: AppTextStyle.textLarge.copyWith(
-                color: AppColors.darkGreyLightest,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset(
+            UrlAsset.logoWT,
+            width: 48,
+            height: 48,
+            fit: BoxFit.cover,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const AppTextLargePrimary("Assalamu'alaikum").copyWith(
+                style: AppTextStyle.textLarge.copyWith(
+                  color: AppColors.darkGreyLightest,
+                ),
               ),
-            ),
-            AppTextLargeGreen("Diky Nugraha").copyWith(
-              style: AppTextStyle.textLarge.copyWith(
-                color: AppColors.primaryDark,
-                fontWeight: FontWeight.bold,
+              AppTextLargeGreen("Diky Nugraha").copyWith(
+                style: AppTextStyle.textLarge.copyWith(
+                  color: AppColors.primaryDark,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }

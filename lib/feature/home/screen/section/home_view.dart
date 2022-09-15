@@ -4,6 +4,7 @@ import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
+import 'package:flutter_bil_hikmah/feature/home/screen/section/carousel_banner.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/poster_page.dart';
@@ -24,6 +25,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     const _upperHomeDescription = UpperHome();
     const _banner = BannerHome();
+    const _carouselBanner = CarouselBanner();
 
     List<Function()> _onPressed = [
       () => Navigator.of(context).push(VideoDakwahPage.route(needAppBar: true)),
@@ -75,64 +77,71 @@ class _HomeViewState extends State<HomeView> {
       );
     }
 
-    final _mainFeature = Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: listMainFeature.getRange(0, 4).map((item) {
-            return Expanded(
-              flex: 1,
-              child: mainItemContainer(
-                item.url,
-                item.title,
-                item.index,
-              ),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 20.0),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: listMainFeature.getRange(4, 8).map((item) {
-            return Expanded(
-              flex: 1,
-              child: mainItemContainer(
-                item.url,
-                item.title,
-                item.index,
-              ),
-            );
-          }).toList(),
-        ),
-      ],
+    final _mainFeature = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: listMainFeature.getRange(0, 4).map((item) {
+              return Expanded(
+                flex: 1,
+                child: mainItemContainer(
+                  item.url,
+                  item.title,
+                  item.index,
+                ),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 20.0),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: listMainFeature.getRange(4, 8).map((item) {
+              return Expanded(
+                flex: 1,
+                child: mainItemContainer(
+                  item.url,
+                  item.title,
+                  item.index,
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
 
-    final _headerRecommendedVideo = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Rekomendasi Video",
-          style: AppTextStyle.textMedium.copyWith(
-            color: AppColors.darkGreyDark,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: Text(
-            "Lainnya",
-            style: AppTextStyle.textSmall.copyWith(
-              color: AppColors.primaryDark,
-              fontWeight: FontWeight.w600,
+    final _headerRecommendedVideo = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Rekomendasi Video",
+            style: AppTextStyle.textMedium.copyWith(
+              color: AppColors.darkGreyDark,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: () {},
+            child: Text(
+              "Lainnya",
+              style: AppTextStyle.textSmall.copyWith(
+                color: AppColors.primaryDark,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
 
     final _generatedRecomendedVideo = ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       itemCount: 4,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -152,13 +161,12 @@ class _HomeViewState extends State<HomeView> {
 
     // Main of View
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         children: [
           const SizedBox(height: 18.0),
           _upperHomeDescription,
           const SizedBox(height: 36.0),
-          _banner,
+          _carouselBanner,
           const SizedBox(height: 36.0),
           _mainFeature,
           const SizedBox(height: 36.0),
