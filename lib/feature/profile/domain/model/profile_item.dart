@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
+import 'package:flutter_bil_hikmah/feature/faq/screen/faq_page.dart';
 import 'package:flutter_bil_hikmah/feature/favorite/screen/favorite_page.dart';
 
 class ProfileItemAction {
@@ -33,42 +34,29 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
     ProfileItemAction(
       icon: Icons.settings,
       title: "Pengaturan",
-      route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
-      },
+      route: () {},
     ),
     ProfileItemAction(
       icon: Icons.notes_rounded,
       title: "Syarat & Ketentuan",
-      route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
-      },
+      route: () {},
     ),
     ProfileItemAction(
       icon: Icons.help_outline_rounded,
       title: "Bantuan",
       route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
+        Navigator.of(context).push(FAQPage.route());
       },
     ),
     ProfileItemAction(
       icon: Icons.privacy_tip_outlined,
       title: "Kebijakan Privasi",
-      route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
-      },
+      route: () {},
     ),
     ProfileItemAction(
       icon: Icons.star_rate_outlined,
       title: "Rating",
-      route: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Container()));
-      },
+      route: () {},
     ),
   ];
 
