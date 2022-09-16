@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: RouteHandler.initialRoute,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: true,
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
