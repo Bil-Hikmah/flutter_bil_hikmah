@@ -3,9 +3,17 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_i
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoDakwahDetailView extends StatefulWidget {
-  const VideoDakwahDetailView({Key? key}) : super(key: key);
+  const VideoDakwahDetailView(
+    this.player,
+    this.controller, {
+    Key? key,
+  }) : super(key: key);
+
+  final Widget player;
+  final YoutubePlayerController controller;
 
   @override
   State<VideoDakwahDetailView> createState() => _VideoDakwahDetailViewState();
@@ -127,6 +135,8 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
       dummyListVideoItem,
       (DummyVideoItem item) {
         // Todo : open video detail
+        widget.controller
+            .loadVideo("https://www.youtube.com/watch?v=TfWWMss1oaA");
       },
     );
 
@@ -134,7 +144,7 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _videoContainer,
+          widget.player,
           const SizedBox(height: 8.0),
           _videoDesc,
           const SizedBox(height: 10.0),
