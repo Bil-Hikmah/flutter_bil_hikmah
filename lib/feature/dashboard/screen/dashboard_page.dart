@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/dashboard/screen/section/bottom_navigation_bar.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/home_page.dart';
@@ -50,7 +51,8 @@ class _DashboardPageState extends State<DashboardPage> {
             );
           return false;
         } else {
-          return true;
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          return false;
         }
       },
       child: SafeArea(
