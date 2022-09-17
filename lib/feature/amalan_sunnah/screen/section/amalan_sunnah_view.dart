@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/common/constant/dummy.dart';
+import 'package:flutter_bil_hikmah/feature/default_detail/default_detail_page.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_card_item.dart';
 
 class AmalanSunnahView extends StatefulWidget {
@@ -18,9 +20,25 @@ class _AmalanSunnahViewState extends State<AmalanSunnahView> {
         return index == 0
             ? Padding(
                 padding: const EdgeInsets.only(top: 24.0),
-                child: defaultItemCard("Amalan Sunnah", () {}),
+                child: defaultItemCard(
+                  "Amalan Sunnah",
+                  () {
+                    Navigator.of(context).push(DefaultDetailPage.route(
+                      "Amalan Sunnah",
+                      Dummy.dummyContentText,
+                    ));
+                  },
+                ),
               )
-            : defaultItemCard("Amalan Sunnah", () {});
+            : defaultItemCard(
+                "Amalan Sunnah",
+                () {
+                  Navigator.of(context).push(DefaultDetailPage.route(
+                    "Amalan Sunnah",
+                    Dummy.dummyContentText,
+                  ));
+                },
+              );
       },
     );
   }
