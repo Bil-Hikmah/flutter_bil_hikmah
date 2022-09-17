@@ -21,6 +21,7 @@ AppBar defaultAppBar({
     title: _title,
     elevation: 0,
     backgroundColor: backgroundColor,
+    automaticallyImplyLeading: false,
     centerTitle: true,
     leading: needBack
         ? IconButton(
@@ -28,7 +29,7 @@ AppBar defaultAppBar({
             icon: Icon(
               Icons.arrow_back_ios_new,
               color: leadingColor,
-              size: 12.0,
+              size: 16.0,
             ),
           )
         : null,
