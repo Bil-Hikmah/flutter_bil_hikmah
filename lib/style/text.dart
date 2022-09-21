@@ -4,6 +4,7 @@ import 'package:flutter_bil_hikmah/style/colors.dart';
 /// App Text Config. This is the default configuration for the text in the app.
 class _AppTextConfig {
   static const String fontFamily = "Poppins";
+  static const String quranFamily = "noorehidayat";
   static const TextAlign textAlign = TextAlign.left;
   static const TextOverflow textOverflow = TextOverflow.ellipsis;
   static const bool softWrap = true;
@@ -63,6 +64,49 @@ class AppTextStyle {
   );
   static const TextStyle textTripleExtraLarge = TextStyle(
     fontFamily: _AppTextConfig.fontFamily,
+    fontSize: 32,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  // note Font for quran text
+  static const TextStyle quranTextExtraSmall = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 10,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextSmall = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 12,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextMedium = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 14,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextLarge = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 16,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextExtraLarge = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 18,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextDoubleExtraLarge = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
+    fontSize: 20,
+    height: _AppTextConfig.height,
+    color: _AppTextConfig.primaryColor,
+  );
+  static const TextStyle quranTextTripleExtraLarge = TextStyle(
+    fontFamily: _AppTextConfig.quranFamily,
     fontSize: 32,
     height: _AppTextConfig.height,
     color: _AppTextConfig.primaryColor,
