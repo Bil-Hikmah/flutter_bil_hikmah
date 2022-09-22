@@ -1,38 +1,46 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+import "../../scripts/fastfile"
 
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
+  private_lane :build_apk do |options|
+    unless options[:build_number]
+      UI.user_error!("Please specify build_number parameter")
+    end
+
+    build_number = options[:build_number]
+
+    fetch_dependencies
+
+    sh_on_root(command: "flutter build apk --release --verbose")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
+  lane :deploy_to_firebase do |options|
+    unless options[:app_id]
+      UI.user_error!("Please specify firebase app id with the app_id parameter")
+    end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    unless options[:firebase_cli_token]
+      UI.user_error!("Please specify Firebase Token with the firebase_cli_token parameter")
+    end
+
+    # Generate APK File with given build_number
+    build_apk(build_number: options[:build_number])
+
+    # Prepare firebase distributions parameter
+    artifact_type = "APK"
+    artifact_path = "#{root_path}/build/app/outputs/flutter-apk/app-release.apk"
+    app_id = options[:app_id]
+    firebase_cli_token = options[:firebase_cli_token]
+    release_notes = options.fetch(:release_notes, "No Release Notes")
+
+    # # Upload APK to firebase
+    firebase_app_distribution(
+      app: app_id,
+      android_artifact_type: artifact_type,
+      android_artifact_path: artifact_path,
+      firebase_cli_token: firebase_cli_token,
+      release_notes: release_notes,
+    )
   end
 end
