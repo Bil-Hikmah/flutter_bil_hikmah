@@ -23,6 +23,7 @@ platform :android do
     # Prepare firebase distributions parameter
     artifact_type = "APK"
     artifact_path = "#{root_path}/build/app/outputs/flutter-apk/app-release.apk"
+    groups = "internal-1"
     app_id = options[:app_id]
     firebase_cli_token = options[:firebase_cli_token]
     release_notes = options.fetch(:release_notes, "No Release Notes")
@@ -32,6 +33,7 @@ platform :android do
       app: app_id,
       android_artifact_type: artifact_type,
       android_artifact_path: artifact_path,
+      groups: groups,
       firebase_cli_token: firebase_cli_token,
       release_notes: release_notes,
     )
