@@ -3,11 +3,13 @@ import 'package:flutter_bil_hikmah/common/exception/exception.dart';
 import 'package:flutter_bil_hikmah/common/exception/exception_handling.dart';
 import 'package:flutter_bil_hikmah/common/network/http_client.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/surah_item.dart';
 
 import '../../../../common/misc/injection.dart';
 
 abstract class QuranService {
   Future<QuranItem> quranAll();
+  Future<SurahItem> surahDetail(int surah);
 }
 
 class QuranServiceImpl implements QuranService {
@@ -29,6 +31,24 @@ class QuranServiceImpl implements QuranService {
         response: response,
       );
       return QuranItem.fromJson(response.body);
+    } on AppException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SurahItem> surahDetail(int surah) async {
+    try {
+      final url = _appEndpoint.getQuranSurah(surah);
+      final response = await _httpClient.get(
+        url,
+        null,
+      );
+      ExceptionHandling.handelAPIError(
+        desireStatusCode: 200,
+        response: response,
+      );
+      return SurahItem.fromJson(response.body);
     } on AppException {
       rethrow;
     }
