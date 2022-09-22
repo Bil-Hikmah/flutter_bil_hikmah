@@ -1,19 +1,14 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy Android APK to Firebase App Distribution
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       release_notes:
         description: "The Release notes that will used for the apk file"
         required: false
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-   deploy-android-apk-to-firebase:
+  deploy-android-apk-to-firebase:
     name: "Deploy Android APK to Firebase"
     runs-on: ubuntu-latest
     steps:
@@ -31,25 +26,5 @@ jobs:
           bundler-cache: true
       - name: Install Fastlane
         run: cd android && bundle install && cd ..
-      - name: Create env file
-        run: |
-          touch .env
-          echo AUTH0_STAGING_DOMAIN=${{ secrets.AUTH0_STAGING_DOMAIN }} >> .env
-          echo AUTH0_STAGING_CLIENT_ID=${{ secrets.AUTH0_STAGING_CLIENT_ID }} >> .env
-          echo AUTHENTICATOR_SECRET_CODE=${{ secrets.AUTHENTICATOR_SECRET_CODE }} >> .env
-          echo STAGING_HOST=${{ secrets.STAGING_HOST }} >> .env
-          echo HOST_DOMAIN=${{ secrets.HOST_DOMAIN }} >> .env
-          echo BACKTEST_AUTH=${{ secrets.BACKTEST_AUTH }} >> .env
-          cat .env
-      - name: Create keystore file
-        run: |
-          cd android
-          touch key.properties
-          echo storePassword=${{ secrets.STORE_PASSWORD }} >> key.properties
-          echo keyPassword=${{ secrets.KEY_PASSSWORD }} >> key.properties
-          echo keyAlias=${{ secrets.KEY_ALIAS }} >> key.properties
-          echo storeFile=../../android/upload-keystore.jks >> key.properties
-          cat key.properties
-          cd ..
       - name: Build APK and Deploy to firebase
-        run: cd android && bundle exec fastlane deploy_to_firebase app_id:${{ secrets.ANDROID_FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_CLI_TOKEN }} release_notes:"${{ github.event.inputs.release_notes }}" build_number:1 && cd ..
+        run: cd android && bundle exec fastlane deploy_to_firebase app_id:${{ secrets.ANDROID_FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_CLI_TOKEN }} release_notes:"${{ github.event.inputs.release_notes }}" && cd ..
