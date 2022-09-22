@@ -19,21 +19,25 @@ class AlquranState extends Equatable {
     this.status = AlquranStatus.initial,
     this.exception,
     this.alQuranAll,
+    this.surahDetail,
   });
 
   final AlquranStatus status;
   final AppException? exception;
   final List<QuranItemData>? alQuranAll;
+  final SurahItem? surahDetail;
 
   AlquranState copyWith({
     AlquranStatus? status,
     AppException? exception,
     List<QuranItemData>? alQuranAll,
+    SurahItem? surahDetail,
   }) {
     return AlquranState(
       status: status ?? this.status,
       exception: exception ?? this.exception,
       alQuranAll: alQuranAll ?? this.alQuranAll,
+      surahDetail: surahDetail ?? this.surahDetail,
     );
   }
 
@@ -42,5 +46,6 @@ class AlquranState extends Equatable {
         status,
         exception,
         alQuranAll,
+        surahDetail,
       ];
 }
