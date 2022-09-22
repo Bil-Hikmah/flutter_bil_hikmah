@@ -3,15 +3,8 @@ import "../../scripts/fastfile"
 default_platform(:android)
 
 platform :android do
-  private_lane :build_apk do |options|
-    unless options[:build_number]
-      UI.user_error!("Please specify build_number parameter")
-    end
-
-    build_number = options[:build_number]
-
+  private_lane :build_apk do
     fetch_dependencies
-
     sh_on_root(command: "flutter build apk --release --verbose")
   end
 
@@ -25,7 +18,7 @@ platform :android do
     end
 
     # Generate APK File with given build_number
-    build_apk(build_number: options[:build_number])
+    build_apk
 
     # Prepare firebase distributions parameter
     artifact_type = "APK"
