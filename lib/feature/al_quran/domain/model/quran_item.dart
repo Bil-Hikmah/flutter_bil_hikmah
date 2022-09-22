@@ -13,6 +13,35 @@ class QuranItem {
   final String message;
   final List<QuranItemData> data;
 
+  static final List<QuranItemData> dummyQuranItemData = List.generate(
+    5,
+    (index) => QuranItemData(
+      number: 1,
+      sequence: 1,
+      numberOfVerses: 1,
+      name: QuranNaming(
+        short: "loading",
+        long: "loading",
+        transliteration: Translation(
+          en: "loading",
+          id: "loading",
+        ),
+        translation: Translation(
+          en: "loading",
+          id: "loading",
+        ),
+      ),
+      revelation: Revelation(
+        arab: Arab.madaniyah,
+        en: En.median,
+        id: Id.madaniyyah,
+      ),
+      tafsir: Tafsir(
+        id: "loading",
+      ),
+    ),
+  );
+
   factory QuranItem.fromJson(String str) => QuranItem.fromMap(json.decode(str));
 
   factory QuranItem.fromMap(Map<String, dynamic> json) => QuranItem(
@@ -127,7 +156,7 @@ final arabValues = EnumValues(
   reverseMap: null,
 );
 
-extension $ArabExtension on Arab {
+extension ArabExtension on Arab {
   String get name {
     switch (this) {
       case Arab.madaniyah:
