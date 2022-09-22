@@ -67,6 +67,9 @@ dependencies:
   # Youtube Player using iFrame
   youtube_player_iframe: ^3.1.0
 
+  # For lazy load
+  shimmer: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
