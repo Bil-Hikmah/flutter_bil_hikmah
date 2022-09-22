@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/surah_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailSurahView extends StatefulWidget {
-  const DetailSurahView({Key? key}) : super(key: key);
+  const DetailSurahView(this.surahDetail, {Key? key}) : super(key: key);
+
+  final SurahItemData surahDetail;
 
   @override
   State<DetailSurahView> createState() => _DetailSurahViewState();
@@ -30,7 +33,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Al-Fatihah",
+            widget.surahDetail.name.transliteration.id,
             style: AppTextStyle.textDoubleExtraLarge.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -38,7 +41,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
           ),
           const SizedBox(height: 4.0),
           Text(
-            "Arti Surah",
+            widget.surahDetail.name.translation.id,
             style: AppTextStyle.textLarge.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -56,7 +59,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Makiyah",
+                  widget.surahDetail.revelation.id,
                   style: AppTextStyle.textMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
@@ -70,7 +73,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
                 ),
                 const SizedBox(width: 5.0),
                 Text(
-                  "7 Ayat",
+                  "${widget.surahDetail.numberOfVerses} Ayat",
                   style: AppTextStyle.textMedium.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
@@ -79,12 +82,14 @@ class _DetailSurahViewState extends State<DetailSurahView> {
               ],
             ),
           ),
-          SvgPicture.asset(UrlAsset.bismillah),
+          widget.surahDetail.preBismillah != null
+              ? SvgPicture.asset(UrlAsset.bismillah)
+              : const SizedBox(),
         ],
       ),
     );
 
-    Widget _surahItem() {
+    Widget _surahItem(Verse verse) {
       return Container(
         margin: const EdgeInsets.only(top: 24.0),
         child: Column(
@@ -112,7 +117,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
                     ),
                     child: Center(
                       child: Text(
-                        "1",
+                        verse.number.inSurah.toString(),
                         style: AppTextStyle.textMedium.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -143,9 +148,10 @@ class _DetailSurahViewState extends State<DetailSurahView> {
             ),
             const SizedBox(height: 24.0),
             Text(
-              "Font Quran asasd asdas \n",
-              textDirection: TextDirection.rtl,
+              verse.text.arab,
               softWrap: true,
+              maxLines: 10,
+              textAlign: TextAlign.right,
               style: AppTextStyle.textLarge
                   .copyWith(color: AppColors.darkGreyDark),
             ),
@@ -154,7 +160,7 @@ class _DetailSurahViewState extends State<DetailSurahView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Yang Maha Pengasih lagi Maha Penyayang,",
+                  verse.translation.id,
                   softWrap: true,
                   style: AppTextStyle.textLarge
                       .copyWith(color: AppColors.darkGreyDark),
@@ -171,9 +177,11 @@ class _DetailSurahViewState extends State<DetailSurahView> {
     final _listSurahItem = ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 10,
+      itemCount: widget.surahDetail.verses.length,
       itemBuilder: (context, index) {
-        return _surahItem();
+        return _surahItem(
+          widget.surahDetail.verses[index],
+        );
       },
     );
 

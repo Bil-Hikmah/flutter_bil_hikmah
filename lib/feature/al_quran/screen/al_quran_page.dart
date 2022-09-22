@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/exception/exception.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/section/al_quran_view.dart';
-import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AlQuranPage extends StatelessWidget {
   const AlQuranPage({this.needBack = false, Key? key}) : super(key: key);
@@ -41,10 +42,10 @@ class AlQuranPage extends StatelessWidget {
               needBack: needBack,
             ),
             body: state.status.isLoading || state.status.isFailure
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryDark,
-                    ),
+                ? Shimmer.fromColors(
+                    highlightColor: Colors.white,
+                    baseColor: Colors.grey[300]!,
+                    child: AlQuranView(QuranItem.dummyQuranItemData),
                   )
                 : AlQuranView(state.alQuranAll!),
           );

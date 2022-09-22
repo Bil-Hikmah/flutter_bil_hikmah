@@ -190,7 +190,9 @@ class _AlQuranViewState extends State<AlQuranView> {
         return InkWell(
           onTap: () {
             // Navigate to detail surah
-            Navigator.of(context).push(DetailSurahPage.route());
+            Navigator.of(context).push(DetailSurahPage.route(
+              widget.quranData[index].number,
+            ));
           },
           child: _surahCard(
             index,
