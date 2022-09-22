@@ -4,7 +4,6 @@ import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_page.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/game_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
-import 'package:flutter_bil_hikmah/feature/home/screen/section/banner_home.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/carousel_banner.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
@@ -25,7 +24,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     const _upperHomeDescription = UpperHome();
-    const _banner = BannerHome();
+    // currently disabled
+    // const _banner = BannerHome();
     const _carouselBanner = CarouselBanner();
 
     List<Function()> _onPressed = [

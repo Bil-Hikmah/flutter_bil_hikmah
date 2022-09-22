@@ -22,12 +22,6 @@ class VideoDakwahDetailView extends StatefulWidget {
 class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
   @override
   Widget build(BuildContext context) {
-    final _videoContainer = Container(
-      width: double.infinity,
-      height: 208.0,
-      color: AppColors.darkGreyLight,
-    );
-
     final _videoTitle = Text(
       'Video Dakwah',
       softWrap: true,
