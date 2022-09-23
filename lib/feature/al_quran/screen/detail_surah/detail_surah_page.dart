@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/exception/exception.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/detail_surah/detail_surah_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -22,7 +23,9 @@ class DetailSurahPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AlquranCubit()..surahDetail(surahNumber),
+      create: (context) => AlquranCubit(
+        QuranRepositoryImpl.create(),
+      )..surahDetail(surahNumber),
       child: BlocConsumer<AlquranCubit, AlquranState>(
         listener: (context, state) {
           if (state.status.isFailure) {

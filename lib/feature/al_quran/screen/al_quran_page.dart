@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/exception/exception.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/section/al_quran_view.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
@@ -20,7 +21,9 @@ class AlQuranPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AlquranCubit()..alQuranAll(),
+      create: (context) => AlquranCubit(
+        QuranRepositoryImpl.create(),
+      )..alQuranAll(),
       child: BlocConsumer<AlquranCubit, AlquranState>(
         listener: (context, state) {
           if (state.status.isFailure) {
