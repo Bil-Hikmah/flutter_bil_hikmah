@@ -8,9 +8,9 @@ import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repo
 part 'alquran_state.dart';
 
 class AlquranCubit extends Cubit<AlquranState> {
-  AlquranCubit() : super(const AlquranState());
+  AlquranCubit(this._quranRepository) : super(const AlquranState());
 
-  final QuranRepository _quranRepository = QuranRepositoryImpl.create();
+  final QuranRepository _quranRepository;
 
   Future<void> alQuranAll() async {
     emit(state.copyWith(status: AlquranStatus.loading));
