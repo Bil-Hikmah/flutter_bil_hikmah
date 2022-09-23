@@ -70,9 +70,21 @@ dependencies:
   # For lazy load
   shimmer: ^2.0.0
 
+  # Audio player
+  just_audio: ^0.9.29
+
+  # Positioned/focus item in listview
+  scrollable_positioned_list: ^0.3.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^2.1.4
+
+  mockito: ^5.0.16
+
+  bloc_test:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
