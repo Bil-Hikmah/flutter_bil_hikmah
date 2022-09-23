@@ -1,101 +1,108 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-class AppException {
+class AppException extends Equatable {
   final String? message;
   final ErrorType type;
 
-  AppException(
+  const AppException(
     this.type, {
     this.message,
   });
+
+  @override
+  List<Object?> get props => [
+        message,
+        type,
+      ];
 }
 
 class BadRequest extends AppException {
-  BadRequest({
+  const BadRequest({
     String? message,
     ErrorType errorType = ErrorType.badRequest,
   }) : super(errorType, message: message);
 }
 
 class Unauthorized extends AppException {
-  Unauthorized({
+  const Unauthorized({
     String? message,
     ErrorType errorType = ErrorType.unauthorized,
   }) : super(errorType, message: message);
 }
 
 class PaymentRequired extends AppException {
-  PaymentRequired({
+  const PaymentRequired({
     String? message,
     ErrorType errorType = ErrorType.paymentRequired,
   }) : super(errorType, message: message);
 }
 
 class Forbidden extends AppException {
-  Forbidden({
+  const Forbidden({
     String? message,
     ErrorType errorType = ErrorType.forbidden,
   }) : super(errorType, message: message);
 }
 
 class NotFound extends AppException {
-  NotFound({
+  const NotFound({
     String? message,
     ErrorType errorType = ErrorType.notFound,
   }) : super(errorType, message: message);
 }
 
 class MethodNotAllowed extends AppException {
-  MethodNotAllowed({
+  const MethodNotAllowed({
     String? message,
     ErrorType errorType = ErrorType.methodNotAllowed,
   }) : super(errorType, message: message);
 }
 
 class NotAcceptable extends AppException {
-  NotAcceptable({
+  const NotAcceptable({
     String? message,
     ErrorType errorType = ErrorType.notAcceptable,
   }) : super(errorType, message: message);
 }
 
 class InternalServerError extends AppException {
-  InternalServerError({
+  const InternalServerError({
     String? message,
     ErrorType errorType = ErrorType.internalServerError,
   }) : super(errorType, message: message);
 }
 
 class NotImplemented extends AppException {
-  NotImplemented({
+  const NotImplemented({
     String? message,
     ErrorType errorType = ErrorType.notImplemented,
   }) : super(errorType, message: message);
 }
 
 class BadGateway extends AppException {
-  BadGateway({
+  const BadGateway({
     String? message,
     ErrorType errorType = ErrorType.badGateway,
   }) : super(errorType, message: message);
 }
 
 class LoginFailed extends AppException {
-  LoginFailed({
+  const LoginFailed({
     String? message,
     ErrorType errorType = ErrorType.loginFailed,
   }) : super(errorType, message: message);
 }
 
 class Unauthenticated extends AppException {
-  Unauthenticated({
+  const Unauthenticated({
     String? message,
     ErrorType errorType = ErrorType.unauthenticated,
   }) : super(errorType, message: message);
 }
 
 class UnknownException extends AppException {
-  UnknownException({
+  const UnknownException({
     String? message,
     ErrorType errorType = ErrorType.unknown,
   }) : super(errorType, message: message);
