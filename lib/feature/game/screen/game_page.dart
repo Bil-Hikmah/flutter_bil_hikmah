@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/section/game_view.dart';
+import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GamePage extends StatelessWidget {
+class GamePage extends StatefulWidget {
   const GamePage({Key? key}) : super(key: key);
 
   static Route route() => MaterialPageRoute(
@@ -10,13 +12,33 @@ class GamePage extends StatelessWidget {
       );
 
   @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  @override
+  void initState() {
+    BlocProvider.of<InitAppCubit>(context).onGetGameItem();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: defaultAppBar(
-        context: context,
-        title: "Game Edukasi",
-      ),
-      body: const GameView(),
+    return BlocConsumer<InitAppCubit, InitAppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          appBar: defaultAppBar(
+            context: context,
+            title: "Game Edukasi",
+          ),
+          body: state.status.isLoading || state.status.isError
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : GameView(state.gameItem),
+        );
+      },
     );
   }
 }

@@ -1,11 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class GameView extends StatefulWidget {
-  const GameView({Key? key}) : super(key: key);
+  const GameView(this.gameItem, {Key? key}) : super(key: key);
+
+  final List<Map<String, dynamic>>? gameItem;
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -14,7 +15,10 @@ class GameView extends StatefulWidget {
 class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
-    Widget _cardGame(String title, String level) {
+    Widget _cardGame(
+      String title,
+      int level,
+    ) {
       return Container(
         height: 164.0,
         width: double.infinity,
@@ -76,7 +80,7 @@ class _GameViewState extends State<GameView> {
                       ),
                     ),
                     Text(
-                      level + " level",
+                      level.toString() + " level",
                       style: AppTextStyle.textSmall.copyWith(
                         color: AppColors.darkGreyDark,
                         fontWeight: FontWeight.bold,
@@ -93,11 +97,11 @@ class _GameViewState extends State<GameView> {
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      itemCount: 5,
+      itemCount: widget.gameItem?.length ?? 0,
       itemBuilder: (context, index) {
         return _cardGame(
-          "Hitung",
-          "12",
+          widget.gameItem![index]["name"],
+          widget.gameItem![index]["currentLevel"],
         );
       },
     );
