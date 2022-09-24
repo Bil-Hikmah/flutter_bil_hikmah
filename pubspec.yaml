@@ -76,6 +76,12 @@ dependencies:
   # Positioned/focus item in listview
   scrollable_positioned_list: ^0.3.4
 
+  # Share Preference
+  shared_preferences: ^2.0.15
+
+  # Local Databse
+  sqflite:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
