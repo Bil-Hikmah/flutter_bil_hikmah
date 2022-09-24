@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bil_hikmah/common/constant/game_data.dart';
 import 'package:flutter_bil_hikmah/common/constant/game_item.dart';
 import 'package:flutter_bil_hikmah/common/exception/exception.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,30 +17,64 @@ class InitAppCubit extends Cubit<InitAppState> {
     emit(state.copyWith(status: InitAppStatus.loading));
     try {
       final database = await openDatabase(
-        join(await getDatabasesPath(), 'gameVersion1.db'),
+        join(await getDatabasesPath(), 'gameVersion2.db'),
         onCreate: (db, version) {
+          // Note : Execute the "CREATE TABLE" query
           db.execute(
-            'CREATE TABLE game(id INTEGER PRIMARY KEY, name TEXT, currentLevel INTEGER)',
+            'CREATE TABLE game(id INTEGER PRIMARY KEY, name TEXT, currentLevel INTEGER,totalLevel INTEGER)',
           );
+          db.execute(
+            'CREATE TABLE gameDetail(id INTEGER PRIMARY KEY, idGameItem INTEGER, level INTEGER, answerKey TEXT, questionData TEXT)',
+          );
+          // Note : Excute insert Game Hitung
           db.insert(
             "game",
-            GameItem(id: 1, name: "Hitung", currentLevel: 0).toMap(),
+            GameItem(
+              id: 1,
+              name: "Hitung",
+              currentLevel: 0,
+              totalLevel: 3,
+            ).toMap(),
           );
+          for (int i = 0; i < listGameDetailHitung.length; i++) {
+            db.insert(
+              "gameDetail",
+              GameItemDetail(
+                id: listGameDetailHitung[i].id,
+                idGameItem: 1,
+                level: listGameDetailHitung[i].level,
+                answerKey: listGameDetailHitung[i].answerKey,
+                questionData: listGameDetailHitung[i].questionData,
+              ).toMap(),
+            );
+          }
+          // Note : Excute insert Game Angka
           db.insert(
             "game",
-            GameItem(id: 2, name: "Angka", currentLevel: 0).toMap(),
+            GameItem(
+              id: 2,
+              name: "Angka",
+              currentLevel: 0,
+              totalLevel: 2,
+            ).toMap(),
           );
-          db.insert(
-            "game",
-            GameItem(id: 3, name: "Salam Perkenalan", currentLevel: 0).toMap(),
-          );
-          db.insert(
-            "game",
-            GameItem(id: 4, name: "Salam salam", currentLevel: 0).toMap(),
-          );
+          for (int i = 0; i < listGameDetailAngka.length; i++) {
+            db.insert(
+              "gameDetail",
+              GameItemDetail(
+                id: listGameDetailAngka[i].id,
+                idGameItem: 2,
+                level: listGameDetailAngka[i].level,
+                answerKey: listGameDetailAngka[i].answerKey,
+                questionData: listGameDetailAngka[i].questionData,
+              ).toMap(),
+            );
+          }
         },
-        version: 1,
+        version: 2,
       );
+      print(database);
+      log(database.toString());
 
       emit(state.copyWith(
         status: InitAppStatus.success,
