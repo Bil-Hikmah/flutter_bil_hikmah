@@ -286,6 +286,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_exception:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "1b649d58a40d1fe2eb066b73cb6b24c849ac8a9a"
+      url: "https://github.com/Bil-Hikmah/flutter_exception.git"
+    source: git
+    version: "0.0.1"
   flutter_inappwebview:
     dependency: transitive
     description:
@@ -1079,5 +1088,5 @@ packages:
     source: hosted
     version: "1.0.4"
 sdks:
-  dart: ">=2.17.0 <3.0.0"
+  dart: ">=2.17.6 <3.0.0"
   flutter: ">=3.0.0"

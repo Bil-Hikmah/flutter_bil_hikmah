@@ -82,6 +82,12 @@ dependencies:
   # Local Databse
   sqflite:
 
+  # Handling exception
+  flutter_exception:
+    git:
+      url: https://github.com/Bil-Hikmah/flutter_exception.git
+      ref: main
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
