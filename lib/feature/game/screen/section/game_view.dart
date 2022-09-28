@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/game/screen/game_detail/game_detail_page.dart';
+import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameView extends StatefulWidget {
   const GameView(this.gameItem, {Key? key}) : super(key: key);
@@ -17,10 +20,23 @@ class _GameViewState extends State<GameView> {
   Widget build(BuildContext context) {
     Widget _cardGame(
       String title,
+      int idGame,
       int level,
+      int currentLevel,
     ) {
       return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          context.read<InitAppCubit>().onGetDetailItem(idGame).then(
+                (value) => Navigator.of(context).push(
+                  GameDetailPage.route(
+                    title,
+                    idGame,
+                    currentLevel,
+                    context.read<InitAppCubit>().state.database!,
+                  ),
+                ),
+              );
+        },
         child: Container(
           height: 164.0,
           width: double.infinity,
@@ -104,7 +120,9 @@ class _GameViewState extends State<GameView> {
       itemBuilder: (context, index) {
         return _cardGame(
           widget.gameItem![index]["name"],
+          widget.gameItem![index]["id"],
           widget.gameItem![index]["totalLevel"],
+          widget.gameItem![index]["currentLevel"],
         );
       },
     );
