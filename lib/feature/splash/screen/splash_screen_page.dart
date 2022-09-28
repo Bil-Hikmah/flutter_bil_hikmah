@@ -5,7 +5,7 @@ import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
 import 'package:flutter_bil_hikmah/config/routes/route_name.dart';
 import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bil_hikmah/common/exception/exception.dart';
+import 'package:flutter_exception/exception.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);

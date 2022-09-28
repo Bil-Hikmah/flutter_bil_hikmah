@@ -1,9 +1,8 @@
 import 'package:flutter_bil_hikmah/common/endpoint/app_endpoint.dart';
-import 'package:flutter_bil_hikmah/common/exception/exception.dart';
-import 'package:flutter_bil_hikmah/common/exception/exception_handling.dart';
 import 'package:flutter_bil_hikmah/common/network/http_client.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/surah_item.dart';
+import 'package:flutter_exception/flutter_exception.dart';
 
 import '../../../../common/misc/injection.dart';
 

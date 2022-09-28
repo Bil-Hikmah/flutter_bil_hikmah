@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bil_hikmah/common/exception/exception.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/home_repository.dart';
+import 'package:flutter_exception/exception.dart';
 
 part 'home_state.dart';
 
