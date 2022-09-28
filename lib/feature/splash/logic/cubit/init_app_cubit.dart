@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bil_hikmah/common/constant/game_data.dart';
 import 'package:flutter_bil_hikmah/common/constant/game_item.dart';
-import 'package:flutter_bil_hikmah/common/exception/exception.dart';
+import 'package:flutter_exception/flutter_exception.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -17,7 +15,7 @@ class InitAppCubit extends Cubit<InitAppState> {
     emit(state.copyWith(status: InitAppStatus.loading));
     try {
       final database = await openDatabase(
-        join(await getDatabasesPath(), 'gameVersion2.db'),
+        join(await getDatabasesPath(), 'gameVersion7.db'),
         onCreate: (db, version) {
           // Note : Execute the "CREATE TABLE" query
           db.execute(
@@ -42,7 +40,7 @@ class InitAppCubit extends Cubit<InitAppState> {
               GameItemDetail(
                 id: listGameDetailHitung[i].id,
                 idGameItem: 1,
-                level: listGameDetailHitung[i].level,
+                level: i,
                 answerKey: listGameDetailHitung[i].answerKey,
                 questionData: listGameDetailHitung[i].questionData,
               ).toMap(),
@@ -64,17 +62,15 @@ class InitAppCubit extends Cubit<InitAppState> {
               GameItemDetail(
                 id: listGameDetailAngka[i].id,
                 idGameItem: 2,
-                level: listGameDetailAngka[i].level,
+                level: i,
                 answerKey: listGameDetailAngka[i].answerKey,
                 questionData: listGameDetailAngka[i].questionData,
               ).toMap(),
             );
           }
         },
-        version: 2,
+        version: 1,
       );
-      print(database);
-      log(database.toString());
 
       emit(state.copyWith(
         status: InitAppStatus.success,
@@ -93,13 +89,64 @@ class InitAppCubit extends Cubit<InitAppState> {
   Future<void> onGetGameItem() async {
     state.copyWith(status: InitAppStatus.loading);
     try {
-      final db = state.database!;
-
-      final List<Map<String, dynamic>> gameItem = await db.query('game');
+      final List<Map<String, dynamic>> gameItem =
+          await state.database!.query('game');
 
       emit(state.copyWith(
         status: InitAppStatus.success,
         gameItem: gameItem,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: InitAppStatus.error,
+        exception: UnknownException(
+          message: e.toString(),
+        ),
+      ));
+    }
+  }
+
+  Future<void> onGetDetailItem(int idGame) async {
+    state.copyWith(status: InitAppStatus.loading);
+    try {
+      final List<Map<String, dynamic>> gameDetailItem =
+          await state.database!.query(
+        'gameDetail',
+        where: 'idGameItem = ?',
+        whereArgs: [idGame],
+      );
+
+      emit(state.copyWith(
+        status: InitAppStatus.success,
+        gameDetailItem: gameDetailItem,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: InitAppStatus.error,
+        exception: UnknownException(
+          message: e.toString(),
+        ),
+      ));
+    }
+  }
+
+  Future<void> onUnlockItem(
+    int idGame,
+    int currentLevel,
+  ) async {
+    state.copyWith(status: InitAppStatus.loading);
+    try {
+      await state.database!.update(
+        'game',
+        {'currentLevel': currentLevel},
+        where: 'id = ?',
+        whereArgs: [idGame],
+      );
+
+      await onGetGameItem();
+
+      emit(state.copyWith(
+        status: InitAppStatus.success,
       ));
     } catch (e) {
       emit(state.copyWith(

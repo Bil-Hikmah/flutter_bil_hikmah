@@ -20,24 +20,28 @@ class InitAppState extends Equatable {
     this.exception,
     this.database,
     this.gameItem,
+    this.gameDetailItem,
   });
 
   final InitAppStatus status;
   final AppException? exception;
   final Database? database;
   final List<Map<String, dynamic>>? gameItem;
+  final List<Map<String, dynamic>>? gameDetailItem;
 
   InitAppState copyWith({
     InitAppStatus? status,
     AppException? exception,
     Database? database,
     List<Map<String, dynamic>>? gameItem,
+    List<Map<String, dynamic>>? gameDetailItem,
   }) {
     return InitAppState(
       status: status ?? this.status,
       exception: exception ?? this.exception,
       database: database ?? this.database,
       gameItem: gameItem ?? this.gameItem,
+      gameDetailItem: gameDetailItem ?? this.gameDetailItem,
     );
   }
 
@@ -47,5 +51,6 @@ class InitAppState extends Equatable {
         exception,
         database,
         gameItem,
+        gameDetailItem,
       ];
 }
