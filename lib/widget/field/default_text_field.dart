@@ -7,7 +7,7 @@ class DefaultTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   final String? labelText;
-  final int maxLength;
+  final int? maxLength;
   final TextInputType? inputType;
   final bool initial;
   final String? initialText;
@@ -29,7 +29,7 @@ class DefaultTextField extends StatelessWidget {
     this.onSaved,
     this.controller,
     this.labelText,
-    this.maxLength = 0,
+    this.maxLength,
     this.inputType = TextInputType.text,
     this.initial = false,
     this.initialText,
@@ -94,7 +94,6 @@ class DefaultTextField extends StatelessWidget {
       autovalidateMode: needAutoValidate ? AutovalidateMode.always : null,
       decoration: InputDecoration(
         focusColor: AppColors.primaryDark,
-        hoverColor: AppColors.primaryDark,
         fillColor: AppColors.lightGreyDark,
         filled: false,
         focusedBorder: OutlineInputBorder(
@@ -105,13 +104,11 @@ class DefaultTextField extends StatelessWidget {
         hintStyle: AppTextStyle.textSmall.copyWith(
           color: AppColors.darkGreyLightest,
         ),
-
         labelText: labelText,
         labelStyle: AppTextStyle.textSmall,
         floatingLabelStyle: AppTextStyle.textSmall.copyWith(
           color: AppColors.primaryDark,
         ),
-        // border: InputBorder.none,
         contentPadding: const EdgeInsets.all(16),
         suffixIcon: suffixWidget,
         suffixIconConstraints: suffixConstraints,
@@ -121,9 +118,8 @@ class DefaultTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(16.0),
         ),
-        // disabledBorder: null
       ),
-      // maxLength: maxLength,
+      maxLength: maxLength,
       validator: validator,
       onSaved: onSaved ?? (value) {},
     );
