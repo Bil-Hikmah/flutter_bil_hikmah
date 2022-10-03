@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/video_dakwah_view.dart';
+import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoDakwahPage extends StatelessWidget {
   const VideoDakwahPage({this.needAppBar = false, Key? key}) : super(key: key);
@@ -15,13 +18,41 @@ class VideoDakwahPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: needAppBar
-            ? defaultAppBar(context: context, title: "Video Dakwah")
-            : null,
-        backgroundColor: Colors.white,
-        body: VideoDakwahView(needAppBar ? false : true),
+    return BlocProvider(
+      create: (context) => VideoDakwahCubit()..onInit(),
+      child: BlocConsumer<VideoDakwahCubit, VideoDakwahState>(
+        listener: (context, state) {
+          if (state.status.isFailure) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar
+              ..showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(state.exception?.message ?? 'Unknown Error'),
+                ),
+              );
+          }
+        },
+        builder: (context, state) {
+          return SafeArea(
+            child: Scaffold(
+              appBar: needAppBar
+                  ? defaultAppBar(context: context, title: "Video Dakwah")
+                  : null,
+              backgroundColor: Colors.white,
+              body: state.status.isLoading || state.status.isFailure
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryDark,
+                      ),
+                    )
+                  : VideoDakwahView(
+                      needAppBar ? false : true,
+                      state.videoGenreData!,
+                    ),
+            ),
+          );
+        },
       ),
     );
   }

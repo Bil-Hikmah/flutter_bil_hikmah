@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_genre.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -12,7 +12,7 @@ class GenreVideo extends StatelessWidget {
   }) : super(key: key);
 
   final int currentindex;
-  final List<DummyVideoGenre> genreVideo;
+  final List<VideoTypesData> genreVideo;
   final void Function(int index) onTap;
 
   @override
@@ -65,13 +65,13 @@ class GenreVideo extends StatelessWidget {
             ? Padding(
                 padding: const EdgeInsets.only(left: 24.0),
                 child: _genreItemContainer(
-                  index,
-                  genreVideo[index].title,
+                  index + 1,
+                  genreVideo[index].titleCategory,
                 ),
               )
             : _genreItemContainer(
-                index,
-                genreVideo[index].title,
+                index + 1,
+                genreVideo[index].titleCategory,
               ),
       ),
     );
