@@ -44,9 +44,26 @@ class AppEndpoint {
     );
   }
 
+  Uri getVideoGenre() {
+    return UriHelper.createUrl(
+      host: _baseUrl,
+      path: "/api/video-types",
+    );
+  }
+
+  Uri getVideo(int? idTypeVideo) {
+    return UriHelper.createUrl(
+      host: _baseUrl,
+      path: "/api/videos",
+      queryParameters: {
+        if (idTypeVideo != null) "id_category": idTypeVideo.toString(),
+      },
+    );
+  }
+
   factory AppEndpoint.create() {
     return AppEndpoint(
-      "https://api.example.com",
+      "bilhikmah-api.jogjadev.my.id",
       "bilhikmah-quran.vercel.app",
     );
   }
