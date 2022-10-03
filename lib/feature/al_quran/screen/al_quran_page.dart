@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/al_quran/screen/section/al_quran_shimmer.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/section/al_quran_view.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +48,7 @@ class AlQuranPage extends StatelessWidget {
                 ? Shimmer.fromColors(
                     highlightColor: Colors.white,
                     baseColor: Colors.grey[300]!,
-                    child: AlQuranView(QuranItem.dummyQuranItemData),
+                    child: const AlquranShimmer(),
                   )
                 : AlQuranView(state.alQuranAll!),
           );
