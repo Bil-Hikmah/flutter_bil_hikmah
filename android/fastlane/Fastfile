@@ -3,7 +3,7 @@ import "../../scripts/fastfile"
 default_platform(:android)
 
 platform :android do
-  private_lane :build_apk |options| do
+  private_lane :build_apk do |options|
     fetch_dependencies
     build_number = options[:build_number]
     sh_on_root(command: "flutter build apk --release --verbose --build-number=#{build_number}")
