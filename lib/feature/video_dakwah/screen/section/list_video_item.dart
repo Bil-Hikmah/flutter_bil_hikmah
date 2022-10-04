@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_item.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class ListVideoItem extends StatelessWidget {
   const ListVideoItem(this.listVideo, this.onTap, {Key? key}) : super(key: key);
 
-  final List<DummyVideoItem> listVideo;
-  final void Function(DummyVideoItem item) onTap;
+  final List<VideoItemData> listVideo;
+  final void Function(VideoItemData item) onTap;
 
   @override
   Widget build(BuildContext context) {
-    Widget _videoBanner() => Container(
+    Widget _videoBanner(String url) => Container(
           height: 147.0,
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
-            color: AppColors.primaryDark,
+            image: DecorationImage(
+              image:
+                  NetworkImage("https://bilhikmah-api.jogjadev.my.id/" + url),
+              fit: BoxFit.cover,
+            ),
           ),
         );
 
@@ -85,7 +89,7 @@ class ListVideoItem extends StatelessWidget {
           ),
         );
 
-    Widget _videoItem(DummyVideoItem item) => InkWell(
+    Widget _videoItem(VideoItemData item) => InkWell(
           onTap: () {
             onTap(item);
           },
@@ -96,14 +100,14 @@ class ListVideoItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _videoBanner(),
+                _videoBanner(item.videoImg),
                 const SizedBox(height: 8.0),
-                _videoTitle(item.title),
+                _videoTitle(item.videTitle),
                 const SizedBox(height: 4.0),
                 _videoInformation(
-                  item.genreVideo,
-                  item.countView,
-                  item.date,
+                  item.titleCategory,
+                  1,
+                  item.createdAt,
                 ),
               ],
             ),

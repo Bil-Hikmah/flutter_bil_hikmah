@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class IframeYoutubePlayer extends StatefulWidget {
-  const IframeYoutubePlayer({required this.body, Key? key}) : super(key: key);
+  const IframeYoutubePlayer(this.initVideoUrl, {required this.body, Key? key})
+      : super(key: key);
+
+  final String initVideoUrl;
 
   final Widget Function(
     BuildContext context,
@@ -33,7 +36,7 @@ class _IframeYoutubePlayerState extends State<IframeYoutubePlayer> {
       ),
     )
       ..onInit = () {
-        _controller.loadVideo("https://www.youtube.com/watch?v=DUVU6f_9s6I");
+        _controller.loadVideo(widget.initVideoUrl);
       }
       ..onFullscreenChange = (isFullScreen) {
         log('${isFullScreen ? 'Entered' : 'Exited'} Fullscreen.');

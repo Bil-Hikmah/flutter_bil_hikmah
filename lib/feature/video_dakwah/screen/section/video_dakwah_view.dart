@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/genre_video.dart';
@@ -64,10 +63,13 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
     );
 
     Widget _buildListVideo(List<VideoItemData> data) => ListVideoItem(
-          dummyListVideoItem,
-          (DummyVideoItem item) {
+          data,
+          (VideoItemData item) {
             // Todo : open video detail
-            Navigator.of(context).push(VideoDakwahDetailPage.route());
+            Navigator.of(context).push(VideoDakwahDetailPage.route(
+              item.videoUrl,
+              data,
+            ));
           },
         );
 
@@ -85,8 +87,10 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
               _buildGendreVideo,
               const SizedBox(height: 24.0),
               state.status.isLoadingVideo || state.status.isFailure
-                  ? const CircularProgressIndicator(
-                      color: AppColors.primaryDark,
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryDark,
+                      ),
                     )
                   : _buildListVideo(state.videoDakwahItem!),
             ],

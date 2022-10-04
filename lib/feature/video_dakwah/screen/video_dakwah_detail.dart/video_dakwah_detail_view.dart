@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/dummy_video_item.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
@@ -8,12 +8,14 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 class VideoDakwahDetailView extends StatefulWidget {
   const VideoDakwahDetailView(
     this.player,
-    this.controller, {
+    this.controller,
+    this.data, {
     Key? key,
   }) : super(key: key);
 
   final Widget player;
   final YoutubePlayerController controller;
+  final List<VideoItemData> data;
 
   @override
   State<VideoDakwahDetailView> createState() => _VideoDakwahDetailViewState();
@@ -126,11 +128,10 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
     );
 
     final _buildListVideo = ListVideoItem(
-      dummyListVideoItem,
-      (DummyVideoItem item) {
+      widget.data,
+      (VideoItemData item) {
         // Todo : open video detail
-        widget.controller
-            .loadVideo("https://www.youtube.com/watch?v=TfWWMss1oaA");
+        widget.controller.loadVideo(item.videoUrl);
       },
     );
 
