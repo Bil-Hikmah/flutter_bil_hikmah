@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/video_dakwah_shimmer.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/video_dakwah_view.dart';
-import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class VideoDakwahPage extends StatelessWidget {
   const VideoDakwahPage({this.needAppBar = false, Key? key}) : super(key: key);
@@ -41,10 +42,10 @@ class VideoDakwahPage extends StatelessWidget {
                   : null,
               backgroundColor: Colors.white,
               body: state.status.isLoading || state.status.isFailure
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryDark,
-                      ),
+                  ? Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: Colors.grey[300]!,
+                      child: const VideoDakwahShimmer(),
                     )
                   : VideoDakwahView(
                       needAppBar ? false : true,
