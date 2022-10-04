@@ -33,7 +33,6 @@ class VideoDakwahRepositoryImpl implements VideoDakwahRepository {
     } on AppException {
       rethrow;
     } catch (e) {
-      print(e);
       throw UnknownException(
         message: e.toString(),
       );
