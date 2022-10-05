@@ -80,10 +80,13 @@ dependencies:
   shared_preferences: ^2.0.15
 
   # Local Databse
-  sqflite:
+  sqflite: ^2.0.2
 
   # Handling exception
   api_exception: ^0.0.3
+
+  # Fetch meta data from youtube
+  youtube_video_info: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -100,7 +103,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.1
+  flutter_lints: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
