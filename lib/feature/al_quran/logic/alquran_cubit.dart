@@ -1,9 +1,9 @@
-import 'package:bloc/bloc.dart';
+import 'package:api_exception/api_exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/surah_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
-import 'package:flutter_exception/flutter_exception.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'alquran_state.dart';
 

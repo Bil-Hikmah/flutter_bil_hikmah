@@ -1,9 +1,9 @@
-import 'package:bloc/bloc.dart';
+import 'package:api_exception/exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_repository.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
-import 'package:flutter_exception/exception.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'video_dakwah_state.dart';
 

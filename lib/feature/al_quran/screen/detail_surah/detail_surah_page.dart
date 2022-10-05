@@ -1,3 +1,4 @@
+import 'package:api_exception/api_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_bil_hikmah/feature/al_quran/screen/detail_surah/detail_s
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_exception/flutter_exception.dart';
 
 class DetailSurahPage extends StatelessWidget {
   const DetailSurahPage(this.surahNumber, {Key? key}) : super(key: key);

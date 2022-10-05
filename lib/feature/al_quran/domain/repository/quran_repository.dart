@@ -1,7 +1,7 @@
+import 'package:api_exception/api_exception.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/quran_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/model/surah_item.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/service/quran_service.dart';
-import 'package:flutter_exception/flutter_exception.dart';
 
 abstract class QuranRepository {
   Future<List<QuranItemData>> quranAll();

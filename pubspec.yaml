@@ -83,10 +83,7 @@ dependencies:
   sqflite:
 
   # Handling exception
-  flutter_exception:
-    git:
-      url: https://github.com/Bil-Hikmah/flutter_exception.git
-      ref: main
+  api_exception: ^0.0.2
 
 dev_dependencies:
   flutter_test:

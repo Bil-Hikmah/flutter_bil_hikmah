@@ -1,7 +1,7 @@
+import 'package:api_exception/api_exception.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/domain/repository/quran_repository.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/logic/alquran_cubit.dart';
-import 'package:flutter_exception/flutter_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

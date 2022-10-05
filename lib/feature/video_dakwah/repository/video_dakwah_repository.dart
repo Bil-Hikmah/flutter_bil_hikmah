@@ -1,7 +1,7 @@
+import 'package:api_exception/exception.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_service.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
-import 'package:flutter_exception/flutter_exception.dart';
 
 abstract class VideoDakwahRepository {
   Future<List<VideoTypesData>> getGenreVideo();

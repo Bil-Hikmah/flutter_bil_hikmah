@@ -1,9 +1,10 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:api_exception/api_exception.dart';
 
-import 'package:flutter_exception/exception.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:sqflite/sqflite.dart';
 
 part 'game_detail_state.dart';

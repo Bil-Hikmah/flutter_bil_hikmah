@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
+  api_exception:
+    dependency: "direct main"
+    description:
+      name: api_exception
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   args:
     dependency: transitive
     description:
@@ -286,15 +293,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_exception:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: "1b649d58a40d1fe2eb066b73cb6b24c849ac8a9a"
-      url: "https://github.com/Bil-Hikmah/flutter_exception.git"
-    source: git
-    version: "0.0.1"
   flutter_inappwebview:
     dependency: transitive
     description:
