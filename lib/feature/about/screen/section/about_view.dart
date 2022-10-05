@@ -37,11 +37,14 @@ class _AboutViewState extends State<AboutView> {
             children: [
               icon,
               const SizedBox(width: 4.0),
-              Text(
-                title,
-                style: AppTextStyle.textSmall.copyWith(
-                  color: AppColors.darkGreyDarkest,
-                  fontWeight: FontWeight.w300,
+              Expanded(
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.textSmall.copyWith(
+                    color: AppColors.darkGreyDarkest,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ],
