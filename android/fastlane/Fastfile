@@ -4,8 +4,14 @@ default_platform(:android)
 
 platform :android do
   private_lane :build_apk do |options|
+    unless options[:build_number]
+      UI.user_error!("Please specify build number with the build_number parameter")
+    end
+
     fetch_dependencies
+
     build_number = options[:build_number]
+
     sh_on_root(command: "flutter build apk --release --verbose --build-number=#{build_number}")
   end
 
@@ -16,10 +22,6 @@ platform :android do
 
     unless options[:firebase_cli_token]
       UI.user_error!("Please specify Firebase Token with the firebase_cli_token parameter")
-    end
-
-    unless options[:build_number]
-      UI.user_error!("Please specify build number with the build_number parameter")
     end
 
     # Generate APK File with given build_number
