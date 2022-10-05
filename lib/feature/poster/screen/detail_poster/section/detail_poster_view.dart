@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class DetailPosterView extends StatefulWidget {
-  const DetailPosterView({Key? key}) : super(key: key);
+  const DetailPosterView(this.urlImage, {Key? key}) : super(key: key);
+
+  final String urlImage;
 
   @override
   State<DetailPosterView> createState() => _DetailPosterViewState();
@@ -16,9 +19,19 @@ class _DetailPosterViewState extends State<DetailPosterView> {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primaryDark.withOpacity(0.8),
+        color: Colors.black.withOpacity(0.1),
       ),
-      child: null,
+      child: CachedNetworkImage(
+        imageUrl: widget.urlImage,
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        progressIndicatorBuilder: (context, url, progress) => Center(
+          child: CircularProgressIndicator(
+            value: progress.progress,
+            color: AppColors.primaryDark,
+          ),
+        ),
+        fit: BoxFit.cover,
+      ),
     );
 
     final _actionContainer = Column(

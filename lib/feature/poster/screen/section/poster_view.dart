@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_genre.dart';
+import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_genre_dummy.dart';
+import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_item_dummy.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/detail_poster/detail_poster_page.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/section/poster_genre_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -29,13 +31,23 @@ class _PosterViewState extends State<PosterView> {
       ),
     );
 
-    final _poster = Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.0),
-        color: AppColors.primaryDark,
-      ),
-      child: null,
-    );
+    Widget _poster(String urlImage) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+            color: Colors.black.withOpacity(0.1),
+          ),
+          child: CachedNetworkImage(
+            imageUrl: urlImage,
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            progressIndicatorBuilder: (context, url, progress) => Center(
+              child: CircularProgressIndicator(
+                value: progress.progress,
+                color: AppColors.primaryDark,
+              ),
+            ),
+            fit: BoxFit.cover,
+          ),
+        );
 
     final _listPoster = GridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -45,15 +57,16 @@ class _PosterViewState extends State<PosterView> {
         mainAxisSpacing: 20.0,
         childAspectRatio: 3 / 4,
       ),
-      itemCount: 5,
+      itemCount: posterItemDummy.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Navigator.of(context).push(DetailPosterPage.route());
+            Navigator.of(context)
+                .push(DetailPosterPage.route(posterItemDummy[index].urlImage));
           },
-          child: _poster,
+          child: _poster(posterItemDummy[index].urlImage),
         );
       },
     );

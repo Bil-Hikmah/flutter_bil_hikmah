@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_genre.dart';
+import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_genre_dummy.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
