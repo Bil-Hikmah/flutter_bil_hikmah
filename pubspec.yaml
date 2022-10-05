@@ -83,7 +83,7 @@ dependencies:
   sqflite:
 
   # Handling exception
-  api_exception: ^0.0.2
+  api_exception: ^0.0.3
 
 dev_dependencies:
   flutter_test:
