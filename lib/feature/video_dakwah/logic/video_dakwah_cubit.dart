@@ -4,6 +4,7 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:youtube_video_info/youtube_video_info.dart';
 
 part 'video_dakwah_state.dart';
 
@@ -43,6 +44,24 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
       emit(state.copyWith(
         status: VideoDakwahStatus.failure,
         exception: e,
+      ));
+    }
+  }
+
+  Future<void> onGetYouTubeMetaData(String urlVideo) async {
+    emit(state.copyWith(status: VideoDakwahStatus.loadingMetaData));
+    try {
+      final response = await YoutubeData.getData(urlVideo);
+      emit(state.copyWith(
+        status: VideoDakwahStatus.success,
+        youtubeDataModel: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: VideoDakwahStatus.failure,
+        exception: UnknownException(
+          message: e.toString(),
+        ),
       ));
     }
   }

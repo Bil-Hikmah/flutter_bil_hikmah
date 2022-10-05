@@ -40,7 +40,6 @@ class ListVideoItem extends StatelessWidget {
 
     Widget _videoInformation(
       String type,
-      int countView,
       DateTime date,
     ) =>
         Container(
@@ -49,20 +48,6 @@ class ListVideoItem extends StatelessWidget {
             children: [
               Text(
                 type,
-                style: AppTextStyle.textExtraSmall.copyWith(
-                  color: AppColors.darkGreyLight,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(width: 8.0),
-              const Icon(
-                Icons.circle,
-                color: AppColors.darkGreyLight,
-                size: 4.0,
-              ),
-              const SizedBox(width: 8.0),
-              Text(
-                '$countView views',
                 style: AppTextStyle.textExtraSmall.copyWith(
                   color: AppColors.darkGreyLight,
                   fontWeight: FontWeight.w600,
@@ -106,7 +91,6 @@ class ListVideoItem extends StatelessWidget {
                 const SizedBox(height: 4.0),
                 _videoInformation(
                   item.titleCategory,
-                  1,
                   item.createdAt,
                 ),
               ],

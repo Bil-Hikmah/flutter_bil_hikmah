@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:api_exception/exception.dart';
 
 class VideoDakwahDetailView extends StatefulWidget {
   const VideoDakwahDetailView(
     this.player,
     this.controller,
+    this.singleData,
     this.data, {
     Key? key,
   }) : super(key: key);
 
   final Widget player;
   final YoutubePlayerController controller;
+  final VideoItemData singleData;
   final List<VideoItemData> data;
 
   @override
@@ -22,99 +27,124 @@ class VideoDakwahDetailView extends StatefulWidget {
 }
 
 class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
+  late String category;
+  late DateTime createdAt;
+
+  @override
+  void initState() {
+    category = widget.singleData.titleCategory;
+    createdAt = widget.singleData.createdAt;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _videoTitle = Text(
-      'Video Dakwah',
-      softWrap: true,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      style: AppTextStyle.textMedium.copyWith(
-        color: AppColors.darkGreyDark,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-
-    final _videoStatistic = Row(
-      children: [
-        Text(
-          "10300 Views",
-          style: AppTextStyle.textExtraSmall.copyWith(
-            color: AppColors.darkGreyLightest,
+    Widget _videoTitle(String title) => Text(
+          title,
+          softWrap: true,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyle.textMedium.copyWith(
+            color: AppColors.darkGreyDark,
             fontWeight: FontWeight.w500,
           ),
-        ),
-        const SizedBox(width: 8.0),
-        const Icon(
-          Icons.circle,
-          color: AppColors.darkGreyLightest,
-          size: 4.0,
-        ),
-        const SizedBox(width: 8.0),
-        Text(
-          "1 July 2021",
-          style: AppTextStyle.textExtraSmall.copyWith(
-            color: AppColors.darkGreyLightest,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
+        );
 
-    final _videSocialshare = Row(
-      children: [
-        Expanded(
-          child: Text(
-            "Kultum",
-            style: AppTextStyle.textMedium.copyWith(
-              color: AppColors.darkGreyMedium,
-              fontWeight: FontWeight.w600,
+    Widget _videoStatistic(int countView, String createdAt) => Row(
+          children: [
+            Text(
+              "$countView Views",
+              style: AppTextStyle.textExtraSmall.copyWith(
+                color: AppColors.darkGreyLightest,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-        ),
-        const Icon(
-          Icons.favorite_border,
-          color: AppColors.primaryDark,
-          size: 21.0,
-        ),
-        const SizedBox(width: 6.0),
-        Text(
-          "102 K",
-          style: AppTextStyle.textSmall.copyWith(
-            color: AppColors.darkGreyLight,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(width: 24.0),
-        const Icon(
-          Icons.share,
-          color: AppColors.primaryDark,
-          size: 21.0,
-        ),
-        const SizedBox(width: 6.0),
-        Text(
-          "Share",
-          style: AppTextStyle.textSmall.copyWith(
-            color: AppColors.darkGreyLight,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
+            const SizedBox(width: 8.0),
+            const Icon(
+              Icons.circle,
+              color: AppColors.darkGreyLightest,
+              size: 4.0,
+            ),
+            const SizedBox(width: 8.0),
+            Text(
+              createdAt,
+              style: AppTextStyle.textExtraSmall.copyWith(
+                color: AppColors.darkGreyLightest,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
 
-    final _videoDesc = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _videoTitle,
-          const SizedBox(height: 10.0),
-          _videoStatistic,
-          const SizedBox(height: 10.0),
-          _videSocialshare,
-        ],
-      ),
-    );
+    Widget _videSocialshare(double rate) => Row(
+          children: [
+            Expanded(
+              child: Text(
+                category,
+                style: AppTextStyle.textMedium.copyWith(
+                  color: AppColors.darkGreyMedium,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.favorite_border,
+              color: AppColors.primaryDark,
+              size: 21.0,
+            ),
+            const SizedBox(width: 6.0),
+            Text(
+              "Rate: $rate",
+              style: AppTextStyle.textSmall.copyWith(
+                color: AppColors.darkGreyLight,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(width: 24.0),
+            const Icon(
+              Icons.share,
+              color: AppColors.primaryDark,
+              size: 21.0,
+            ),
+            const SizedBox(width: 6.0),
+            Text(
+              "Share",
+              style: AppTextStyle.textSmall.copyWith(
+                color: AppColors.darkGreyLight,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        );
+
+    Widget videoDesc(VideoDakwahState state) => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _videoTitle(
+                state.status.isLoading
+                    ? "Loading..."
+                    : state.youtubeDataModel?.title ?? "Loading",
+              ),
+              const SizedBox(height: 10.0),
+              _videoStatistic(
+                state.status.isLoading
+                    ? 0
+                    : state.youtubeDataModel?.viewCount ?? 0,
+                state.status.isLoading
+                    ? "Loading..."
+                    : state.youtubeDataModel?.authorName ?? "Loading",
+              ),
+              const SizedBox(height: 10.0),
+              _videSocialshare(
+                state.status.isLoading
+                    ? 0
+                    : state.youtubeDataModel?.averageRating ?? 0,
+              ),
+            ],
+          ),
+        );
 
     final _titleHeaderMoreVideo = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -132,24 +162,47 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
       (VideoItemData item) {
         // Todo : open video detail
         widget.controller.loadVideo(item.videoUrl);
+        context.read<VideoDakwahCubit>().onGetYouTubeMetaData(item.videoUrl);
       },
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          widget.player,
-          const SizedBox(height: 8.0),
-          _videoDesc,
-          const SizedBox(height: 10.0),
-          const Divider(color: AppColors.lightGreyDark),
-          const SizedBox(height: 12.0),
-          _titleHeaderMoreVideo,
-          const SizedBox(height: 21.0),
-          _buildListVideo,
-        ],
-      ),
+    return BlocConsumer<VideoDakwahCubit, VideoDakwahState>(
+      listener: (context, state) {
+        if (state.status.isFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(
+                  state.exception?.errorMessage(context) ?? "Unknown Error",
+                  style: AppTextStyle.textMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+        }
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              widget.player,
+              const SizedBox(height: 8.0),
+              videoDesc(state),
+              const SizedBox(height: 10.0),
+              const Divider(color: AppColors.lightGreyDark),
+              const SizedBox(height: 12.0),
+              _titleHeaderMoreVideo,
+              const SizedBox(height: 21.0),
+              _buildListVideo,
+            ],
+          ),
+        );
+      },
     );
   }
 }

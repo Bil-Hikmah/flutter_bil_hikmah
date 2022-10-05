@@ -68,6 +68,7 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
             // Todo : open video detail
             Navigator.of(context).push(VideoDakwahDetailPage.route(
               item.videoUrl,
+              item,
               data,
             ));
           },
