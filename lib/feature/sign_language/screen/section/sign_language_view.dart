@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/list_sign_dummy.dart';
 import 'package:flutter_bil_hikmah/feature/sign_language/screen/detail_sign_language/detail_sign_language_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
@@ -13,9 +14,16 @@ class SignLanguageView extends StatefulWidget {
 class _SignLanguageViewState extends State<SignLanguageView> {
   @override
   Widget build(BuildContext context) {
-    Widget _singLanguageContainerItem() => InkWell(
+    Widget _singLanguageContainerItem(
+      String title,
+      int id,
+    ) =>
+        InkWell(
           onTap: () {
-            Navigator.of(context).push(DetailSignLanguagePage.route());
+            Navigator.of(context).push(DetailSignLanguagePage.route(
+              title,
+              id,
+            ));
           },
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -34,7 +42,7 @@ class _SignLanguageViewState extends State<SignLanguageView> {
               children: [
                 Expanded(
                   child: Text(
-                    "Abjad",
+                    title,
                     style: AppTextStyle.textLarge
                         .copyWith(color: AppColors.darkGreyDark),
                   ),
@@ -50,14 +58,19 @@ class _SignLanguageViewState extends State<SignLanguageView> {
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      itemCount: 5,
+      itemCount: listSignItemDummy.length,
       itemBuilder: (context, index) {
         return index == 0
             ? Padding(
                 padding: const EdgeInsets.only(top: 24.0),
-                child: _singLanguageContainerItem(),
+                child: _singLanguageContainerItem(
+                    listSignItemDummy[index].title,
+                    listSignItemDummy[index].id),
               )
-            : _singLanguageContainerItem();
+            : _singLanguageContainerItem(
+                listSignItemDummy[index].title,
+                listSignItemDummy[index].id,
+              );
       },
     );
   }

@@ -1,10 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/list_detail_sign_dummy.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class DetailSignLangugeView extends StatefulWidget {
-  const DetailSignLangugeView({Key? key}) : super(key: key);
+  const DetailSignLangugeView(this.headerTitle, this.dummyData, {Key? key})
+      : super(key: key);
+
+  final String headerTitle;
+  final DetailSignDummy dummyData;
 
   @override
   State<DetailSignLangugeView> createState() => _DetailSignLangugeViewState();
@@ -38,7 +44,7 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ),
           alignment: Alignment.center,
           child: Text(
-            "Abjad",
+            widget.headerTitle,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyle.textTripleExtraLarge.copyWith(
               color: Colors.white,
@@ -47,7 +53,11 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ),
         );
 
-    Widget _signItem() => Container(
+    Widget _signItem(
+      String urlImage,
+      String title,
+    ) =>
+        Container(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
@@ -59,15 +69,26 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
                 width: 80.0,
                 height: 80.0,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryDark,
+                  color: AppColors.lightGreyMedium,
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 alignment: Alignment.center,
+                child: CachedNetworkImage(
+                  imageUrl: urlImage,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                      color: AppColors.primaryDark,
+                    ),
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
               Expanded(
                 child: Center(
                   child: Text(
-                    "Aa",
+                    title,
                     softWrap: true,
                     maxLines: 2,
                     textAlign: TextAlign.center,
@@ -109,7 +130,11 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ],
         );
 
-    Widget _popUpSignLanguage() => Stack(
+    Widget _popUpSignLanguage(
+      String title,
+      String urlImage,
+    ) =>
+        Stack(
           children: [
             GestureDetector(
               onTap: () {
@@ -141,15 +166,28 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
                         width: 190.0,
                         height: 190.0,
                         decoration: BoxDecoration(
-                          color: AppColors.primaryDark,
+                          color: AppColors.secondaryLight,
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         alignment: Alignment.center,
+                        child: CachedNetworkImage(
+                          imageUrl: urlImage,
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                              color: AppColors.primaryDark,
+                            ),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Expanded(
                         child: Center(
                           child: Text(
-                            "Aa",
+                            title,
                             softWrap: true,
                             maxLines: 3,
                             textAlign: TextAlign.center,
@@ -180,26 +218,43 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ],
         );
 
-    Widget _onGenerateSignItem() => GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 3 / 5,
-            crossAxisSpacing: 14.0,
-            mainAxisSpacing: 14.0,
-          ),
-          itemCount: 7,
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(() {
-                _popUpWidget = _popUpSignLanguage();
-                _visible = true;
-              });
-            },
-            child: _signItem(),
-          ),
-        );
+    Widget _onGenerateSignItem() => widget.dummyData.detailSignItemData == null
+        ? Padding(
+            padding: const EdgeInsets.only(top: 150.0),
+            child: Center(
+              child: Text(
+                "Sorry data on progress",
+                style: AppTextStyle.textLarge
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+            ),
+          )
+        : GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 3 / 5,
+              crossAxisSpacing: 14.0,
+              mainAxisSpacing: 14.0,
+            ),
+            itemCount: widget.dummyData.detailSignItemData?.length ?? 0,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                setState(() {
+                  _popUpWidget = _popUpSignLanguage(
+                    widget.dummyData.detailSignItemData![index].title,
+                    widget.dummyData.detailSignItemData![index].urlImage,
+                  );
+                  _visible = true;
+                });
+              },
+              child: _signItem(
+                widget.dummyData.detailSignItemData![index].urlImage,
+                widget.dummyData.detailSignItemData![index].title,
+              ),
+            ),
+          );
 
     return Stack(
       children: [
