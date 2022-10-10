@@ -61,9 +61,6 @@ dependencies:
   # For cache the image from network
   cached_network_image: ^3.2.0
 
-  # PLayer For play video from youtube
-  youtube_player_flutter: ^8.1.0
-
   # Youtube Player using iFrame
   youtube_player_iframe: ^3.1.0
 
@@ -87,6 +84,9 @@ dependencies:
 
   # Fetch meta data from youtube
   youtube_video_info: ^1.0.1
+
+  # For video playyer
+  video_player: ^2.4.7
 
 dev_dependencies:
   flutter_test:
