@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- Replace "343254889799245" with your Facebook App ID here. -->
+    <string name="facebook_app_id">365654035566090</string>
+</resources>

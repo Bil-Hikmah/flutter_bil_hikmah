@@ -6,7 +6,15 @@
    <application
         android:label="flutter_bil_hikmah"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
+        <!-- <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider[facebook_app_id]"
+            android:exported="false" /> -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
