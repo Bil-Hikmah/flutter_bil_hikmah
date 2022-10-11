@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
 import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/list_detail_sign_dummy.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/screen/detail_sign_language/section/pop_up_sign.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
@@ -103,121 +104,6 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ),
         );
 
-    Widget _actionPopUpSignLanguage() => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40.0,
-              height: 40.0,
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: AppColors.lightGreyLight.withOpacity(0.4),
-              ),
-              child: const Icon(
-                Icons.share_outlined,
-                color: Colors.white,
-                size: 24.0,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              "Bagikan",
-              style: AppTextStyle.textExtraLarge.copyWith(
-                color: Colors.white,
-              ),
-            )
-          ],
-        );
-
-    Widget _popUpSignLanguage(
-      String title,
-      String urlImage,
-    ) =>
-        Stack(
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _visible = false;
-                });
-              },
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: AppColors.darkGreyDark.withOpacity(0.75),
-                child: null,
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(24.0),
-                  width: 238.0,
-                  height: 350.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(38.0),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 190.0,
-                        height: 190.0,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryLight,
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        alignment: Alignment.center,
-                        child: CachedNetworkImage(
-                          imageUrl: urlImage,
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          progressIndicatorBuilder: (context, url, progress) =>
-                              Center(
-                            child: CircularProgressIndicator(
-                              value: progress.progress,
-                              color: AppColors.primaryDark,
-                            ),
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            title,
-                            softWrap: true,
-                            maxLines: 3,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.textExtraLarge.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      _actionPopUpSignLanguage(),
-                      _actionPopUpSignLanguage(),
-                      _actionPopUpSignLanguage(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-
     Widget _onGenerateSignItem() => widget.dummyData.detailSignItemData == null
         ? Padding(
             padding: const EdgeInsets.only(top: 150.0),
@@ -242,9 +128,14 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
             itemBuilder: (context, index) => InkWell(
               onTap: () {
                 setState(() {
-                  _popUpWidget = _popUpSignLanguage(
+                  _popUpWidget = PopUpSign(
                     widget.dummyData.detailSignItemData![index].title,
                     widget.dummyData.detailSignItemData![index].urlImage,
+                    () {
+                      setState(() {
+                        _visible = false;
+                      });
+                    },
                   );
                   _visible = true;
                 });
