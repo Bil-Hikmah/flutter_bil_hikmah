@@ -88,6 +88,15 @@ dependencies:
   # For video playyer
   video_player: ^2.4.7
 
+  # For take a ScreenShot
+  screenshot: ^1.2.3
+
+  # Fot save to galery
+  image_gallery_saver: ^1.7.1
+
+  # Social share
+  flutter_share_me: ^1.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
