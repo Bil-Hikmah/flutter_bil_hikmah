@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -69,19 +70,19 @@ extension ShareSocialTypeX on ShareSocialType {
 List<Map<String, Object>> shareSocialMedia = [
   {
     'title': ShareSocialType.twitter,
-    'icon': 'assets/icons/twitter.png',
+    'icon': UrlAsset.twitterIcon,
   },
   {
     'title': ShareSocialType.telegram,
-    'icon': 'assets/icons/telegram.png',
+    'icon': UrlAsset.telegramIcon,
   },
   {
     'title': ShareSocialType.whatsapp,
-    'icon': 'assets/icons/whatsapp.png',
+    'icon': UrlAsset.whatsappIcon,
   },
   {
     'title': ShareSocialType.more,
-    'icon': 'assets/icons/more.png',
+    'icon': UrlAsset.whatsappIcon,
   }
 ];
 
@@ -111,6 +112,7 @@ Widget bottomSheetContainer(
       itemBuilder: (context, index) {
         return itemBottomSheet(
           (shareSocialMedia[index]["title"] as ShareSocialType).title,
+          shareSocialMedia[index]["icon"] as String,
           () async {
             final FlutterShareMe shareMe = FlutterShareMe();
             await (shareSocialMedia[index]["title"] as ShareSocialType)
@@ -122,22 +124,32 @@ Widget bottomSheetContainer(
   );
 }
 
-Widget itemBottomSheet(String title, void Function() onTap) {
+Widget itemBottomSheet(
+  String title,
+  String imageUrl,
+  void Function() onTap,
+) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Expanded(
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.grey[200],
+      InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 40.0,
+          height: 40.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage(
+                imageUrl,
+              ),
+              fit: BoxFit.cover,
             ),
+            color: Colors.white,
           ),
         ),
       ),
-      const SizedBox(height: 4.0),
+      const Expanded(child: SizedBox()),
       Text(title),
     ],
   );

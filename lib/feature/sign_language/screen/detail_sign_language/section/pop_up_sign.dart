@@ -20,6 +20,8 @@ extension ActionX on Action {
         return "Bagikan";
     }
   }
+
+  bool get isScreenshot => this == Action.screenShot;
 }
 
 class PopUpSign extends StatelessWidget {
@@ -85,8 +87,8 @@ class PopUpSign extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   color: AppColors.lightGreyLight.withOpacity(0.4),
                 ),
-                child: const Icon(
-                  Icons.share_outlined,
+                child: Icon(
+                  action.isScreenshot ? Icons.download : Icons.share_outlined,
                   color: Colors.white,
                   size: 24.0,
                 ),

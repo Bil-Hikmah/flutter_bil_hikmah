@@ -43,4 +43,7 @@ class UrlAsset {
   static const String quran = "$_baseUrlIcons/quran.svg";
   static const String profile = "$_baseUrlIcons/profile.svg";
   static const String bismillah = "$_baseUrlIcons/bismillah.svg";
+  static const String whatsappIcon = "$_baseUrlIcons/whatsapp_icon.png";
+  static const String twitterIcon = "$_baseUrlIcons/twitter_icon.png";
+  static const String telegramIcon = "$_baseUrlIcons/telegram_icon.png";
 }
