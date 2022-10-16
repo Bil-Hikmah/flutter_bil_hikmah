@@ -4,6 +4,7 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.da
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:flutter_bil_hikmah/widget/field/bottom_sheet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:api_exception/exception.dart';
@@ -76,7 +77,11 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
           ],
         );
 
-    Widget _videSocialshare(double rate) => Row(
+    Widget _videSocialshare(
+      double rate, {
+      required void Function() onShare,
+    }) =>
+        Row(
           children: [
             Expanded(
               child: Text(
@@ -101,17 +106,27 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
               ),
             ),
             const SizedBox(width: 24.0),
-            const Icon(
-              Icons.share,
-              color: AppColors.primaryDark,
-              size: 21.0,
+            InkWell(
+              onTap: () {
+                onShare();
+              },
+              child: const Icon(
+                Icons.share,
+                color: AppColors.primaryDark,
+                size: 21.0,
+              ),
             ),
             const SizedBox(width: 6.0),
-            Text(
-              "Share",
-              style: AppTextStyle.textSmall.copyWith(
-                color: AppColors.darkGreyLight,
-                fontWeight: FontWeight.w500,
+            InkWell(
+              onTap: () {
+                onShare();
+              },
+              child: Text(
+                "Share",
+                style: AppTextStyle.textSmall.copyWith(
+                  color: AppColors.darkGreyLight,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],
@@ -141,6 +156,12 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
                 state.status.isLoading
                     ? 0
                     : state.youtubeDataModel?.averageRating ?? 0,
+                onShare: () async {
+                  showShareBottomSheet(
+                    context,
+                    await widget.controller.videoUrl,
+                  );
+                },
               ),
             ],
           ),

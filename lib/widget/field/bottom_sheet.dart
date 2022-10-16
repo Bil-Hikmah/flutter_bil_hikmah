@@ -4,7 +4,8 @@ import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:screenshot/screenshot.dart';
 
 Future<T?> showShareBottomSheet<T>(
-  BuildContext context, {
+  BuildContext context,
+  String message, {
   ScreenshotController? screenshotController,
 }) {
   return showModalBottomSheet<T>(
@@ -19,6 +20,7 @@ Future<T?> showShareBottomSheet<T>(
     builder: (BuildContext context) {
       return bottomSheetContainer(
         context,
+        message,
       );
     },
   );
@@ -45,23 +47,26 @@ extension ShareSocialTypeX on ShareSocialType {
     }
   }
 
-  Future<void> onTap(FlutterShareMe shareMe) async {
+  Future<void> onTap(
+    FlutterShareMe shareMe,
+    String message,
+  ) async {
     switch (this) {
       case ShareSocialType.whatsapp:
         return shareMe
-            .shareToWhatsApp(msg: "Hello")
+            .shareToWhatsApp(msg: message)
             .then((value) => debugPrint(value));
       case ShareSocialType.twitter:
         return shareMe
-            .shareToTwitter(msg: "Hello")
+            .shareToTwitter(msg: message)
             .then((value) => debugPrint(value));
       case ShareSocialType.telegram:
         return shareMe
-            .shareToTelegram(msg: "Hello")
+            .shareToTelegram(msg: message)
             .then((value) => debugPrint(value));
       case ShareSocialType.more:
         return shareMe
-            .shareToSystem(msg: "Hello")
+            .shareToSystem(msg: message)
             .then((value) => debugPrint(value));
     }
   }
@@ -88,6 +93,7 @@ List<Map<String, Object>> shareSocialMedia = [
 
 Widget bottomSheetContainer(
   BuildContext context,
+  String message,
 ) {
   return Container(
     height: MediaQuery.of(context).size.height * 0.20,
@@ -115,8 +121,10 @@ Widget bottomSheetContainer(
           shareSocialMedia[index]["icon"] as String,
           () async {
             final FlutterShareMe shareMe = FlutterShareMe();
-            await (shareSocialMedia[index]["title"] as ShareSocialType)
-                .onTap(shareMe);
+            await (shareSocialMedia[index]["title"] as ShareSocialType).onTap(
+              shareMe,
+              message,
+            );
           },
         );
       },

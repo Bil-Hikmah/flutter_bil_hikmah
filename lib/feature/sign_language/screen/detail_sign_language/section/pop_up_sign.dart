@@ -47,6 +47,7 @@ class PopUpSign extends StatelessWidget {
                   case Action.share:
                     showShareBottomSheet(
                       context,
+                      "Hello",
                       screenshotController: screenshotController,
                     );
                     break;
@@ -74,6 +75,7 @@ class PopUpSign extends StatelessWidget {
                   default:
                     showShareBottomSheet(
                       context,
+                      "Hello",
                       screenshotController: screenshotController,
                     );
                     break;
