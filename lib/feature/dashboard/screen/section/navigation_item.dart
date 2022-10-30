@@ -20,13 +20,14 @@ class NavigationItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: callback,
-            iconSize: 24.0,
-            icon: SvgPicture.asset(
-              svgSource,
-              color: active ? AppColors.primaryDark : AppColors.lightGreyMedium,
-            )),
+          padding: EdgeInsets.zero,
+          onPressed: callback,
+          iconSize: 24.0,
+          icon: SvgPicture.asset(
+            svgSource,
+            color: active ? AppColors.primaryDark : AppColors.lightGreyMedium,
+          ),
+        ),
         Text(
           label,
           style: AppTextStyle.textExtraSmall.copyWith(
