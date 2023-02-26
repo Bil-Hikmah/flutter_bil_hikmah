@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "391048146526-v8g4nr3tv7q6p9couu17kk1qgpke1fpo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_bil_hikmah",
+            "certificate_hash": "323b25caf04ca427e93b7884ecdcdb6c5df67225"
+          }
+        },
+        {
           "client_id": "391048146526-ckemnnp0gf4k6mjl544mqj9mj3hgu7kn.apps.googleusercontent.com",
           "client_type": 3
         }
