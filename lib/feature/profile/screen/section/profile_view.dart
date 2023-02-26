@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/login/logic/login_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/profile/domain/model/profile_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bil_hikmah/widget/button/default_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -158,7 +161,10 @@ class _ProfileViewState extends State<ProfileView> {
               Icons.logout_rounded,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.read<LoginCubit>().signOutGoogle();
+              context.read<AuthenticationCubit>().signOut();
+            },
           )
         ],
       ),
