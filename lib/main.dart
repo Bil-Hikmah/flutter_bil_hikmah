@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/provider/app_bloc_provider.dart';
 import 'package:flutter_bil_hikmah/config/routes/route_handler.dart';
+import 'package:flutter_bil_hikmah/config/routes/route_name.dart';
+import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
+import 'package:flutter_bil_hikmah/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io' as dart_io;
 
@@ -15,12 +19,24 @@ class MyHttpOverrides extends dart_io.HttpOverrides {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   dart_io.HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +47,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: RouteHandler.generateRoute,
         initialRoute: RouteHandler.initialRoute,
         debugShowCheckedModeBanner: false,
+        navigatorKey: _navigatorKey,
         theme: ThemeData(
           useMaterial3: true,
           pageTransitionsTheme: const PageTransitionsTheme(
@@ -39,6 +56,28 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
+        builder: (contextMain, child) {
+          return BlocListener<AuthenticationCubit, AuthenticationState>(
+            listener: ((contet, state) {
+              switch (state.status) {
+                case AuthenticationStatus.authenticated:
+                  _navigator.pushNamedAndRemoveUntil(
+                      Routes.dashboard, (route) => false);
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  _navigator.pushNamedAndRemoveUntil(
+                      Routes.onboarding, (route) => false);
+                  break;
+                case AuthenticationStatus.unknown:
+                  _navigator.pushNamedAndRemoveUntil(
+                      Routes.onboarding, (route) => false);
+                  break;
+                default:
+              }
+            }),
+            child: child,
+          );
+        },
       ),
     );
   }
