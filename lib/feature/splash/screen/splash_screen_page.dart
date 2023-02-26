@@ -29,11 +29,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               ),
             );
         }
-        if (state.status.isSuccess) {
-          Timer(const Duration(milliseconds: 1500), () {
-            Navigator.pushReplacementNamed(context, Routes.onboarding);
-          });
-        }
       },
       builder: (context, state) {
         return Scaffold(
