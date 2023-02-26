@@ -97,6 +97,18 @@ dependencies:
   # Social share
   flutter_share_me: ^1.4.0
 
+  # Firestore
+  cloud_firestore: ^3.1.9
+
+  # Firebase core for init firebase in this app
+  firebase_core: ^1.12.0
+
+  # Google authentication
+  firebase_auth: ^3.3.8
+
+  # Google sign in
+  google_sign_in: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
