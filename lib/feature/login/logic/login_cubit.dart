@@ -10,23 +10,29 @@ class LoginCubit extends Cubit<LoginState> {
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  Future<void> signInWithGoogle() async {
+    emit(state.copyWith(status: LoginStatus.loading));
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    // Once signed in, return the UserCredential
+      // Once signed in, return the UserCredential
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      return await FirebaseAuth.instance.signInWithCredential(credential).then(
+        (user) {
+          emit(state.copyWith(status: LoginStatus.success));
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(status: LoginStatus.failure));
+    }
   }
 
   Future<void> signOutGoogle() async {
