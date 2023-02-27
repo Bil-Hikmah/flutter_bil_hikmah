@@ -109,6 +109,9 @@ dependencies:
   # Google sign in
   google_sign_in: ^5.1.0
 
+  # Progress Indicator
+  flutter_progress_hud: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
