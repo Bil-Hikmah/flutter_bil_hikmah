@@ -1,8 +1,7 @@
 import 'package:api_exception/exception.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_repository.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_video_info/youtube_video_info.dart';
 
@@ -16,13 +15,11 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
   Future<void> onInit() async {
     emit(state.copyWith(status: VideoDakwahStatus.loading));
     try {
-      final videoGenre = await _repository.getGenreVideo();
-
-      final videoItem = await _repository.onGetVideoItem(null);
+      final videoDakwahItem = await _repository.onGetVideoDakwah();
       emit(state.copyWith(
         status: VideoDakwahStatus.success,
-        videoGenreData: videoGenre,
-        videoDakwahItem: videoItem,
+        videoDakwahTemp: videoDakwahItem,
+        videoDakwahItem: videoDakwahItem,
       ));
     } on AppException catch (e) {
       emit(state.copyWith(
@@ -32,13 +29,19 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
     }
   }
 
-  Future<void> onGetVideoGenre(int idTypeVideo) async {
-    emit(state.copyWith(status: VideoDakwahStatus.loadingVideo));
+  Future<void> onGetVideoWithGenre(String genre) async {
+    emit(state.copyWith(status: VideoDakwahStatus.loadingGenre));
     try {
-      final response = await _repository.onGetVideoItem(idTypeVideo);
+      final List<VideoDakwahModels> videoDakwahItem;
+      if (genre == "semua") {
+        videoDakwahItem = await _repository.onGetVideoDakwah();
+      } else {
+        videoDakwahItem = await _repository.onGetVideoDakwahWithGenre(genre);
+      }
+
       emit(state.copyWith(
         status: VideoDakwahStatus.success,
-        videoDakwahItem: response,
+        videoDakwahItem: videoDakwahItem,
       ));
     } on AppException catch (e) {
       emit(state.copyWith(
@@ -62,6 +65,27 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
         exception: UnknownException(
           message: e.toString(),
         ),
+      ));
+    }
+  }
+
+  Future<void> onGetVideoWithSearch(String keyword) async {
+    emit(state.copyWith(status: VideoDakwahStatus.loadingSearch));
+    try {
+      final videoDakwahItem = state.videoDakwahTemp!.where((element) {
+        final title = element.title.toLowerCase();
+        final search = keyword.toLowerCase();
+        return title.contains(search);
+      }).toList();
+
+      emit(state.copyWith(
+        status: VideoDakwahStatus.success,
+        videoDakwahItem: videoDakwahItem,
+      ));
+    } on AppException catch (e) {
+      emit(state.copyWith(
+        status: VideoDakwahStatus.failure,
+        exception: e,
       ));
     }
   }

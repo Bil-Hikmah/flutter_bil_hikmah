@@ -5,6 +5,7 @@ enum VideoDakwahStatus {
   loading,
   loadingGenre,
   loadingVideo,
+  loadingSearch,
   loadingMetaData,
   success,
   failure,
@@ -15,6 +16,7 @@ extension VideoDakwahStatusX on VideoDakwahStatus {
   bool get isLoading => this == VideoDakwahStatus.loading;
   bool get isLoadingGenre => this == VideoDakwahStatus.loadingGenre;
   bool get isLoadingVideo => this == VideoDakwahStatus.loadingVideo;
+  bool get isLoadingSearch => this == VideoDakwahStatus.loadingSearch;
   bool get isLoadingMetaData => this == VideoDakwahStatus.loadingMetaData;
   bool get isSuccess => this == VideoDakwahStatus.success;
   bool get isFailure => this == VideoDakwahStatus.failure;
@@ -24,29 +26,29 @@ class VideoDakwahState extends Equatable {
   const VideoDakwahState({
     this.status = VideoDakwahStatus.initial,
     this.exception,
-    this.videoGenreData,
     this.videoDakwahItem,
+    this.videoDakwahTemp,
     this.youtubeDataModel,
   });
 
   final VideoDakwahStatus status;
   final AppException? exception;
-  final List<VideoTypesData>? videoGenreData;
-  final List<VideoItemData>? videoDakwahItem;
+  final List<VideoDakwahModels>? videoDakwahItem;
+  final List<VideoDakwahModels>? videoDakwahTemp;
   final YoutubeDataModel? youtubeDataModel;
 
   VideoDakwahState copyWith({
     VideoDakwahStatus? status,
     AppException? exception,
-    List<VideoTypesData>? videoGenreData,
-    List<VideoItemData>? videoDakwahItem,
+    List<VideoDakwahModels>? videoDakwahItem,
+    List<VideoDakwahModels>? videoDakwahTemp,
     YoutubeDataModel? youtubeDataModel,
   }) {
     return VideoDakwahState(
       status: status ?? this.status,
       exception: exception ?? this.exception,
-      videoGenreData: videoGenreData ?? this.videoGenreData,
       videoDakwahItem: videoDakwahItem ?? this.videoDakwahItem,
+      videoDakwahTemp: videoDakwahTemp ?? this.videoDakwahTemp,
       youtubeDataModel: youtubeDataModel ?? this.youtubeDataModel,
     );
   }
@@ -55,8 +57,8 @@ class VideoDakwahState extends Equatable {
   List<Object?> get props => [
         status,
         exception,
-        videoGenreData,
         videoDakwahItem,
+        videoDakwahTemp,
         youtubeDataModel,
       ];
 }
