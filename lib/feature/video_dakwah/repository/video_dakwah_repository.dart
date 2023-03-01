@@ -1,11 +1,9 @@
-import 'package:api_exception/exception.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_service.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 
 abstract class VideoDakwahRepository {
-  Future<List<VideoTypesData>> getGenreVideo();
-  Future<List<VideoItemData>> onGetVideoItem(int? idTypeVideo);
+  Future<List<VideoDakwahModels>> onGetVideoDakwah();
+  Future<List<VideoDakwahModels>> onGetVideoDakwahWithGenre(String genre);
 }
 
 class VideoDakwahRepositoryImpl implements VideoDakwahRepository {
@@ -14,29 +12,14 @@ class VideoDakwahRepositoryImpl implements VideoDakwahRepository {
   VideoDakwahRepositoryImpl(this._videoDakwahService);
 
   @override
-  Future<List<VideoTypesData>> getGenreVideo() async {
-    try {
-      return await _videoDakwahService.getVideoGenre();
-    } on AppException {
-      rethrow;
-    } catch (e) {
-      throw UnknownException(
-        message: e.toString(),
-      );
-    }
+  Future<List<VideoDakwahModels>> onGetVideoDakwah() async {
+    return await _videoDakwahService.onGetVideoDakwah();
   }
 
   @override
-  Future<List<VideoItemData>> onGetVideoItem(int? idTypeVideo) async {
-    try {
-      return await _videoDakwahService.onGetVideoItem(idTypeVideo);
-    } on AppException {
-      rethrow;
-    } catch (e) {
-      throw UnknownException(
-        message: e.toString(),
-      );
-    }
+  Future<List<VideoDakwahModels>> onGetVideoDakwahWithGenre(
+      String genre) async {
+    return await _videoDakwahService.onGetVideoDakwahWithGenre(genre);
   }
 
   factory VideoDakwahRepositoryImpl.create() {

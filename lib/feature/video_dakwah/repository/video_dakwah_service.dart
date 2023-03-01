@@ -1,55 +1,48 @@
 import 'package:api_exception/api_exception.dart';
-import 'package:flutter_bil_hikmah/common/endpoint/app_endpoint.dart';
-import 'package:flutter_bil_hikmah/common/misc/injection.dart';
-import 'package:flutter_bil_hikmah/common/network/http_client.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
+import 'package:flutter_bil_hikmah/common/network/firebase_service.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 
 abstract class VideoDakwahService {
-  Future<List<VideoTypesData>> getVideoGenre();
-  Future<List<VideoItemData>> onGetVideoItem(int? idTypeVideo);
+  Future<List<VideoDakwahModels>> onGetVideoDakwah();
+  Future<List<VideoDakwahModels>> onGetVideoDakwahWithGenre(String genre);
 }
 
 class VideoDakwahServiceImpl implements VideoDakwahService {
-  final HttpClient _httpClient;
-  final AppEndpoint _appEndpoint;
+  final FirebaseService firebaseService;
 
-  VideoDakwahServiceImpl(this._httpClient, this._appEndpoint);
+  VideoDakwahServiceImpl(
+    this.firebaseService,
+  );
 
   @override
-  Future<List<VideoTypesData>> getVideoGenre() async {
+  Future<List<VideoDakwahModels>> onGetVideoDakwah() async {
     try {
-      final url = _appEndpoint.getVideoGenre();
-      final response = await _httpClient.get(url, {});
-      ExceptionHandling.handelAPIError(
-        desireStatusCode: 200,
-        response: response,
-      );
-      return VideoTypes.fromJson(response.body).data;
-    } on AppException {
-      rethrow;
+      final response = await firebaseService.getAllDocument();
+      return response!
+          .map((e) => VideoDakwahModels.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      throw UnknownException(message: e.toString());
     }
   }
 
   @override
-  Future<List<VideoItemData>> onGetVideoItem(int? idTypeVideo) async {
+  Future<List<VideoDakwahModels>> onGetVideoDakwahWithGenre(
+      String genre) async {
     try {
-      final url = _appEndpoint.getVideo(idTypeVideo);
-      final response = await _httpClient.get(url, {});
-      ExceptionHandling.handelAPIError(
-        desireStatusCode: 200,
-        response: response,
-      );
-      return VideoItem.fromJson(response.body).data;
-    } on AppException {
-      rethrow;
+      final response =
+          await firebaseService.getDocumentFilteredWhere("genre", genre);
+      return response!
+          .map((e) => VideoDakwahModels.fromJson(e.data()))
+          .toList();
+    } catch (e) {
+      throw UnknownException(message: e.toString());
     }
   }
 
   factory VideoDakwahServiceImpl.create() {
     return VideoDakwahServiceImpl(
-      Injection.httpClient,
-      Injection.endpoint,
+      FirebaseServiceImplementation.create("video_dakwah"),
     );
   }
 }
