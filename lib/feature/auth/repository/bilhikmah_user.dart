@@ -15,9 +15,9 @@ class BilhikmahUser {
 
   factory BilhikmahUser.fromJson(Map<String, dynamic> json) {
     return BilhikmahUser(
-      displayName: json['displayName'],
+      displayName: json['display_name'],
       email: json['email'],
-      userName: json['userName'],
+      userName: json['user_name'],
       phoneNumber: json['phone_number'],
       avatarURL: json['avatar_url'],
     );
@@ -25,9 +25,9 @@ class BilhikmahUser {
 
   Map<String, dynamic> toJson() {
     return {
-      'displayName': displayName,
+      'display_name': displayName,
       'email': email,
-      'userName': userName,
+      'user_name': userName,
       "phone_number": phoneNumber,
       "avatar_url": avatarURL,
     };
