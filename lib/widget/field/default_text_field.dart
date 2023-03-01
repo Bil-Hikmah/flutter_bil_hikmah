@@ -22,6 +22,7 @@ class DefaultTextField extends StatelessWidget {
   final bool readOnly;
   final bool needAutoValidate;
   final int maxLines;
+  final Function(String)? onSubmitedValue;
 
   const DefaultTextField({
     Key? key,
@@ -43,6 +44,7 @@ class DefaultTextField extends StatelessWidget {
     this.readOnly = false,
     this.needAutoValidate = false,
     this.maxLines = 1,
+    this.onSubmitedValue,
   }) : super(key: key);
 
   // listInputType
@@ -83,6 +85,7 @@ class DefaultTextField extends StatelessWidget {
       readOnly: readOnly,
       controller: controller,
       onChanged: onChanged ?? (value) {},
+      onFieldSubmitted: onSubmitedValue,
       textAlign: alignRight ? TextAlign.end : TextAlign.start,
       cursorColor: AppColors.primaryDark,
       initialValue: initialText,
@@ -94,11 +97,15 @@ class DefaultTextField extends StatelessWidget {
       autovalidateMode: needAutoValidate ? AutovalidateMode.always : null,
       decoration: InputDecoration(
         focusColor: AppColors.primaryDark,
-        fillColor: AppColors.lightGreyDark,
-        filled: false,
+        fillColor: AppColors.lightGreyDark.withOpacity(0.7),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: Colors.white),
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: const BorderSide(color: AppColors.darkGreyLight),
+          borderSide: const BorderSide(color: AppColors.primaryDark),
         ),
         hintText: hintText,
         hintStyle: AppTextStyle.textSmall.copyWith(
@@ -112,12 +119,6 @@ class DefaultTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(16),
         suffixIcon: suffixWidget,
         suffixIconConstraints: suffixConstraints,
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.white,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-        ),
       ),
       maxLength: maxLength,
       validator: validator,
