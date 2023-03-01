@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_detail.dart/video_dakwah_detail_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -16,13 +17,13 @@ class VideoDakwahDetailPage extends StatelessWidget {
   }) : super(key: key);
 
   final String initVideoUrl;
-  final VideoItemData singleData;
-  final List<VideoItemData> data;
+  final VideoDakwahModels singleData;
+  final List<VideoDakwahModels> data;
 
   static Route route(
     String initVideoUrl,
-    VideoItemData singleData,
-    List<VideoItemData> data,
+    VideoDakwahModels singleData,
+    List<VideoDakwahModels> data,
   ) {
     return MaterialPageRoute(
       builder: (context) => VideoDakwahDetailPage(

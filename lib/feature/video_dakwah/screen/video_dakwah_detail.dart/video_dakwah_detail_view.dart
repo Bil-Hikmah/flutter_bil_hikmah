@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -20,8 +21,8 @@ class VideoDakwahDetailView extends StatefulWidget {
 
   final Widget player;
   final YoutubePlayerController controller;
-  final VideoItemData singleData;
-  final List<VideoItemData> data;
+  final VideoDakwahModels singleData;
+  final List<VideoDakwahModels> data;
 
   @override
   State<VideoDakwahDetailView> createState() => _VideoDakwahDetailViewState();
@@ -33,8 +34,8 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
 
   @override
   void initState() {
-    category = widget.singleData.titleCategory;
-    createdAt = widget.singleData.createdAt;
+    category = widget.singleData.genre;
+    createdAt = widget.singleData.dateCreated;
     super.initState();
   }
 
@@ -180,10 +181,10 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
 
     final _buildListVideo = ListVideoItem(
       widget.data,
-      (VideoItemData item) {
+      (VideoDakwahModels item) {
         // Todo : open video detail
-        widget.controller.loadVideo(item.videoUrl);
-        context.read<VideoDakwahCubit>().onGetYouTubeMetaData(item.videoUrl);
+        widget.controller.loadVideo(item.videoURL);
+        context.read<VideoDakwahCubit>().onGetYouTubeMetaData(item.videoURL);
       },
     );
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/common/repository/dakwah_genre.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_genre_response.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/genre_video.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/list_video_item.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_detail.dart/video_dakwah_detail_page.dart';
@@ -11,21 +11,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoDakwahView extends StatefulWidget {
   const VideoDakwahView(
-    this.needMoreUpperSpace,
-    this.videoGenreData, {
+    this.needMoreUpperSpace, {
     Key? key,
   }) : super(key: key);
 
   final bool needMoreUpperSpace;
-  final List<VideoTypesData> videoGenreData;
 
   @override
   State<VideoDakwahView> createState() => _VideoDakwahViewState();
 }
 
 class _VideoDakwahViewState extends State<VideoDakwahView> {
+  int currentIndex = 0;
   final TextEditingController _searchController = TextEditingController();
-  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +32,27 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
       child: DefaultTextField(
         hintText: "Search something ....",
         controller: _searchController,
+        suffixWidget: GestureDetector(
+            onTap: () {
+              currentIndex = 0;
+              context
+                  .read<VideoDakwahCubit>()
+                  .onGetVideoWithSearch(_searchController.text);
+              _searchController.clear();
+            },
+            child: const Icon(Icons.search, color: AppColors.primaryDark)),
         validator: (String? value) {
           if (value == null || value.isEmpty) {
             return "Please fill this field";
           }
           return null;
+        },
+        onSubmitedValue: (String? value) {
+          if (value != null) {
+            currentIndex = 0;
+            context.read<VideoDakwahCubit>().onGetVideoWithSearch(value);
+            _searchController.clear();
+          }
         },
       ),
     );
@@ -46,28 +60,26 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
     final _buildGendreVideo = SizedBox(
       height: 46.0,
       child: GenreVideo(
-        _currentIndex,
-        widget.videoGenreData,
+        currentIndex,
+        stringGenre,
         (int index) {
+          if (currentIndex == index) return;
           setState(() {
-            if (_currentIndex == index) {
-              _currentIndex = 0;
-              context.read<VideoDakwahCubit>().onGetVideoGenre(0);
-            } else {
-              _currentIndex = index;
-              context.read<VideoDakwahCubit>().onGetVideoGenre(index);
-            }
+            currentIndex = index;
+            context
+                .read<VideoDakwahCubit>()
+                .onGetVideoWithGenre(stringGenre[currentIndex - 1]);
           });
         },
       ),
     );
 
-    Widget _buildListVideo(List<VideoItemData> data) => ListVideoItem(
+    Widget _buildListVideo(List<VideoDakwahModels> data) => ListVideoItem(
           data,
-          (VideoItemData item) {
+          (VideoDakwahModels item) {
             // Todo : open video detail
             Navigator.of(context).push(VideoDakwahDetailPage.route(
-              item.videoUrl,
+              item.videoURL,
               item,
               data,
             ));
@@ -87,7 +99,9 @@ class _VideoDakwahViewState extends State<VideoDakwahView> {
               const SizedBox(height: 12.0),
               _buildGendreVideo,
               const SizedBox(height: 24.0),
-              state.status.isLoadingVideo || state.status.isFailure
+              state.status.isLoadingVideo ||
+                      state.status.isFailure ||
+                      state.status.isLoadingGenre
                   ? const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.primaryDark,

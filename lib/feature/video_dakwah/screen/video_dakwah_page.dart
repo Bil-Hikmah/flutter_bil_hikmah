@@ -49,7 +49,6 @@ class VideoDakwahPage extends StatelessWidget {
                     )
                   : VideoDakwahView(
                       needAppBar ? false : true,
-                      state.videoGenreData!,
                     ),
             ),
           );
