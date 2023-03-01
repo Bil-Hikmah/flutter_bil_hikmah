@@ -11,3 +11,7 @@ extension NumberFormater on int {
 extension DateTimeFormater on DateTime {
   String get formatDate => DateFormat("dd MMMM yyyy").format(this);
 }
+
+extension GetVideoThumbnail on String {
+  String get getVideoThumbnail => "https://img.youtube.com/vi/$this/0.jpg";
+}
