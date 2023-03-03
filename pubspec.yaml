@@ -111,6 +111,10 @@ dependencies:
 
   # Progress Indicator
   flutter_progress_hud: ^2.0.2
+  firebase_storage: ^10.3.11
+
+  # Permission handler
+  permission_handler: ^9.0.2
 
 dev_dependencies:
   flutter_test:
