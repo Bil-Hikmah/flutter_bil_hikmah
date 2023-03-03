@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/list_sign_dummy.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/sign_language_response.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/logic/cubit/sign_language_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/sign_language/screen/detail_sign_language/detail_sign_language_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class SignLanguageView extends StatefulWidget {
-  const SignLanguageView({Key? key}) : super(key: key);
+  const SignLanguageView(this.state, {Key? key}) : super(key: key);
+
+  final SignLanguageState state;
 
   @override
   State<SignLanguageView> createState() => _SignLanguageViewState();
@@ -16,13 +19,13 @@ class _SignLanguageViewState extends State<SignLanguageView> {
   Widget build(BuildContext context) {
     Widget _singLanguageContainerItem(
       String title,
-      int id,
+      List<SignLanguageDetail> data,
     ) =>
         InkWell(
           onTap: () {
             Navigator.of(context).push(DetailSignLanguagePage.route(
               title,
-              id,
+              data,
             ));
           },
           child: Container(
@@ -58,18 +61,19 @@ class _SignLanguageViewState extends State<SignLanguageView> {
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      itemCount: listSignItemDummy.length,
+      itemCount: widget.state.signLanguageResponse.length,
       itemBuilder: (context, index) {
         return index == 0
             ? Padding(
                 padding: const EdgeInsets.only(top: 24.0),
                 child: _singLanguageContainerItem(
-                    listSignItemDummy[index].title,
-                    listSignItemDummy[index].id),
+                  widget.state.signLanguageResponse[index].name,
+                  widget.state.signLanguageResponse[index].details,
+                ),
               )
             : _singLanguageContainerItem(
-                listSignItemDummy[index].title,
-                listSignItemDummy[index].id,
+                widget.state.signLanguageResponse[index].name,
+                widget.state.signLanguageResponse[index].details,
               );
       },
     );

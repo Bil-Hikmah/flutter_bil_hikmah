@@ -56,7 +56,7 @@ class PopUpSign extends StatelessWidget {
                       ImageGallerySaver.saveImage(
                         image!,
                         quality: 100,
-                        name: 'Coinsleek',
+                        name: 'Coinsleek-123',
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -134,27 +134,30 @@ class PopUpSign extends StatelessWidget {
                 children: [
                   Screenshot(
                     controller: screenshotController,
-                    child: Container(
-                      width: 190.0,
-                      height: 190.0,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryLight,
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: CachedNetworkImage(
-                        imageUrl: urlImage,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        progressIndicatorBuilder: (context, url, progress) =>
-                            Center(
-                          child: CircularProgressIndicator(
-                            value: progress.progress,
-                            color: AppColors.primaryDark,
+                    child: CachedNetworkImage(
+                      imageUrl: urlImage,
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 190.0,
+                        height: 190.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                          color: AppColors.secondaryLight,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        fit: BoxFit.cover,
                       ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                          color: AppColors.primaryDark,
+                        ),
+                      ),
+                      fit: BoxFit.cover,
                     ),
                   ),
                   Expanded(

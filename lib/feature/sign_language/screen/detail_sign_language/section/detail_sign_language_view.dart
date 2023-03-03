@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
-import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/list_detail_sign_dummy.dart';
+import 'package:flutter_bil_hikmah/feature/sign_language/domain/models/sign_language_response.dart';
 import 'package:flutter_bil_hikmah/feature/sign_language/screen/detail_sign_language/section/pop_up_sign.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 
 class DetailSignLangugeView extends StatefulWidget {
-  const DetailSignLangugeView(this.headerTitle, this.dummyData, {Key? key})
+  const DetailSignLangugeView(this.headerTitle, this.data, {Key? key})
       : super(key: key);
 
   final String headerTitle;
-  final DetailSignDummy dummyData;
+  final List<SignLanguageDetail> data;
 
   @override
   State<DetailSignLangugeView> createState() => _DetailSignLangugeViewState();
@@ -66,24 +66,26 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: BoxDecoration(
-                  color: AppColors.lightGreyMedium,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                alignment: Alignment.center,
-                child: CachedNetworkImage(
-                  imageUrl: urlImage,
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  progressIndicatorBuilder: (context, url, progress) => Center(
-                    child: CircularProgressIndicator(
-                      value: progress.progress,
-                      color: AppColors.primaryDark,
+              CachedNetworkImage(
+                imageUrl: urlImage,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.0),
+                    color: AppColors.lightGreyMedium,
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  fit: BoxFit.cover,
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                    color: AppColors.primaryDark,
+                  ),
                 ),
               ),
               Expanded(
@@ -104,7 +106,7 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
           ),
         );
 
-    Widget _onGenerateSignItem() => widget.dummyData.detailSignItemData == null
+    Widget _onGenerateSignItem() => widget.data.isEmpty
         ? Padding(
             padding: const EdgeInsets.only(top: 150.0),
             child: Center(
@@ -124,13 +126,13 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
               crossAxisSpacing: 14.0,
               mainAxisSpacing: 14.0,
             ),
-            itemCount: widget.dummyData.detailSignItemData?.length ?? 0,
+            itemCount: widget.data.length,
             itemBuilder: (context, index) => InkWell(
               onTap: () {
                 setState(() {
                   _popUpWidget = PopUpSign(
-                    widget.dummyData.detailSignItemData![index].title,
-                    widget.dummyData.detailSignItemData![index].urlImage,
+                    widget.data[index].title,
+                    widget.data[index].imageURL,
                     () {
                       setState(() {
                         _visible = false;
@@ -141,8 +143,8 @@ class _DetailSignLangugeViewState extends State<DetailSignLangugeView> {
                 });
               },
               child: _signItem(
-                widget.dummyData.detailSignItemData![index].urlImage,
-                widget.dummyData.detailSignItemData![index].title,
+                widget.data[index].imageURL,
+                widget.data[index].title,
               ),
             ),
           );
