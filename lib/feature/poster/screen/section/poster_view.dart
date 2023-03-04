@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_genre_dummy.dart';
-import 'package:flutter_bil_hikmah/feature/poster/domain/model/poster_item_dummy.dart';
+import 'package:flutter_bil_hikmah/feature/poster/logic/poster_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/detail_poster/detail_poster_page.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/section/poster_genre_item.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 
 class PosterView extends StatefulWidget {
-  const PosterView({Key? key}) : super(key: key);
+  const PosterView(this.state, {Key? key}) : super(key: key);
+
+  final PosterState state;
 
   @override
   State<PosterView> createState() => _PosterViewState();
@@ -57,16 +59,16 @@ class _PosterViewState extends State<PosterView> {
         mainAxisSpacing: 20.0,
         childAspectRatio: 3 / 4,
       ),
-      itemCount: posterItemDummy.length,
+      itemCount: widget.state.poster.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Navigator.of(context)
-                .push(DetailPosterPage.route(posterItemDummy[index].urlImage));
+            Navigator.of(context).push(
+                DetailPosterPage.route(widget.state.poster[index].imageURL));
           },
-          child: _poster(posterItemDummy[index].urlImage),
+          child: _poster(widget.state.poster[index].imageURL),
         );
       },
     );
