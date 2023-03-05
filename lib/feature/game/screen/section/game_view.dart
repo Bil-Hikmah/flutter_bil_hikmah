@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/game/domain/model/game_response.dart';
+import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/game_detail/game_detail_page.dart';
-import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GameView extends StatefulWidget {
   const GameView(this.gameItem, {Key? key}) : super(key: key);
 
-  final List<Map<String, dynamic>>? gameItem;
+  final List<Game> gameItem;
 
   @override
   State<GameView> createState() => _GameViewState();
@@ -20,22 +22,34 @@ class _GameViewState extends State<GameView> {
   Widget build(BuildContext context) {
     Widget _cardGame(
       String title,
-      int idGame,
       int level,
-      int currentLevel,
+      Game game,
     ) {
       return GestureDetector(
         onTap: () {
-          context.read<InitAppCubit>().onGetDetailItem(idGame).then(
-                (value) => Navigator.of(context).push(
-                  GameDetailPage.route(
+          final int? currentLevel =
+              BlocProvider.of<AuthenticationCubit>(context)
+                  .state
+                  .user!
+                  .currentStatusGame[title];
+          if (currentLevel == null) {
+            BlocProvider.of<AuthenticationCubit>(context)
+                .updateUserGameData(title, 0);
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (newContext) {
+                return BlocProvider.value(
+                  value: BlocProvider.of<GameCubit>(context),
+                  child: GameDetailPage(
                     title,
-                    idGame,
-                    currentLevel,
-                    context.read<InitAppCubit>().state.database!,
+                    currentLevel ?? 0,
+                    game,
                   ),
-                ),
-              );
+                );
+              },
+            ),
+          );
         },
         child: Container(
           height: 164.0,
@@ -116,13 +130,12 @@ class _GameViewState extends State<GameView> {
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      itemCount: widget.gameItem?.length ?? 0,
+      itemCount: widget.gameItem.length,
       itemBuilder: (context, index) {
         return _cardGame(
-          widget.gameItem![index]["name"],
-          widget.gameItem![index]["id"],
-          widget.gameItem![index]["totalLevel"],
-          widget.gameItem![index]["currentLevel"],
+          widget.gameItem[index].name,
+          widget.gameItem[index].questions.length,
+          widget.gameItem[index],
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/section/game_view.dart';
 import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
@@ -24,21 +25,32 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<InitAppCubit, InitAppState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: defaultAppBar(
-            context: context,
-            title: "Game Edukasi",
-          ),
-          body: state.status.isLoading || state.status.isError
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : GameView(state.gameItem),
-        );
-      },
+    return BlocProvider(
+      create: (context) => GameCubit()..onGetGame(),
+      child: BlocConsumer<GameCubit, GameState>(
+        listener: (context, state) {
+          if (state.status.isError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.exception?.message.toString() ?? "Unknown"),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: defaultAppBar(
+              context: context,
+              title: "Game Edukasi",
+            ),
+            body: state.status.isLoading || state.status.isError
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : GameView(state.gameItem),
+          );
+        },
+      ),
     );
   }
 }

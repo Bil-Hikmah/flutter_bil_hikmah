@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_detail_cubit.dart';
-import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/game/domain/model/game_response.dart';
+import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_cubit.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bil_hikmah/widget/button/default_button.dart';
@@ -9,11 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameDetailView extends StatefulWidget {
   const GameDetailView(
-    this.gameID, {
+    this.game,
+    this.title, {
     Key? key,
   }) : super(key: key);
-
-  final int gameID;
+  final Game game;
+  final String title;
 
   @override
   State<GameDetailView> createState() => _GameDetailViewState();
@@ -162,7 +164,7 @@ class _GameDetailViewState extends State<GameDetailView> {
           ],
         );
 
-    return BlocConsumer<GameDetailCubit, GameDetailState>(
+    return BlocConsumer<GameCubit, GameState>(
       listener: ((context, state) {}),
       builder: (context, state) {
         return state.status.isLoading ||
@@ -189,56 +191,43 @@ class _GameDetailViewState extends State<GameDetailView> {
                               crossAxisSpacing: 20.0,
                               mainAxisSpacing: 24.0,
                             ),
-                            itemCount: state.gameDetailItem!.length,
+                            itemCount: widget.game.questions.length,
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  if (context
-                                          .read<GameDetailCubit>()
+                                  if (BlocProvider.of<AuthenticationCubit>(
+                                              context)
                                           .state
-                                          .currentLevel! >=
-                                      context
-                                          .read<GameDetailCubit>()
-                                          .state
-                                          .gameDetailItem![index]["level"]) {
+                                          .user!
+                                          .currentStatusGame[widget.title] >=
+                                      index) {
                                     //Note Change popuup widget to visible
                                     setState(() {
                                       isVisible = true;
                                       popUpWidget = _buildPopUpGameContainer(
-                                        state.gameDetailItem![index]
-                                            ['questionData'],
-                                        state.gameDetailItem![index]
-                                            ['answerKey'],
+                                        widget.game.questions[index].imageURL,
+                                        widget.game.questions[index].key,
                                         () {
-                                          if (context
-                                                  .read<GameDetailCubit>()
-                                                  .state
-                                                  .currentLevel! ==
-                                              context
-                                                      .read<GameDetailCubit>()
+                                          if (BlocProvider.of<AuthenticationCubit>(
+                                                          context)
                                                       .state
-                                                      .gameDetailItem![index]
-                                                  ["level"]) {
+                                                      .user!
+                                                      .currentStatusGame[
+                                                  widget.title] ==
+                                              index) {
                                             // Note Unlock next level and set up pop up widget to invisible
-                                            BlocProvider.of<InitAppCubit>(
+                                            BlocProvider.of<
+                                                        AuthenticationCubit>(
                                                     context)
-                                                .onUnlockItem(
-                                              state.gameDetailItem![index]
-                                                  ["idGameItem"],
-                                              state.gameDetailItem![index]
-                                                      ["level"] +
-                                                  1,
+                                                .updateUserGameData(
+                                              widget.title,
+                                              index + 1,
                                             )
                                                 .then((value) {
-                                              context
-                                                  .read<GameDetailCubit>()
-                                                  .onUpdatedCurrentLevel(
-                                                    widget.gameID,
-                                                  );
-                                            });
-                                            setState(() {
-                                              answerController.clear();
-                                              isVisible = false;
+                                              setState(() {
+                                                answerController.clear();
+                                                isVisible = false;
+                                              });
                                             });
                                           }
                                         },
@@ -247,9 +236,12 @@ class _GameDetailViewState extends State<GameDetailView> {
                                   }
                                 },
                                 child: _gameItem(
-                                  state.gameDetailItem![index]["level"],
-                                  state.currentLevel! >=
-                                      state.gameDetailItem![index]["level"],
+                                  index,
+                                  BlocProvider.of<AuthenticationCubit>(context)
+                                          .state
+                                          .user!
+                                          .currentStatusGame[widget.title] >=
+                                      index,
                                 ),
                               );
                             },
