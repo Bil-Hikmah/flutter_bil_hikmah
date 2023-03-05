@@ -9,13 +9,13 @@ class AuthenticationState extends Equatable {
   });
 
   final AuthenticationStatus status;
-  final User? user;
+  final BilhikmahUser? user;
 
   factory AuthenticationState.unknown() {
     return const AuthenticationState(status: AuthenticationStatus.unknown);
   }
 
-  factory AuthenticationState.authenticated(User user) {
+  factory AuthenticationState.authenticated(BilhikmahUser user) {
     return AuthenticationState(
       status: AuthenticationStatus.authenticated,
       user: user,
@@ -25,6 +25,16 @@ class AuthenticationState extends Equatable {
   factory AuthenticationState.unauthenticated() {
     return const AuthenticationState(
         status: AuthenticationStatus.unauthenticated);
+  }
+
+  AuthenticationState copyWith({
+    AuthenticationStatus? status,
+    BilhikmahUser? user,
+  }) {
+    return AuthenticationState(
+      status: status ?? this.status,
+      user: user ?? this.user,
+    );
   }
 
   @override

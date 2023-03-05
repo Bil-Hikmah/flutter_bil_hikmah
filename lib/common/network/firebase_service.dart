@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirebaseService {
-  Future<void> addNewDocument(Map<String, dynamic> data);
+  Future<DocumentReference<Map<String, dynamic>>> addNewDocument(
+      Map<String, dynamic> data);
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>?> getAllDocument();
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>?>
       getDocumentFilteredWhere(
     String field,
     String value,
   );
+  Future<bool> updateField(Map<String, dynamic> field, String documentID);
 }
 
 class FirebaseServiceImplementation implements FirebaseService {
@@ -16,10 +18,22 @@ class FirebaseServiceImplementation implements FirebaseService {
   FirebaseServiceImplementation(this.collectionReference);
 
   @override
-  Future<void> addNewDocument(Map<String, dynamic> data) async {
-    await collectionReference.add(data).catchError(
-          (error) => throw Exception(error.toString()),
-        );
+  Future<DocumentReference<Map<String, dynamic>>> addNewDocument(
+      Map<String, dynamic> data) async {
+    return await collectionReference
+        .add(data)
+        .onError((error, stackTrace) => throw Exception(error.toString()));
+  }
+
+  Future<void> updateDocument(
+    String id,
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      await collectionReference.doc(id).update(data);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
@@ -43,6 +57,19 @@ class FirebaseServiceImplementation implements FirebaseService {
       final getData =
           await collectionReference.where(field, isEqualTo: value).get();
       return getData.docs;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> updateField(
+      Map<String, dynamic> field, String documentID) async {
+    try {
+      return await collectionReference
+          .doc(documentID)
+          .update(field)
+          .then((value) => true);
     } catch (e) {
       throw Exception(e.toString());
     }
