@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/default_detail/section/default_detail_view.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
+import 'package:flutter_bil_hikmah/widget/misc/webview_page.dart';
 
 class DefaultDetailPage extends StatelessWidget {
   const DefaultDetailPage(
     this.title,
-    this.content, {
+    this.webURL, {
     Key? key,
   }) : super(key: key);
 
   static Route route(
     String title,
-    String content,
+    String webURL,
   ) =>
       MaterialPageRoute(
         builder: (_) => DefaultDetailPage(
           title,
-          content,
+          webURL,
         ),
       );
 
   final String title;
-  final String content;
+  final String webURL;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +30,9 @@ class DefaultDetailPage extends StatelessWidget {
         context: context,
         title: title,
       ),
-      body: DefaultDetailView(
-        title,
-        content,
+      body: WebviewPage(
+        title: title,
+        link: webURL,
       ),
     );
   }
