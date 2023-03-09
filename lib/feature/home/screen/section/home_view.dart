@@ -9,6 +9,7 @@ import 'package:flutter_bil_hikmah/feature/home/screen/section/carousel_banner.d
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
 import 'package:flutter_bil_hikmah/feature/poster/screen/poster_page.dart';
+import 'package:flutter_bil_hikmah/feature/quran_disabilitas/screen/quran_disabilitas_page.dart';
 import 'package:flutter_bil_hikmah/feature/sign_language/screen/sign_language_page.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -34,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
       () => Navigator.of(context).push(AlQuranPage.route(needBack: true)),
       () => Navigator.of(context).push(GamePage.route()),
       () => Navigator.of(context).push(DakwahDisabilitasPage.route()),
-      () => Navigator.of(context).push(AkhlakMuliaPage.route()),
+      () => Navigator.of(context).push(QurabDisabilitasPage.route()),
       () => Navigator.of(context).push(AmalanSunnah.route()),
       () => Navigator.of(context).push(SignLanguagePage.route()),
       () => Navigator.of(context).push(PosterPage.route()),

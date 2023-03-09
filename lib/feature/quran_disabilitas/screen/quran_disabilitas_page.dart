@@ -8,6 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QurabDisabilitasPage extends StatelessWidget {
   const QurabDisabilitasPage({Key? key}) : super(key: key);
 
+  static Route route() => MaterialPageRoute(
+        builder: (_) => const QurabDisabilitasPage(),
+      );
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
