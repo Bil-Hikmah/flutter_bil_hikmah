@@ -26,7 +26,7 @@ InkWell defaultItemCard(
           Expanded(
             child: Text(
               title,
-              style: AppTextStyle.textLarge
+              style: AppTextStyle.textMedium
                   .copyWith(color: AppColors.darkGreyDark),
             ),
           ),
