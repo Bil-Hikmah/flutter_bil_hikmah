@@ -19,24 +19,28 @@ class HomeState extends Equatable {
     this.exception,
     this.streamedTime,
     this.adhanSchedule,
+    this.smallDakwah = const [],
   });
 
   final HomeStateStatus status;
   final AppException? exception;
   final DateTime? streamedTime;
   final AdhanSchedule? adhanSchedule;
+  final List<VideoDakwahModels> smallDakwah;
 
   HomeState copyWith({
     HomeStateStatus? status,
     AppException? exception,
     DateTime? streamedTime,
     AdhanSchedule? adhanSchedule,
+    List<VideoDakwahModels>? smallDakwah,
   }) {
     return HomeState(
       status: status ?? this.status,
       exception: exception ?? this.exception,
       streamedTime: streamedTime ?? this.streamedTime,
       adhanSchedule: adhanSchedule ?? this.adhanSchedule,
+      smallDakwah: smallDakwah ?? this.smallDakwah,
     );
   }
 
@@ -46,5 +50,6 @@ class HomeState extends Equatable {
         exception,
         streamedTime,
         adhanSchedule,
+        smallDakwah,
       ];
 }

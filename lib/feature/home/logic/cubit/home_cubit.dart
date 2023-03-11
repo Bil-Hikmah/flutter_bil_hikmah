@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:api_exception/exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/model/adhan_schedule.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/home_repository.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'home_state.dart';
@@ -12,11 +15,22 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository = HomeRepositoryImpl.create();
   DateTime current = DateTime.now();
 
-  Stream<DateTime> streamedTime() {
-    return Stream.periodic(const Duration(seconds: 1), (i) {
-      current = current.add(const Duration(seconds: 1));
-      return current;
-    });
+  late StreamSubscription<DateTime> streamedTime;
+
+  @override
+  close() async {
+    streamedTime.cancel();
+    return super.close();
+  }
+
+  Stream<DateTime> streamedTimes() {
+    return Stream.periodic(
+      const Duration(seconds: 1),
+      (i) {
+        current = current.add(const Duration(seconds: 1));
+        return current;
+      },
+    );
   }
 
   Future<void> onInit() async {
@@ -25,23 +39,18 @@ class HomeCubit extends Cubit<HomeState> {
       streamedTime: current,
     ));
     try {
-      final response = await _homeRepository.getAdhanSchedule();
-      emit(state.copyWith(adhanSchedule: response));
-      streamedTime().listen((event) {
+      streamedTime = streamedTimes().listen((event) {
         emit(state.copyWith(
           streamedTime: event,
         ));
       });
-
-      /// Emit the data from response to state of cubit (HomeState)
-      // final response = _homeRepository.onGetHomeData();
-
-      emit(
-        state.copyWith(
-          status: HomeStateStatus.loaded,
-          // response: response, => for example, if you want to emit the response to state of cubit (HomeState)
-        ),
-      );
+      final adhanScheduleResponse = await _homeRepository.getAdhanSchedule();
+      final smallDakwahResponse = await _homeRepository.onGetVideoDakwah();
+      emit(state.copyWith(
+        adhanSchedule: adhanScheduleResponse,
+        smallDakwah: smallDakwahResponse,
+        status: HomeStateStatus.loaded,
+      ));
     } on AppException catch (e) {
       emit(
         state.copyWith(
