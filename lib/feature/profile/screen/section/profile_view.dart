@@ -25,9 +25,15 @@ class _ProfileViewState extends State<ProfileView> {
           Container(
             height: 80.0,
             width: 80.0,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.primaryDark,
+              image: DecorationImage(
+                image: NetworkImage(
+                  context.read<AuthenticationCubit>().state.user?.avatarURL ??
+                      "Unknown Avatar",
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 24.0),
@@ -36,7 +42,8 @@ class _ProfileViewState extends State<ProfileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Adrianto Wawa Surya",
+                  context.read<AuthenticationCubit>().state.user?.displayName ??
+                      "Unknown Name",
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.textLarge.copyWith(
                     color: AppColors.darkGreyDarkest,
@@ -44,7 +51,8 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 const SizedBox(height: 4.0),
                 Text(
-                  "wawaAnto@gmail.com",
+                  context.read<AuthenticationCubit>().state.user?.email ??
+                      "Unknown Email",
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.textSmall.copyWith(
                     color: AppColors.darkGreyLightest,
@@ -146,6 +154,20 @@ class _ProfileViewState extends State<ProfileView> {
       },
     );
 
+    Widget logoutButton() {
+      return ButtonDefault(
+        text: "Keluar",
+        trailingIcon: const Icon(
+          Icons.logout_rounded,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          context.read<LoginCubit>().signOutGoogle();
+          context.read<AuthenticationCubit>().signOut();
+        },
+      );
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -154,18 +176,9 @@ class _ProfileViewState extends State<ProfileView> {
         children: [
           _headerProfile,
           ..._actionItem,
-          const SizedBox(height: 50.0),
-          ButtonDefault(
-            text: "Keluar",
-            trailingIcon: const Icon(
-              Icons.logout_rounded,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              context.read<LoginCubit>().signOutGoogle();
-              context.read<AuthenticationCubit>().signOut();
-            },
-          )
+          const SizedBox(height: 24.0),
+          logoutButton(),
+          const SizedBox(height: 24.0),
         ],
       ),
     );
