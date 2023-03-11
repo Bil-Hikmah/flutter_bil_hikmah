@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(),
+      create: (context) => HomeCubit()..onInit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status.isError) {
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                         color: AppColors.primaryDark,
                       ),
                     )
-                  : const HomeView(),
+                  : HomeView(state),
             ),
           );
         },

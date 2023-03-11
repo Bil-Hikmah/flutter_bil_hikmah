@@ -5,6 +5,7 @@ import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_pa
 import 'package:flutter_bil_hikmah/feature/dakwah_disabilitas/view/dakwah_disabilitas_page.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/game_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
+import 'package:flutter_bil_hikmah/feature/home/logic/cubit/home_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/carousel_banner.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
@@ -14,9 +15,12 @@ import 'package:flutter_bil_hikmah/feature/sign_language/screen/sign_language_pa
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView(this.state, {Key? key}) : super(key: key);
+
+  final HomeState state;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -130,7 +134,10 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context)
+                  .push(VideoDakwahPage.route(needAppBar: true));
+            },
             child: Text(
               "Lainnya",
               style: AppTextStyle.textSmall.copyWith(
@@ -166,7 +173,7 @@ class _HomeViewState extends State<HomeView> {
       return Row(
         children: [
           Text(
-            "Jadwal Sholat",
+            "Jadwal Sholat - ${DateFormat("HH:mm:ss").format(widget.state.streamedTime ?? DateTime.now())}",
             style: AppTextStyle.textSmall.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -229,11 +236,26 @@ class _HomeViewState extends State<HomeView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            adhanScheduleItem("Subuh", "04:00"),
-            adhanScheduleItem("Dzuhur", "12:00"),
-            adhanScheduleItem("Ashar", "15:00"),
-            adhanScheduleItem("Maghrib", "18:00"),
-            adhanScheduleItem("Isya", "20:00"),
+            adhanScheduleItem(
+              "Subuh",
+              widget.state.adhanSchedule?.shubuh ?? "Null",
+            ),
+            adhanScheduleItem(
+              "Dzuhur",
+              widget.state.adhanSchedule?.dzuhur ?? "Null",
+            ),
+            adhanScheduleItem(
+              "Ashar",
+              widget.state.adhanSchedule?.ashr ?? "Null",
+            ),
+            adhanScheduleItem(
+              "Maghrib",
+              widget.state.adhanSchedule?.magrib ?? "Null",
+            ),
+            adhanScheduleItem(
+              "Isya",
+              widget.state.adhanSchedule?.isya ?? "Null",
+            ),
           ],
         ),
       );
