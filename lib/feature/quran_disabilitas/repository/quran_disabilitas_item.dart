@@ -9,8 +9,8 @@ class QuranDisabilitas {
 
   factory QuranDisabilitas.fromJson(Map<String, dynamic> json) {
     return QuranDisabilitas(
-      surahName: json['surahName'],
-      videoURL: json['videoURL'],
+      surahName: json['surah'],
+      videoURL: json['video_url'],
     );
   }
 }

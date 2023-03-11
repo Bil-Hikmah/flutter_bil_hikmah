@@ -10,7 +10,7 @@ class AmalanSunnahItem {
   factory AmalanSunnahItem.fromJson(Map<String, dynamic> json) {
     return AmalanSunnahItem(
       title: json['title'],
-      webURL: json['webURL'],
+      webURL: json['web_url'],
     );
   }
 }
