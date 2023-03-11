@@ -28,10 +28,10 @@ class RecommendedItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         color: AppColors.secondaryLight,
-        // image: DecorationImage(
-        //   image: AssetImage(url),
-        //   fit: BoxFit.cover,
-        // ),
+        image: DecorationImage(
+          image: NetworkImage(url.substring(url.length - 11).getVideoThumbnail),
+          fit: BoxFit.contain,
+        ),
       ),
     );
 
@@ -39,7 +39,7 @@ class RecommendedItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Melangkah Menuju Hidup Islami yang Berseri Menyakan asdnononqonrq fnoqno",
+          title,
           maxLines: 2,
           softWrap: true,
           overflow: TextOverflow.ellipsis,

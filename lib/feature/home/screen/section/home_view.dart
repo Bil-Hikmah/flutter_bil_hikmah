@@ -152,18 +152,18 @@ class _HomeViewState extends State<HomeView> {
 
     final _generatedRecomendedVideo = ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      itemCount: 4,
+      itemCount: widget.state.smallDakwah.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
           child: RecommendedItem(
-            "XXX",
-            "XXX",
-            "Dakwah",
+            widget.state.smallDakwah[index].videoURL,
+            widget.state.smallDakwah[index].title,
+            widget.state.smallDakwah[index].genre,
             123456,
-            DateTime.now(),
+            widget.state.smallDakwah[index].dateCreated,
           ),
         );
       },
