@@ -25,15 +25,15 @@ class NavigationItem extends StatelessWidget {
           iconSize: 24.0,
           icon: SvgPicture.asset(
             svgSource,
-            color: active ? AppColors.primaryDark : AppColors.lightGreyMedium,
+            color: active ? AppColors.primaryDark : AppColors.bottomNabBarColor,
           ),
         ),
         Text(
           label,
-          style: AppTextStyle.textExtraSmall.copyWith(
-            color: active ? AppColors.primaryDark : AppColors.lightGreyMedium,
+          style: AppTextStyle.textSmall.copyWith(
+            color: active ? AppColors.primaryDark : AppColors.bottomNabBarColor,
             height: 0,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             letterSpacing: 0.3,
           ),
         ),

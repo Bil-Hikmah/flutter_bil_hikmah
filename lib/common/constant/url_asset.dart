@@ -46,4 +46,6 @@ class UrlAsset {
   static const String whatsappIcon = "$_baseUrlIcons/whatsapp_icon.png";
   static const String twitterIcon = "$_baseUrlIcons/twitter_icon.png";
   static const String telegramIcon = "$_baseUrlIcons/telegram_icon.png";
+  static const String adhanBackground =
+      "$_baseUrlBackground/adhan_background.png";
 }

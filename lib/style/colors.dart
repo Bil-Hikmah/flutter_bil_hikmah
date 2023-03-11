@@ -28,4 +28,7 @@ class AppColors {
   static const darkGreyMedium = Color(0xFF494A50);
   static const darkGreyDark = Color(0xFF2F3036);
   static const darkGreyDarkest = Color(0xFF1F2024);
+
+  // Bottom Navigation Bar Colors
+  static const bottomNabBarColor = Color(0xFFBDBDBD);
 }

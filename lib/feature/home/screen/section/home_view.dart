@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bil_hikmah/feature/akhlak_mulia/screen/akhlak_mulia_page.dart';
+import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
 import 'package:flutter_bil_hikmah/feature/al_quran/screen/al_quran_page.dart';
 import 'package:flutter_bil_hikmah/feature/amalan_sunnah/screen/amalan_sunnah_page.dart';
 import 'package:flutter_bil_hikmah/feature/dakwah_disabilitas/view/dakwah_disabilitas_page.dart';
@@ -98,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
               );
             }).toList(),
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: 16.0),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,6 +162,105 @@ class _HomeViewState extends State<HomeView> {
       },
     );
 
+    Widget headerAdhanSection() {
+      return Row(
+        children: [
+          Text(
+            "Jadwal Sholat",
+            style: AppTextStyle.textSmall.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Spacer(),
+          const Icon(
+            Icons.location_on,
+            color: Colors.white,
+            size: 14.0,
+          ),
+          const SizedBox(width: 6.0),
+          InkWell(
+            onTap: () {},
+            child: Text(
+              "Yogyakarta",
+              style: AppTextStyle.textExtraSmall.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget adhanScheduleItem(String timeName, String time) {
+      return Column(
+        children: [
+          Text(
+            timeName,
+            style: AppTextStyle.textExtraSmall.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 6.0),
+          Text(
+            time,
+            style: AppTextStyle.textSmall.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget adhanSchedule() {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Colors.transparent,
+          border: Border.all(
+            color: Colors.white,
+            width: 1.0,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            adhanScheduleItem("Subuh", "04:00"),
+            adhanScheduleItem("Dzuhur", "12:00"),
+            adhanScheduleItem("Ashar", "15:00"),
+            adhanScheduleItem("Maghrib", "18:00"),
+            adhanScheduleItem("Isya", "20:00"),
+          ],
+        ),
+      );
+    }
+
+    Widget adhanContainer() {
+      return Container(
+        height: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          image: const DecorationImage(
+            image: AssetImage(UrlAsset.adhanBackground),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            headerAdhanSection(),
+            adhanSchedule(),
+          ],
+        ),
+      );
+    }
+
     // Main of View
     return SingleChildScrollView(
       child: Column(
@@ -172,6 +271,8 @@ class _HomeViewState extends State<HomeView> {
           _carouselBanner,
           const SizedBox(height: 36.0),
           _mainFeature,
+          const SizedBox(height: 16.0),
+          adhanContainer(),
           const SizedBox(height: 36.0),
           _headerRecommendedVideo,
           const SizedBox(height: 21.0),
