@@ -10,6 +10,8 @@ abstract class FirebaseService {
     String value,
   );
   Future<bool> updateField(Map<String, dynamic> field, String documentID);
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>?> getLimitDocument(
+      int limit);
 }
 
 class FirebaseServiceImplementation implements FirebaseService {
@@ -70,6 +72,17 @@ class FirebaseServiceImplementation implements FirebaseService {
           .doc(documentID)
           .update(field)
           .then((value) => true);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>?> getLimitDocument(
+      int limit) async {
+    try {
+      final getData = await collectionReference.limit(limit).get();
+      return getData.docs;
     } catch (e) {
       throw Exception(e.toString());
     }
