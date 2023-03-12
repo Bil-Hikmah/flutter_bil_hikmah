@@ -111,6 +111,8 @@ dependencies:
 
   # Progress Indicator
   flutter_progress_hud: ^2.0.2
+
+  # Firebase Storage
   firebase_storage: ^10.3.11
 
   # Permission handler
@@ -121,6 +123,9 @@ dependencies:
 
   # Implement Sentry
   sentry_flutter: ^6.22.0
+
+  # lottie file
+  lottie: ^1.4.2
 
 dev_dependencies:
   flutter_test:
