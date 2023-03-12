@@ -37,13 +37,13 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
       },
     ),
     ProfileItemAction(
-      icon: Icons.star_rate_outlined,
+      icon: Icons.message_rounded,
       title: "Live Chat",
       route: () {},
     ),
     ProfileItemAction(
       icon: Icons.star_rate_outlined,
-      title: "Feedback",
+      title: "Masukan",
       route: () {
         Navigator.of(context).push(FeedbackPage.route());
       },
