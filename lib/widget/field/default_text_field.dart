@@ -23,6 +23,7 @@ class DefaultTextField extends StatelessWidget {
   final bool needAutoValidate;
   final int maxLines;
   final Function(String)? onSubmitedValue;
+  final bool isNeedAutoFocus;
 
   const DefaultTextField({
     Key? key,
@@ -45,6 +46,7 @@ class DefaultTextField extends StatelessWidget {
     this.needAutoValidate = false,
     this.maxLines = 1,
     this.onSubmitedValue,
+    this.isNeedAutoFocus = false,
   }) : super(key: key);
 
   // listInputType
@@ -83,6 +85,7 @@ class DefaultTextField extends StatelessWidget {
     return TextFormField(
       enabled: isEnabled,
       readOnly: readOnly,
+      autofocus: isNeedAutoFocus,
       controller: controller,
       onChanged: onChanged ?? (value) {},
       onFieldSubmitted: onSubmitedValue,
