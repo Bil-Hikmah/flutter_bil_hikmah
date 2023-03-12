@@ -18,7 +18,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    Widget _headerProfile() => Padding(
+    Widget _headerProfile(AuthenticationState state) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 24.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,12 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context
-                              .read<AuthenticationCubit>()
-                              .state
-                              .user
-                              ?.displayName ??
-                          "Unknown Name",
+                      state.user?.displayName ?? "Unknown Name",
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.textLarge.copyWith(
                         color: AppColors.darkGreyDarkest,
@@ -60,8 +55,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     const SizedBox(height: 4.0),
                     Text(
-                      context.read<AuthenticationCubit>().state.user?.email ??
-                          "Unknown Email",
+                      state.user?.email ?? "Unknown Email",
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.textSmall.copyWith(
                         color: AppColors.darkGreyLightest,
@@ -182,19 +176,23 @@ class _ProfileViewState extends State<ProfileView> {
       );
     }
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _headerProfile(),
-          ..._actionItem,
-          const SizedBox(height: 24.0),
-          logoutButton(),
-          const SizedBox(height: 24.0),
-        ],
-      ),
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _headerProfile(state),
+              ..._actionItem,
+              const SizedBox(height: 24.0),
+              logoutButton(),
+              const SizedBox(height: 24.0),
+            ],
+          ),
+        );
+      },
     );
   }
 }
