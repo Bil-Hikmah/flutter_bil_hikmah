@@ -58,4 +58,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       print("Error: $e");
     }
   }
+
+  void changeDisplayName(String displayName) {
+    emit(state.copyWith(
+      user: state.user!.copyWith(
+        displayName: displayName,
+      ),
+    ));
+  }
 }
