@@ -116,6 +116,9 @@ dependencies:
   # Permission handler
   permission_handler: ^9.0.2
 
+  # Get the path of file
+  path_provider: ^2.0.9
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
