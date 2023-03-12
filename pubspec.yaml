@@ -119,6 +119,9 @@ dependencies:
   # Get the path of file
   path_provider: ^2.0.9
 
+  # Implement Sentry
+  sentry_flutter: ^6.22.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
