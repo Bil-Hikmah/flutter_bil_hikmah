@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/login/logic/login_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/profile/domain/model/profile_item.dart';
+import 'package:flutter_bil_hikmah/feature/profile/screen/edit_profile/edit_profile_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:flutter_bil_hikmah/widget/button/default_button.dart';
@@ -17,82 +18,95 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    final _headerProfile = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 80.0,
-            width: 80.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primaryDark,
-              image: DecorationImage(
-                image: NetworkImage(
-                  context.read<AuthenticationCubit>().state.user?.avatarURL ??
-                      "Unknown Avatar",
+    Widget _headerProfile() => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 80.0,
+                width: 80.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryDark,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      context
+                              .read<AuthenticationCubit>()
+                              .state
+                              .user
+                              ?.avatarURL ??
+                          "Unknown Avatar",
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          const SizedBox(width: 24.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.read<AuthenticationCubit>().state.user?.displayName ??
-                      "Unknown Name",
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.textLarge.copyWith(
-                    color: AppColors.darkGreyDarkest,
-                  ),
-                ),
-                const SizedBox(height: 4.0),
-                Text(
-                  context.read<AuthenticationCubit>().state.user?.email ??
-                      "Unknown Email",
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.textSmall.copyWith(
-                    color: AppColors.darkGreyLightest,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 8.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryDark,
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Edit Profile",
-                        style: AppTextStyle.textExtraSmall.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+              const SizedBox(width: 24.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context
+                              .read<AuthenticationCubit>()
+                              .state
+                              .user
+                              ?.displayName ??
+                          "Unknown Name",
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.textLarge.copyWith(
+                        color: AppColors.darkGreyDarkest,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      context.read<AuthenticationCubit>().state.user?.email ??
+                          "Unknown Email",
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.textSmall.copyWith(
+                        color: AppColors.darkGreyLightest,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(EditProfilePage.route());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                          vertical: 8.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryDark,
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Edit Profile",
+                              style: AppTextStyle.textExtraSmall.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(width: 8.0),
+                            const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 12.0,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 8.0),
-                      const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 12.0,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+              )
+            ],
+          ),
+        );
 
     Widget _actionItemContainer(
       IconData icon,
@@ -174,7 +188,7 @@ class _ProfileViewState extends State<ProfileView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _headerProfile,
+          _headerProfile(),
           ..._actionItem,
           const SizedBox(height: 24.0),
           logoutButton(),
