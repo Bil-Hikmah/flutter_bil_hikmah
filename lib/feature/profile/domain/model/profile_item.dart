@@ -17,13 +17,13 @@ class ProfileItemAction {
 
 List<ProfileItemAction> listProfileItemAction(BuildContext context) {
   final List<ProfileItemAction> listItem = [
-    ProfileItemAction(
-      icon: Icons.favorite_border,
-      title: "Favorit",
-      route: () {
-        Navigator.of(context).push(FavoritePage.route());
-      },
-    ),
+    // ProfileItemAction(
+    //   icon: Icons.favorite_border,
+    //   title: "Favorit",
+    //   route: () {
+    //     Navigator.of(context).push(FavoritePage.route());
+    //   },
+    // ),
     ProfileItemAction(
       icon: Icons.info_outline,
       title: "Tentang Aplikasi",
