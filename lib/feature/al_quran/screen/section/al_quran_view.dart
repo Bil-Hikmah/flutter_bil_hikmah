@@ -139,8 +139,8 @@ class _AlQuranViewState extends State<AlQuranView> {
           Row(
             children: [
               Container(
-                height: 42.0,
-                width: 42.0,
+                height: 44.0,
+                width: 44.0,
                 padding: const EdgeInsets.all(10.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
