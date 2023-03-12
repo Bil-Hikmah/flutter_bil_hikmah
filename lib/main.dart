@@ -10,6 +10,8 @@ import 'package:flutter_bil_hikmah/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io' as dart_io;
 
+import 'package:sentry_flutter/sentry_flutter.dart';
+
 class MyHttpOverrides extends dart_io.HttpOverrides {
   @override
   dart_io.HttpClient createHttpClient(dart_io.SecurityContext? context) {
@@ -25,7 +27,15 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   dart_io.HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://4c364ace0ddb4dbcb4f88319fdb030cf@o4504824495276032.ingest.sentry.io/4504824500256768';
+      options.tracesSampleRate = 1.0;
+      options.attachScreenshot = true;
+    },
+    appRunner: () => runApp(const MyApp()),
+  );
 }
 
 class MyApp extends StatefulWidget {
