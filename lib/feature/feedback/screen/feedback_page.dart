@@ -3,6 +3,7 @@ import 'package:flutter_bil_hikmah/feature/feedback/logic/feedback_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/feedback/screen/feedback_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
+import 'package:flutter_bil_hikmah/widget/field/success_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
@@ -33,7 +34,10 @@ class FeedbackPage extends StatelessWidget {
                   backgroundColor: AppColors.primaryDark,
                 ),
               );
-              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacement(
+                SuccessPage.route(
+                    "Sukses mengirim masukan.\nDengan anda mengirimkan masukan kami semakin menyempurnakan akan aplikasi.\nTerimakasih 😄"),
+              );
             }
             if (state.status == FeedBackStateStatus.error) {
               ScaffoldMessenger.of(context).showSnackBar(
