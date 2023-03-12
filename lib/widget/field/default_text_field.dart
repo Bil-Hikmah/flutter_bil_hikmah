@@ -97,7 +97,7 @@ class DefaultTextField extends StatelessWidget {
       autovalidateMode: needAutoValidate ? AutovalidateMode.always : null,
       decoration: InputDecoration(
         focusColor: AppColors.primaryDark,
-        fillColor: AppColors.lightGreyDark.withOpacity(0.7),
+        hoverColor: AppColors.lightGreyDark.withOpacity(0.7),
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
@@ -112,7 +112,9 @@ class DefaultTextField extends StatelessWidget {
           color: AppColors.darkGreyLightest,
         ),
         labelText: labelText,
-        labelStyle: AppTextStyle.textSmall,
+        labelStyle: AppTextStyle.textSmall.copyWith(
+          color: AppColors.darkGreyLightest,
+        ),
         floatingLabelStyle: AppTextStyle.textSmall.copyWith(
           color: AppColors.primaryDark,
         ),

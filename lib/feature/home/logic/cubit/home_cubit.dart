@@ -10,9 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(const HomeState());
+  HomeCubit()
+      : _homeRepository = HomeRepositoryImpl.create(),
+        super(const HomeState());
 
-  final HomeRepository _homeRepository = HomeRepositoryImpl.create();
+  final HomeRepository _homeRepository;
   DateTime current = DateTime.now();
 
   late StreamSubscription<DateTime> streamedTime;

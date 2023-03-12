@@ -20,63 +20,68 @@ class _FeedbackViewState extends State<FeedbackView> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          DefaultTextField(
-            hintText: "Subject",
-            controller: subjectController,
-            inputType: TextInputType.text,
-            validator: (String? text) {
-              if (text?.isEmpty ?? true) {
-                return "Tolong isi subject";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 8.0),
-          DefaultTextField(
-            hintText: "Pesan",
-            controller: messageController,
-            inputType: TextInputType.multiline,
-            maxLines: 8,
-            validator: (String? text) {
-              if (text?.isEmpty ?? true) {
-                return "Tolong isi pesan";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 24.0),
-          ButtonDefault(
-            text: "Kirim",
-            onPressed: () {
-              if (!(formKey.currentState?.validate() ?? false)) {
-                return;
-              }
-              context.read<FeedbackCubit>().sendFeedbackSentry(
-                    BlocProvider.of<AuthenticationCubit>(context)
-                            .state
-                            .user
-                            ?.id ??
-                        "Unknown ID",
-                    BlocProvider.of<AuthenticationCubit>(context)
-                            .state
-                            .user
-                            ?.userName ??
-                        "Unknown Username",
-                    BlocProvider.of<AuthenticationCubit>(context)
-                            .state
-                            .user
-                            ?.email ??
-                        "Unknown Email",
-                    subjectController.text,
-                    messageController.text,
-                  );
-            },
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            DefaultTextField(
+              hintText: "Subjek",
+              labelText: "Subjek",
+              controller: subjectController,
+              inputType: TextInputType.text,
+              validator: (String? text) {
+                if (text?.isEmpty ?? true) {
+                  return "Tolong isi subjek!";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 12.0),
+            DefaultTextField(
+              hintText: "Tulis pesan anda disini",
+              labelText: "Pesan",
+              controller: messageController,
+              inputType: TextInputType.multiline,
+              maxLines: 8,
+              validator: (String? text) {
+                if (text?.isEmpty ?? true) {
+                  return "Tolong isi pesan";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 24.0),
+            ButtonDefault(
+              text: "Kirim",
+              onPressed: () {
+                if (!(formKey.currentState?.validate() ?? false)) {
+                  return;
+                }
+                context.read<FeedbackCubit>().sendFeedbackSentry(
+                      BlocProvider.of<AuthenticationCubit>(context)
+                              .state
+                              .user
+                              ?.id ??
+                          "Unknown ID",
+                      BlocProvider.of<AuthenticationCubit>(context)
+                              .state
+                              .user
+                              ?.userName ??
+                          "Unknown Username",
+                      BlocProvider.of<AuthenticationCubit>(context)
+                              .state
+                              .user
+                              ?.email ??
+                          "Unknown Email",
+                      subjectController.text,
+                      messageController.text,
+                    );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
