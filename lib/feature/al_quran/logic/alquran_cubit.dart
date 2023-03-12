@@ -25,6 +25,8 @@ class AlquranCubit extends Cubit<AlquranState> {
         status: AlquranStatus.failure,
         exception: e,
       ));
+    } on StateError {
+      return;
     }
   }
 
