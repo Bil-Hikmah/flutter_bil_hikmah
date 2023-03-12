@@ -44,42 +44,40 @@ class _OnboardPageState extends State<OnboardPage> {
                 progress?.show();
               }
             },
-            child: SafeArea(
-              child: Stack(
-                children: [
-                  OnboardContent(
-                    _pageController,
-                    (page) {
-                      setState(() {
-                        _scrollIndex = page;
-                      });
-                    },
-                    dummyOnboard,
-                  ),
-                  OnboardActionButton(
-                    dummyOnboard.length,
-                    _scrollIndex,
-                    () {
-                      _pageController.jumpToPage(dummyOnboard.length - 1);
-                      setState(() {
-                        _scrollIndex = dummyOnboard.length - 1;
-                      });
-                    },
-                    () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease,
-                      );
-                      setState(() {
-                        _scrollIndex++;
-                      });
-                    },
-                    () {
-                      context.read<LoginCubit>().signInWithGoogle();
-                    },
-                  ),
-                ],
-              ),
+            child: Stack(
+              children: [
+                OnboardContent(
+                  _pageController,
+                  (page) {
+                    setState(() {
+                      _scrollIndex = page;
+                    });
+                  },
+                  dummyOnboard,
+                ),
+                OnboardActionButton(
+                  dummyOnboard.length,
+                  _scrollIndex,
+                  () {
+                    _pageController.jumpToPage(dummyOnboard.length - 1);
+                    setState(() {
+                      _scrollIndex = dummyOnboard.length - 1;
+                    });
+                  },
+                  () {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                    );
+                    setState(() {
+                      _scrollIndex++;
+                    });
+                  },
+                  () {
+                    context.read<LoginCubit>().signInWithGoogle();
+                  },
+                ),
+              ],
             ),
           ),
         ),

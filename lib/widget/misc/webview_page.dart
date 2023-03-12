@@ -33,73 +33,71 @@ class _WebviewPageState extends State<WebviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.darkGreyDark,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(widget.title, style: AppTextStyle.textMedium),
+        actions: [
+          IconButton(
+            onPressed: () {
+              if (widget.webViewKLocalHTML == WebViewKLocalHTML.disable) {
+                _controller.reload();
+              }
+            },
             icon: const Icon(
-              Icons.arrow_back,
+              Icons.refresh,
               color: AppColors.darkGreyDark,
             ),
-            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      ),
+      body: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LinearProgressIndicator(
+                color: current == 1.0 ? Colors.white : AppColors.primaryDark,
+                backgroundColor: AppColors.lightGreyMedium,
+                value: current,
+                semanticsLabel: "Loading",
+                minHeight: 2.0,
+              ),
+              Expanded(
+                child: WebView(
+                  initialUrl: widget.link ?? 'about:blank',
+                  javascriptMode: widget.javascriptMode,
+                  onWebViewCreated: (controller) async {
+                    _controller = controller;
+                  },
+                  onProgress: (value) {
+                    setState(() {
+                      current = value / 100;
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Text(widget.title, style: AppTextStyle.textMedium),
-          actions: [
-            IconButton(
-              onPressed: () {
-                if (widget.webViewKLocalHTML == WebViewKLocalHTML.disable) {
-                  _controller.reload();
-                }
-              },
-              icon: const Icon(
-                Icons.refresh,
-                color: AppColors.darkGreyDark,
+          Visibility(
+            visible: current == 1.0 ? false : true,
+            child: Center(
+              child: Text(
+                "Loading...",
+                style: AppTextStyle.textMedium
+                    .copyWith(color: AppColors.lightGreyDark),
               ),
-            )
-          ],
-        ),
-        body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LinearProgressIndicator(
-                  color: current == 1.0 ? Colors.white : AppColors.primaryDark,
-                  backgroundColor: AppColors.lightGreyMedium,
-                  value: current,
-                  semanticsLabel: "Loading",
-                  minHeight: 2.0,
-                ),
-                Expanded(
-                  child: WebView(
-                    initialUrl: widget.link ?? 'about:blank',
-                    javascriptMode: widget.javascriptMode,
-                    onWebViewCreated: (controller) async {
-                      _controller = controller;
-                    },
-                    onProgress: (value) {
-                      setState(() {
-                        current = value / 100;
-                      });
-                    },
-                  ),
-                ),
-              ],
             ),
-            Visibility(
-              visible: current == 1.0 ? false : true,
-              child: Center(
-                child: Text(
-                  "Loading...",
-                  style: AppTextStyle.textMedium
-                      .copyWith(color: AppColors.lightGreyDark),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

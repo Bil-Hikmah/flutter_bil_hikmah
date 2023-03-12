@@ -14,7 +14,7 @@ class DetailPosterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: DetailPosterView(urlImage)),
+      body: DetailPosterView(urlImage),
     );
   }
 }

@@ -33,19 +33,17 @@ class DakwahDisabilitasPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return SafeArea(
-            child: Scaffold(
-              appBar: defaultAppBar(context: context, title: "Video Dakwah"),
-              backgroundColor: Colors.white,
-              body: state.status == DakwahDisabilitasStateStatus.loading ||
-                      state.status == DakwahDisabilitasStateStatus.failure
-                  ? Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: Colors.grey[300]!,
-                      child: const VideoDakwahShimmer(),
-                    )
-                  : const DawahDisabilitasView(),
-            ),
+          return Scaffold(
+            appBar: defaultAppBar(context: context, title: "Video Dakwah"),
+            backgroundColor: Colors.white,
+            body: state.status == DakwahDisabilitasStateStatus.loading ||
+                    state.status == DakwahDisabilitasStateStatus.failure
+                ? Shimmer.fromColors(
+                    highlightColor: Colors.white,
+                    baseColor: Colors.grey[300]!,
+                    child: const VideoDakwahShimmer(),
+                  )
+                : const DawahDisabilitasView(),
           );
         },
       ),

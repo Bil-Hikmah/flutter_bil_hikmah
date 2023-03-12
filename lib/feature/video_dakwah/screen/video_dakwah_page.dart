@@ -35,22 +35,20 @@ class VideoDakwahPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return SafeArea(
-            child: Scaffold(
-              appBar: needAppBar
-                  ? defaultAppBar(context: context, title: "Video Dakwah")
-                  : null,
-              backgroundColor: Colors.white,
-              body: state.status.isLoading || state.status.isFailure
-                  ? Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: Colors.grey[300]!,
-                      child: const VideoDakwahShimmer(),
-                    )
-                  : VideoDakwahView(
-                      needAppBar ? false : true,
-                    ),
-            ),
+          return Scaffold(
+            appBar: needAppBar
+                ? defaultAppBar(context: context, title: "Video Dakwah")
+                : null,
+            backgroundColor: Colors.white,
+            body: state.status.isLoading || state.status.isFailure
+                ? Shimmer.fromColors(
+                    highlightColor: Colors.white,
+                    baseColor: Colors.grey[300]!,
+                    child: const VideoDakwahShimmer(),
+                  )
+                : VideoDakwahView(
+                    needAppBar ? false : true,
+                  ),
           );
         },
       ),

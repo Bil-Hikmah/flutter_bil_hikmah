@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
 import 'package:flutter_bil_hikmah/feature/faq/screen/faq_page.dart';
-import 'package:flutter_bil_hikmah/feature/favorite/screen/favorite_page.dart';
 
 class ProfileItemAction {
   final IconData icon;

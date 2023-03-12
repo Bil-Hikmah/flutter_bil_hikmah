@@ -30,17 +30,13 @@ class HomePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return SafeArea(
-            child: Scaffold(
-              body: state.status.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryDark,
-                      ),
-                    )
-                  : HomeView(state),
-            ),
-          );
+          return state.status.isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryDark,
+                  ),
+                )
+              : HomeView(state);
         },
       ),
     );
