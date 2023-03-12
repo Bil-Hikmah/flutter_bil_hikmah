@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/common/constant/url_asset.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 Future<T?> showShareBottomSheet<T>(
@@ -21,6 +24,7 @@ Future<T?> showShareBottomSheet<T>(
       return bottomSheetContainer(
         context,
         message,
+        screenshotController: screenshotController,
       );
     },
   );
@@ -49,13 +53,24 @@ extension ShareSocialTypeX on ShareSocialType {
 
   Future<void> onTap(
     FlutterShareMe shareMe,
-    String message,
-  ) async {
+    String message, {
+    ScreenshotController? screenshotController,
+  }) async {
     switch (this) {
       case ShareSocialType.whatsapp:
-        return shareMe
-            .shareToWhatsApp(msg: message)
-            .then((value) => debugPrint(value));
+        return screenshotController != null
+            ? await screenshotController.capture().then((image) async {
+                final directory = await getApplicationDocumentsDirectory();
+                final file = await File('${directory.path}/temp.png').create();
+                await file.writeAsBytes(image!);
+
+                shareMe
+                    .shareToWhatsApp(msg: message, imagePath: file.path)
+                    .then((value) => debugPrint(value));
+              })
+            : shareMe
+                .shareToWhatsApp(msg: message)
+                .then((value) => debugPrint(value));
       case ShareSocialType.twitter:
         return shareMe
             .shareToTwitter(msg: message)
@@ -93,8 +108,10 @@ List<Map<String, Object>> shareSocialMedia = [
 
 Widget bottomSheetContainer(
   BuildContext context,
-  String message,
-) {
+  String message, {
+  ScreenshotController? screenshotController,
+}) {
+  final FlutterShareMe shareMe = FlutterShareMe();
   return Container(
     height: MediaQuery.of(context).size.height * 0.20,
     decoration: const BoxDecoration(
@@ -120,10 +137,10 @@ Widget bottomSheetContainer(
           (shareSocialMedia[index]["title"] as ShareSocialType).title,
           shareSocialMedia[index]["icon"] as String,
           () async {
-            final FlutterShareMe shareMe = FlutterShareMe();
             await (shareSocialMedia[index]["title"] as ShareSocialType).onTap(
               shareMe,
               message,
+              screenshotController: screenshotController,
             );
           },
         );
