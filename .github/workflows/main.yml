@@ -26,5 +26,15 @@ jobs:
           bundler-cache: true
       - name: Install Fastlane
         run: cd android && bundle install && cd ..
+      - name: Create keystore file
+        run: |
+          cd android
+          touch key.properties
+          echo storePassword=${{ secrets.STORE_PASSWORD }} >> key.properties
+          echo keyPassword=${{ secrets.KEY_PASSSWORD }} >> key.properties
+          echo keyAlias=${{ secrets.KEY_ALIAS }} >> key.properties
+          echo storeFile=../../android/bilhikmah-keystore.jks >> key.properties
+          cat key.properties
+          cd ..
       - name: Build APK and Deploy to firebase
         run: cd android && bundle exec fastlane deploy_to_firebase app_id:${{ secrets.ANDROID_FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_CLI_TOKEN }} release_notes:"${{ github.event.inputs.release_notes }}" build_number:$GITHUB_RUN_NUMBER && cd ..
