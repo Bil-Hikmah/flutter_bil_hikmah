@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
 import 'package:flutter_bil_hikmah/feature/faq/screen/faq_page.dart';
 import 'package:flutter_bil_hikmah/feature/feedback/screen/feedback_page.dart';
+import 'package:flutter_bil_hikmah/feature/live_chat/screen/live_chat_page.dart';
 
 class ProfileItemAction {
   final IconData icon;
@@ -39,7 +40,9 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
     ProfileItemAction(
       icon: Icons.message_rounded,
       title: "Live Chat",
-      route: () {},
+      route: () {
+        Navigator.of(context).push(LiveChatPage.route());
+      },
     ),
     ProfileItemAction(
       icon: Icons.star_rate_outlined,
