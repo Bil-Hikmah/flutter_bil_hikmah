@@ -29,10 +29,7 @@ class _LiveChatPageState extends State<LiveChatPage> {
     crispMain = CrispMain(
       websiteId: crispWebstiteID,
       locale: 'en-us',
-    ).setSessionData({
-      "user_id":
-          "${BlocProvider.of<AuthenticationCubit>(context).state.user?.id ?? Random().nextInt(1000000) + 50000}"
-    });
+    );
 
     crispMain.register(
       user: CrispUser(
