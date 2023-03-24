@@ -3,6 +3,7 @@ import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
 import 'package:flutter_bil_hikmah/feature/faq/screen/faq_page.dart';
 import 'package:flutter_bil_hikmah/feature/feedback/screen/feedback_page.dart';
 import 'package:flutter_bil_hikmah/feature/live_chat/screen/live_chat_page.dart';
+import 'package:flutter_bil_hikmah/feature/term_and_conditions/screen/term_and_conditions_page.dart';
 
 class ProfileItemAction {
   final IconData icon;
@@ -54,7 +55,9 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
     ProfileItemAction(
       icon: Icons.privacy_tip_outlined,
       title: "Kebijakan Privasi",
-      route: () {},
+      route: () {
+        Navigator.of(context).push(TermAndConditionsPage.route());
+      },
     ),
   ];
 

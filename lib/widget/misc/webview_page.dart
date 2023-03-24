@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/term_and_conditions/screen/term_and_conditions_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -77,6 +78,10 @@ class _WebviewPageState extends State<WebviewPage> {
                   javascriptMode: widget.javascriptMode,
                   onWebViewCreated: (controller) async {
                     _controller = controller;
+                    if (widget.webViewKLocalHTML ==
+                        WebViewKLocalHTML.termAndConditions) {
+                      _controller.loadHtmlString(localTermAndConditions);
+                    }
                   },
                   onProgress: (value) {
                     setState(() {
