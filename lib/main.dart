@@ -6,6 +6,7 @@ import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart'
 import 'package:flutter_bil_hikmah/feature/auth/repository/authentication_repository.dart';
 import 'package:flutter_bil_hikmah/feature/login/logic/login_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/theme_mode/logic/cubit/theme_mode_cubit.dart';
 import 'package:flutter_bil_hikmah/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io' as dart_io;
@@ -67,45 +68,56 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<LoginCubit>(
             create: (_) => LoginCubit(),
-          )
-        ],
-        child: MaterialApp(
-          title: "BilHikmah",
-          onGenerateRoute: RouteHandler.generateRoute,
-          initialRoute: RouteHandler.initialRoute,
-          debugShowCheckedModeBanner: false,
-          navigatorKey: _navigatorKey,
-          theme: ThemeData(
-            useMaterial3: true,
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              },
-            ),
           ),
-          builder: (contextMain, child) {
-            return BlocListener<AuthenticationCubit, AuthenticationState>(
-              listenWhen: (previous, current) {
-                return previous.status != current.status;
+          BlocProvider<ThemeModeCubit>(
+            create: (_) => ThemeModeCubit(),
+          ),
+        ],
+        child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
+          builder: (context, themeState) {
+            return MaterialApp(
+              title: "BilHikmah",
+              onGenerateRoute: RouteHandler.generateRoute,
+              initialRoute: RouteHandler.initialRoute,
+              debugShowCheckedModeBanner: false,
+              navigatorKey: _navigatorKey,
+              themeMode: themeState.themeMode,
+              theme: ThemeData(
+                brightness: themeState.themeMode == ThemeMode.dark
+                    ? Brightness.dark
+                    : Brightness.light,
+                useMaterial3: true,
+                pageTransitionsTheme: const PageTransitionsTheme(
+                  builders: {
+                    TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                  },
+                ),
+              ),
+              builder: (contextMain, child) {
+                return BlocListener<AuthenticationCubit, AuthenticationState>(
+                  listenWhen: (previous, current) {
+                    return previous.status != current.status;
+                  },
+                  listener: ((contet, state) {
+                    switch (state.status) {
+                      case AuthenticationStatus.authenticated:
+                        _navigator.pushNamedAndRemoveUntil(
+                            Routes.dashboard, (route) => false);
+                        break;
+                      case AuthenticationStatus.unauthenticated:
+                        _navigator.pushNamedAndRemoveUntil(
+                            Routes.onboarding, (route) => false);
+                        break;
+                      case AuthenticationStatus.unknown:
+                        _navigator.pushNamedAndRemoveUntil(
+                            Routes.onboarding, (route) => false);
+                        break;
+                      default:
+                    }
+                  }),
+                  child: child,
+                );
               },
-              listener: ((contet, state) {
-                switch (state.status) {
-                  case AuthenticationStatus.authenticated:
-                    _navigator.pushNamedAndRemoveUntil(
-                        Routes.dashboard, (route) => false);
-                    break;
-                  case AuthenticationStatus.unauthenticated:
-                    _navigator.pushNamedAndRemoveUntil(
-                        Routes.onboarding, (route) => false);
-                    break;
-                  case AuthenticationStatus.unknown:
-                    _navigator.pushNamedAndRemoveUntil(
-                        Routes.onboarding, (route) => false);
-                    break;
-                  default:
-                }
-              }),
-              child: child,
             );
           },
         ),
