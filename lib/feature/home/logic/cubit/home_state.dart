@@ -3,12 +3,16 @@ part of 'home_cubit.dart';
 enum HomeStateStatus {
   initial,
   loading,
+  loadingChangeCity,
+  loadedChangeCity,
   loaded,
   error,
 }
 
 extension HomeStateStatusExt on HomeStateStatus {
   bool get isLoading => this == HomeStateStatus.loading;
+  bool get isLoadingChangeCity => this == HomeStateStatus.loadingChangeCity;
+  bool get isLoadedChangeCity => this == HomeStateStatus.loadedChangeCity;
   bool get isLoaded => this == HomeStateStatus.loaded;
   bool get isError => this == HomeStateStatus.error;
 }
@@ -20,6 +24,7 @@ class HomeState extends Equatable {
     this.streamedTime,
     this.adhanSchedule,
     this.smallDakwah = const [],
+    this.cityAdhan = 'yogyakarta',
   });
 
   final HomeStateStatus status;
@@ -27,6 +32,7 @@ class HomeState extends Equatable {
   final DateTime? streamedTime;
   final AdhanSchedule? adhanSchedule;
   final List<VideoDakwahModels> smallDakwah;
+  final String cityAdhan;
 
   HomeState copyWith({
     HomeStateStatus? status,
@@ -34,6 +40,7 @@ class HomeState extends Equatable {
     DateTime? streamedTime,
     AdhanSchedule? adhanSchedule,
     List<VideoDakwahModels>? smallDakwah,
+    String? cityAdhan,
   }) {
     return HomeState(
       status: status ?? this.status,
@@ -41,6 +48,7 @@ class HomeState extends Equatable {
       streamedTime: streamedTime ?? this.streamedTime,
       adhanSchedule: adhanSchedule ?? this.adhanSchedule,
       smallDakwah: smallDakwah ?? this.smallDakwah,
+      cityAdhan: cityAdhan ?? this.cityAdhan,
     );
   }
 
@@ -51,5 +59,6 @@ class HomeState extends Equatable {
         streamedTime,
         adhanSchedule,
         smallDakwah,
+        cityAdhan,
       ];
 }

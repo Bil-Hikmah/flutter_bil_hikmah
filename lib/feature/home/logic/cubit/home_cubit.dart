@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:api_exception/exception.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/model/adhan_schedule.dart';
+import 'package:flutter_bil_hikmah/feature/home/domain/repository/city_adhan_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/home_repository.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'home_state.dart';
 
@@ -41,18 +43,49 @@ class HomeCubit extends Cubit<HomeState> {
       streamedTime: current,
     ));
     try {
-      streamedTime = streamedTimes().listen((event) {
+      streamedTimes().listen((event) {
         emit(state.copyWith(
           streamedTime: event,
         ));
       });
-      final adhanScheduleResponse = await _homeRepository.getAdhanSchedule();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? cityAdhan = prefs.getString('cityAdhan');
+      if (cityAdhan?.isEmpty ?? true) {
+        prefs.setString('cityAdhan', cityAdhanItem[0]);
+        cityAdhan = cityAdhanItem[0];
+      }
+      final adhanScheduleResponse =
+          await _homeRepository.getAdhanSchedule(cityAdhan ?? state.cityAdhan);
       final smallDakwahResponse = await _homeRepository.onGetVideoDakwah();
       emit(state.copyWith(
         adhanSchedule: adhanScheduleResponse,
         smallDakwah: smallDakwahResponse,
         status: HomeStateStatus.loaded,
       ));
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: HomeStateStatus.error,
+          exception: e,
+        ),
+      );
+    }
+  }
+
+  Future<void> onChangeAdhanCity(String cityAdhanChangeItem) async {
+    emit(state.copyWith(status: HomeStateStatus.loadingChangeCity));
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('cityAdhan', cityAdhanChangeItem);
+      final adhanScheduleResponse =
+          await _homeRepository.getAdhanSchedule(cityAdhanChangeItem);
+      emit(
+        state.copyWith(
+          adhanSchedule: adhanScheduleResponse,
+          cityAdhan: cityAdhanChangeItem,
+          status: HomeStateStatus.loadedChangeCity,
+        ),
+      );
     } on AppException catch (e) {
       emit(
         state.copyWith(
