@@ -6,6 +6,7 @@ import 'package:flutter_bil_hikmah/feature/dakwah_disabilitas/view/dakwah_disabi
 import 'package:flutter_bil_hikmah/feature/game/screen/game_page.dart';
 import 'package:flutter_bil_hikmah/feature/home/domain/repository/main_feature_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/logic/cubit/home_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/home/screen/section/adhan_bottom_sheet.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/carousel_banner.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/recommended_item.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/upper_home.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_bil_hikmah/feature/sign_language/screen/sign_language_pa
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_page.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
@@ -180,16 +182,57 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           const Spacer(),
-          const Icon(
-            Icons.location_on,
-            color: Colors.white,
-            size: 14.0,
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(24.0),
+                  ),
+                ),
+                builder: (bottomSheetContext) {
+                  return AdhanBottomSheet(
+                    (String onChangeAdhanCity) {
+                      context
+                          .read<HomeCubit>()
+                          .onChangeAdhanCity(onChangeAdhanCity);
+                    },
+                  );
+                },
+              );
+            },
+            child: const Icon(
+              Icons.location_on,
+              color: Colors.white,
+              size: 14.0,
+            ),
           ),
           const SizedBox(width: 6.0),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(24.0),
+                  ),
+                ),
+                builder: (bottomSheetContext) {
+                  return AdhanBottomSheet(
+                    (String onChangeAdhanCity) {
+                      context
+                          .read<HomeCubit>()
+                          .onChangeAdhanCity(onChangeAdhanCity);
+                    },
+                  );
+                },
+              );
+            },
             child: Text(
-              "Yogyakarta",
+              widget.state.cityAdhan,
               style: AppTextStyle.textExtraSmall.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
@@ -273,13 +316,17 @@ class _HomeViewState extends State<HomeView> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            headerAdhanSection(),
-            adhanSchedule(),
-          ],
-        ),
+        child: widget.state.status.isLoadingChangeCity
+            ? const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  headerAdhanSection(),
+                  adhanSchedule(),
+                ],
+              ),
       );
     }
 

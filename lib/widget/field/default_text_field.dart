@@ -124,6 +124,7 @@ class DefaultTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.all(16),
         suffixIcon: suffixWidget,
         suffixIconConstraints: suffixConstraints,
+        suffixIconColor: AppColors.primaryDark,
       ),
       maxLength: maxLength,
       validator: validator,
