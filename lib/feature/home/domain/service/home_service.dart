@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 
 abstract class HomeService {
   Future<bool> getHomeData();
-  Future<AdhanSchedule> getAdhanSchedule();
+  Future<AdhanSchedule> getAdhanSchedule(String city);
   Future<List<VideoDakwahModels>> onGetVideoDakwah();
 }
 
@@ -49,12 +49,12 @@ class HomeServiceImpl implements HomeService {
   }
 
   @override
-  Future<AdhanSchedule> getAdhanSchedule() async {
+  Future<AdhanSchedule> getAdhanSchedule(String city) async {
     try {
       final years = DateTime.now().year;
       final months = DateFormat("MM").format(DateTime.now());
       final uri = Uri.parse(
-          "https://cdn.statically.io/gh/lakuapik/jadwalsholatorg/master/adzan/yogyakarta/$years/$months.json");
+          "https://cdn.statically.io/gh/lakuapik/jadwalsholatorg/master/adzan/$city/$years/$months.json");
       final response = await _httpClient.get(
         uri,
         null,

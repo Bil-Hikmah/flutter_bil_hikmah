@@ -5,7 +5,7 @@ import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_
 
 abstract class HomeRepository {
   Future<bool> onGetHomeData();
-  Future<AdhanSchedule> getAdhanSchedule();
+  Future<AdhanSchedule> getAdhanSchedule(String city);
   Future<List<VideoDakwahModels>> onGetVideoDakwah();
 }
 
@@ -26,9 +26,9 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<AdhanSchedule> getAdhanSchedule() async {
+  Future<AdhanSchedule> getAdhanSchedule(String city) async {
     try {
-      return await _homeService.getAdhanSchedule();
+      return await _homeService.getAdhanSchedule(city);
     } on AppException {
       rethrow;
     } catch (e) {
