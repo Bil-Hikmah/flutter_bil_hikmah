@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/home/domain/repository/home_repository.dart';
 import 'package:flutter_bil_hikmah/feature/home/logic/cubit/home_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/home/screen/section/home_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..onInit(),
+      create: (context) => HomeCubit(HomeRepositoryImpl.create())..onInit(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {
           if (state.status.isError) {

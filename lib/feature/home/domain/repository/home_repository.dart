@@ -37,9 +37,9 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<VideoDakwahModels>> onGetVideoDakwah() {
+  Future<List<VideoDakwahModels>> onGetVideoDakwah() async {
     try {
-      return _homeService.onGetVideoDakwah();
+      return await _homeService.onGetVideoDakwah();
     } on AppException {
       rethrow;
     } catch (e) {

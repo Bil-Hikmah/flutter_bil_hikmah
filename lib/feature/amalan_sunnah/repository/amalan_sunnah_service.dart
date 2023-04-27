@@ -18,6 +18,7 @@ class AmalanSunnahServiceImpl implements AmalanSunnahService {
 
   factory AmalanSunnahServiceImpl.create() {
     return AmalanSunnahServiceImpl(
-        FirebaseServiceImplementation.create("amalan_sunnah"));
+      FirebaseServiceImplementation.create("amalan_sunnah"),
+    );
   }
 }

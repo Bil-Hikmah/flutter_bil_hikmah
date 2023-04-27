@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class AdhanSchedule {
+import 'package:equatable/equatable.dart';
+
+class AdhanSchedule extends Equatable {
   AdhanSchedule({
     required this.imsyak,
     required this.shubuh,
@@ -37,4 +39,17 @@ class AdhanSchedule {
         dhuha: json["dhuha"],
         ashr: json["ashr"],
       );
+
+  @override
+  List<Object?> get props => [
+        imsyak,
+        shubuh,
+        dzuhur,
+        tanggal,
+        terbit,
+        magrib,
+        isya,
+        dhuha,
+        ashr,
+      ];
 }

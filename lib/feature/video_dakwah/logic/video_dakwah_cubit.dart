@@ -8,14 +8,14 @@ import 'package:youtube_video_info/youtube_video_info.dart';
 part 'video_dakwah_state.dart';
 
 class VideoDakwahCubit extends Cubit<VideoDakwahState> {
-  VideoDakwahCubit() : super(const VideoDakwahState());
+  VideoDakwahCubit(this.repository) : super(const VideoDakwahState());
 
-  final VideoDakwahRepository _repository = VideoDakwahRepositoryImpl.create();
+  final VideoDakwahRepository repository;
 
   Future<void> onInit() async {
     emit(state.copyWith(status: VideoDakwahStatus.loading));
     try {
-      final videoDakwahItem = await _repository.onGetVideoDakwah();
+      final videoDakwahItem = await repository.onGetVideoDakwah();
       emit(state.copyWith(
         status: VideoDakwahStatus.success,
         videoDakwahTemp: videoDakwahItem,
@@ -34,9 +34,9 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
     try {
       final List<VideoDakwahModels> videoDakwahItem;
       if (genre == "semua") {
-        videoDakwahItem = await _repository.onGetVideoDakwah();
+        videoDakwahItem = await repository.onGetVideoDakwah();
       } else {
-        videoDakwahItem = await _repository.onGetVideoDakwahWithGenre(genre);
+        videoDakwahItem = await repository.onGetVideoDakwahWithGenre(genre);
       }
 
       emit(state.copyWith(
@@ -72,11 +72,12 @@ class VideoDakwahCubit extends Cubit<VideoDakwahState> {
   Future<void> onGetVideoWithSearch(String keyword) async {
     emit(state.copyWith(status: VideoDakwahStatus.loadingSearch));
     try {
-      final videoDakwahItem = state.videoDakwahTemp!.where((element) {
-        final title = element.title.toLowerCase();
-        final search = keyword.toLowerCase();
-        return title.contains(search);
-      }).toList();
+      final videoDakwahItem = state.videoDakwahTemp?.where((element) {
+            final title = element.title.toLowerCase();
+            final search = keyword.toLowerCase();
+            return title.contains(search);
+          }).toList() ??
+          [];
 
       emit(state.copyWith(
         status: VideoDakwahStatus.success,

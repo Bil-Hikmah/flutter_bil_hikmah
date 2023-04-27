@@ -9,7 +9,7 @@ part 'feedback_state.dart';
 class FeedbackCubit extends Cubit<FeedbackState> {
   FeedbackCubit() : super(const FeedbackState());
 
-  Future<void> sendFeedbackSentry(
+  Future<bool> sendFeedbackSentry(
     String userID,
     String name,
     String email,
@@ -37,11 +37,13 @@ class FeedbackCubit extends Cubit<FeedbackState> {
           emit(state.copyWith(status: FeedBackStateStatus.success));
         },
       );
+      return true;
     } catch (e) {
       emit(state.copyWith(
         status: FeedBackStateStatus.error,
         errorMessage: e.toString(),
       ));
+      return false;
     }
   }
 }

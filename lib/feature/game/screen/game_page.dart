@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/game/domain/repository/game_repsoitory.dart';
 import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/section/game_view.dart';
 import 'package:flutter_bil_hikmah/feature/splash/logic/cubit/init_app_cubit.dart';
@@ -26,13 +27,13 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameCubit()..onGetGame(),
+      create: (context) => GameCubit(GameRepositoryImpl.create())..onGetGame(),
       child: BlocConsumer<GameCubit, GameState>(
         listener: (context, state) {
           if (state.status.isError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.exception?.message.toString() ?? "Unknown"),
+                content: Text(state.exception?.toString() ?? "Unknown"),
               ),
             );
           }

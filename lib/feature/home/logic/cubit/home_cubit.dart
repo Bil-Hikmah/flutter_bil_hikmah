@@ -12,18 +12,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit()
-      : _homeRepository = HomeRepositoryImpl.create(),
-        super(const HomeState());
+  HomeCubit(this._homeRepository) : super(const HomeState());
 
   final HomeRepository _homeRepository;
   DateTime current = DateTime.now();
 
-  late StreamSubscription<DateTime> streamedTime;
+  StreamSubscription<DateTime>? streamedTime;
 
   @override
   close() async {
-    streamedTime.cancel();
+    if (streamedTime != null) {
+      streamedTime!.cancel();
+    }
     return super.close();
   }
 
@@ -75,8 +75,8 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> onChangeAdhanCity(String cityAdhanChangeItem) async {
     emit(state.copyWith(status: HomeStateStatus.loadingChangeCity));
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('cityAdhan', cityAdhanChangeItem);
+      // final SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString('cityAdhan', cityAdhanChangeItem);
       final adhanScheduleResponse =
           await _homeRepository.getAdhanSchedule(cityAdhanChangeItem);
       emit(

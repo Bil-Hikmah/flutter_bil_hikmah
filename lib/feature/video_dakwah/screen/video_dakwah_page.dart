@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_repository.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/video_dakwah_shimmer.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/section/video_dakwah_view.dart';
 import 'package:flutter_bil_hikmah/widget/field/default_app_bar.dart';
@@ -20,7 +21,8 @@ class VideoDakwahPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VideoDakwahCubit()..onInit(),
+      create: (context) =>
+          VideoDakwahCubit(VideoDakwahRepositoryImpl.create())..onInit(),
       child: BlocConsumer<VideoDakwahCubit, VideoDakwahState>(
         listener: (context, state) {
           if (state.status.isFailure) {

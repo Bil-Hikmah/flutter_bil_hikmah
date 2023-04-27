@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit() : super(const GameState());
+  GameCubit(this.repository) : super(const GameState());
 
-  final GameRepository repository = GameRepositoryImpl.create();
+  final GameRepository repository;
 
   Future<void> onGetGame() async {
     emit(state.copyWith(status: GameStatus.loading));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/logic/video_dakwah_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_models.dart';
-import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_item.dart';
+import 'package:flutter_bil_hikmah/feature/video_dakwah/repository/video_dakwah_repository.dart';
 import 'package:flutter_bil_hikmah/feature/video_dakwah/screen/video_dakwah_detail.dart/video_dakwah_detail_view.dart';
 import 'package:flutter_bil_hikmah/style/colors.dart';
 import 'package:flutter_bil_hikmah/style/text.dart';
@@ -37,8 +37,8 @@ class VideoDakwahDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          VideoDakwahCubit()..onGetYouTubeMetaData(initVideoUrl),
+      create: (context) => VideoDakwahCubit(VideoDakwahRepositoryImpl.create())
+        ..onGetYouTubeMetaData(initVideoUrl),
       child: IframeYoutubePlayer(
         initVideoUrl,
         body: ((context, player, controller) {
