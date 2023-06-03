@@ -6,9 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit(this.repository) : super(const GameState());
+  GameCubit(
+    this.repository,
+    this.currentStatusGameFromUser,
+  ) : super(const GameState());
 
   final GameRepository repository;
+  final Map<String, dynamic> currentStatusGameFromUser;
 
   Future<void> onGetGame() async {
     emit(state.copyWith(status: GameStatus.loading));
@@ -17,6 +21,7 @@ class GameCubit extends Cubit<GameState> {
       emit(state.copyWith(
         status: GameStatus.loaded,
         gameItem: response,
+        userCurrentLevel: currentStatusGameFromUser,
       ));
     } on AppException catch (e) {
       emit(state.copyWith(

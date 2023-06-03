@@ -14,21 +14,25 @@ class GameState extends Equatable {
     this.status = GameStatus.initial,
     this.gameItem = const [],
     this.exception,
+    this.userCurrentLevel,
   });
 
   final GameStatus status;
   final List<Game> gameItem;
   final AppException? exception;
+  final Map<String, dynamic>? userCurrentLevel;
 
   GameState copyWith({
     GameStatus? status,
     List<Game>? gameItem,
     AppException? exception,
+    Map<String, dynamic>? userCurrentLevel,
   }) {
     return GameState(
       status: status ?? this.status,
       gameItem: gameItem ?? this.gameItem,
       exception: exception ?? this.exception,
+      userCurrentLevel: userCurrentLevel ?? this.userCurrentLevel,
     );
   }
 
@@ -37,5 +41,6 @@ class GameState extends Equatable {
         status,
         gameItem,
         exception,
+        userCurrentLevel,
       ];
 }

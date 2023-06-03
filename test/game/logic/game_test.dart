@@ -20,7 +20,7 @@ void main() {
     () {
       blocTest<GameCubit, GameState>(
         "On get all game with empty data / success",
-        build: () => GameCubit(mockGameRepository),
+        build: () => GameCubit(mockGameRepository, {}),
         setUp: () {
           when(mockGameRepository.onGetGameItem())
               .thenAnswer((realInvocation) async => []);
@@ -37,7 +37,7 @@ void main() {
 
       blocTest<GameCubit, GameState>(
         "On get all game with exception",
-        build: () => GameCubit(mockGameRepository),
+        build: () => GameCubit(mockGameRepository, {}),
         setUp: () {
           when(mockGameRepository.onGetGameItem()).thenThrow(
             (_) async => const UnknownException(

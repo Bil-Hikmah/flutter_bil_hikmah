@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bil_hikmah/feature/auth/logic/authentication_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/game/domain/repository/game_repsoitory.dart';
 import 'package:flutter_bil_hikmah/feature/game/logic/cubit/game_cubit.dart';
 import 'package:flutter_bil_hikmah/feature/game/screen/section/game_view.dart';
@@ -27,7 +28,13 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameCubit(GameRepositoryImpl.create())..onGetGame(),
+      create: (context) => GameCubit(
+        GameRepositoryImpl.create(),
+        BlocProvider.of<AuthenticationCubit>(context)
+            .state
+            .user!
+            .currentStatusGame,
+      )..onGetGame(),
       child: BlocConsumer<GameCubit, GameState>(
         listener: (context, state) {
           if (state.status.isError) {
@@ -48,7 +55,10 @@ class _GamePageState extends State<GamePage> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : GameView(state.gameItem),
+                : GameView(
+                    state.gameItem,
+                    state.userCurrentLevel,
+                  ),
           );
         },
       ),
