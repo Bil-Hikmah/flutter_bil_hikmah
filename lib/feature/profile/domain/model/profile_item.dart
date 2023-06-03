@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bil_hikmah/feature/about/screen/about_page.dart';
+import 'package:flutter_bil_hikmah/feature/admin/screen/admin_page.dart';
 import 'package:flutter_bil_hikmah/feature/faq/screen/faq_page.dart';
 import 'package:flutter_bil_hikmah/feature/feedback/screen/feedback_page.dart';
 import 'package:flutter_bil_hikmah/feature/live_chat/screen/live_chat_page.dart';
@@ -60,6 +61,13 @@ List<ProfileItemAction> listProfileItemAction(BuildContext context) {
       title: "Kebijakan Privasi",
       route: () {
         Navigator.of(context).push(TermAndConditionsPage.route());
+      },
+    ),
+    ProfileItemAction(
+      icon: Icons.privacy_tip_outlined,
+      title: "Admin",
+      route: () {
+        Navigator.of(context).push(AdminPage.route());
       },
     ),
   ];

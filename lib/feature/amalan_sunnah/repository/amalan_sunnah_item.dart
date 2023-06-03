@@ -13,4 +13,11 @@ class AmalanSunnahItem {
       webURL: json['web_url'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'web_url': webURL,
+    };
+  }
 }
