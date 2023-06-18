@@ -120,7 +120,8 @@ class _GameDetailViewState extends State<GameDetailView> {
                         if (!formKey.currentState!.validate()) {
                           return;
                         }
-                        if (answerController.text == answerKey) {
+                        if (answerController.text.toLowerCase() ==
+                            answerKey.toLowerCase()) {
                           onAnswered();
                         }
                       },

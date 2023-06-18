@@ -41,7 +41,7 @@ class AlQuranPage extends StatelessWidget {
           return Scaffold(
             appBar: defaultAppBar(
               context: context,
-              title: "Al-Qur'an",
+              title: "Al-Qur'an Saku",
               needBack: needBack,
             ),
             body: state.status.isLoading || state.status.isFailure

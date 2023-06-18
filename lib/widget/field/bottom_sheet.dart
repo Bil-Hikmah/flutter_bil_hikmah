@@ -102,7 +102,7 @@ List<Map<String, Object>> shareSocialMedia = [
   },
   {
     'title': ShareSocialType.more,
-    'icon': UrlAsset.whatsappIcon,
+    'icon': UrlAsset.more,
   }
 ];
 

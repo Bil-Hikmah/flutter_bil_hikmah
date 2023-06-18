@@ -163,7 +163,7 @@ class _AlQuranViewState extends State<AlQuranView> {
                 child: _surahDescription(
                   data.name.transliteration.id,
                   data.revelation.id,
-                  data.number,
+                  data.numberOfVerses,
                 ),
               ),
               Text(

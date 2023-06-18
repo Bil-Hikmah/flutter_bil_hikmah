@@ -187,6 +187,16 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
       },
     );
 
+    final _buildVideo = widget.singleData.genre.toLowerCase() == "disabilitas"
+        ? ColorFiltered(
+            colorFilter: const ColorFilter.mode(
+              Colors.grey,
+              BlendMode.saturation,
+            ),
+            child: widget.player,
+          )
+        : widget.player;
+
     return BlocConsumer<VideoDakwahCubit, VideoDakwahState>(
       listener: (context, state) {
         if (state.status.isFailure) {
@@ -211,7 +221,7 @@ class _VideoDakwahDetailViewState extends State<VideoDakwahDetailView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              widget.player,
+              _buildVideo,
               const SizedBox(height: 8.0),
               videoDesc(state),
               const SizedBox(height: 10.0),

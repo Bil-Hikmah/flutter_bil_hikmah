@@ -12,8 +12,8 @@ class MainFeatureItem {
 }
 
 final List<MainFeatureItem> listMainFeature = [
-  MainFeatureItem(UrlAsset.videokKajian, "Video Kajian", 0),
-  MainFeatureItem(UrlAsset.quranSaku, "Qur'an Saku", 1),
+  MainFeatureItem(UrlAsset.videokKajian, "Video\nKajian", 0),
+  MainFeatureItem(UrlAsset.quranSaku, "Qur'an\nSaku", 1),
   MainFeatureItem(UrlAsset.gameEdukasi, "Game Edukasi", 2),
   MainFeatureItem(UrlAsset.dakwahDifabel, "Dakwah Difabel", 3),
   MainFeatureItem(UrlAsset.akhlakMulia, "Qur'an Saku\n Disabilitas", 4),

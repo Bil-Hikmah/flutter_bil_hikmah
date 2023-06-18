@@ -83,6 +83,26 @@ class _EditProfileViewState extends State<EditProfileView> {
                 "Nama",
                 state.user?.displayName ?? "Unknown Display Name",
                 (onSaveDisplayName) {
+                  int displayLength = onSaveDisplayName.split(" ").length;
+                  int wordLength = onSaveDisplayName.length;
+                  if (displayLength < 10) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content:
+                            Text("Nama tidak boleh lebih dari 10 karakter"),
+                      ),
+                    );
+                    return;
+                  }
+                  if (wordLength < 32) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content:
+                            Text("Nama tidak boleh lebih dari 32 karakter"),
+                      ),
+                    );
+                    return;
+                  }
                   context.read<ProfileCubit>().updateDisplayName(
                         onSaveDisplayName,
                         BlocProvider.of<AuthenticationCubit>(context)
