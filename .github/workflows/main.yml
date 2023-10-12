@@ -41,14 +41,17 @@ jobs:
       - name: Convert Env Variable to Int
         run: |
           # Use JavaScript to convert the string to an integer
-          const stringValue = $GITHUB_RUN_NUMBER;
-          const intValue = parseInt(stringValue) + 50;
+          stringValue=$GITHUB_RUN_NUMBER
+          intValue=$((stringValue))+50
+
+          echo "Original string value: ${stringValue}"
+          echo "Converted integer value: ${intValue}"
 
           console.log(`Original string value: ${stringValue}`);
           console.log(`Converted integer value: ${intValue}`);
 
           # You can use the intValue in subsequent steps
-          echo "::set-env name=GITHUB_RUNNER_PARSED::${intValue}"
+          echo "GITHUB_RUNNER_PARSED=${intValue}" >> $GITHUB_ENV
       - name: Build APK and Deploy to firebase
         run: |
           cd android && bundle exec fastlane deploy_to_firebase app_id:${{ secrets.ANDROID_FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_CLI_TOKEN }} release_notes:"${{ github.event.inputs.release_notes }}" build_number:$GITHUB_RUNNER_PARSED && cd ..
