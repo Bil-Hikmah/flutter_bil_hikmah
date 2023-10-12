@@ -12,7 +12,7 @@ platform :android do
 
     build_number = options[:build_number]
 
-    sh_on_root(command: "flutter build apk --release --verbose --build-number=#{build_number}")
+    sh_on_root(command: "flutter build apk --release --verbose --build-number=#{build_number+50}")
   end
 
   lane :deploy_to_firebase do |options|
