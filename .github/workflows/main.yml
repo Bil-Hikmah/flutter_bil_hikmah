@@ -48,10 +48,7 @@ jobs:
 
           echo "Original string value: ${stringValue}"
           echo "Converted integer value: ${intValue}"
-
-          console.log(`Original string value: ${stringValue}`);
-          console.log(`Converted integer value: ${intValue}`);
-
+         
           # You can use the intValue in subsequent steps
           echo "GITHUB_RUNNER_PARSED=${intValue}" >> $GITHUB_ENV
       - name: Build APK and Deploy to firebase
