@@ -41,7 +41,7 @@ jobs:
       - name: Convert Env Variable to Int
         run: |
           # Use JavaScript to convert the string to an integer
-          stringValue="${GITHUB_RUN_NUMBER}"
+          stringValue=$GITHUB_RUN_NUMBER
           intValue=$((stringValue))
 
           ((intValue + 50))
