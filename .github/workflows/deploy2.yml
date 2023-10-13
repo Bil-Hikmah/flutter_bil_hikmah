@@ -1,0 +1,59 @@
+name: Deploy 2
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: "The Release notes that will used for the apk file"
+        required: false
+
+jobs:
+  deploy-android-apk-to-firebase:
+    name: "Deploy Android APK to Firebase"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "3.0.1"
+          channel: "stable"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+      - name: Install Fastlane
+        run: cd android && bundle install && cd ..
+      - name: Create keystore file
+        run: |
+          cd android
+          touch key.properties
+          echo storePassword=${{ secrets.STORE_PASSWORD }} >> key.properties
+          echo keyPassword=${{ secrets.KEY_PASSSWORD }} >> key.properties
+          echo keyAlias=${{ secrets.KEY_ALIAS }} >> key.properties
+          echo storeFile=../../android/bilhikmah-keystore.jks >> key.properties
+          cat key.properties
+          cd ..
+      - name: Convert Env Variable to Int
+        run: |
+          # Use JavaScript to convert the string to an integer
+          stringValue=$GITHUB_RUN_NUMBER
+          intValue=$((stringValue))
+
+           # Perform calculations with the integer value
+          calculated=$((intValue + 50))
+
+          # Set the result back as a string (you can convert it to an integer if needed)
+          CALCULATED_RESULT="${calculated}"
+
+          echo "Original string value: ${stringValue}"
+          echo "Converted integer value: ${intValue}"
+          echo "CALCULATED integer value: ${CALCULATED_RESULT}"
+         
+          # You can use the intValue in subsequent steps
+          echo "GITHUB_RUNNER_PARSED=${intValue}" >> $GITHUB_ENV
+      - name: Build APK and Deploy to firebase
+        run: |
+          cd android && bundle exec fastlane deploy_to_firebase app_id:${{ secrets.ANDROID_FIREBASE_APP_ID }} firebase_cli_token:${{ secrets.FIREBASE_CLI_TOKEN }} release_notes:"${{ github.event.inputs.release_notes }}" build_number:$GITHUB_RUNNER_PARSED && cd ..
