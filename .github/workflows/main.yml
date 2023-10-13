@@ -44,10 +44,15 @@ jobs:
           stringValue=$GITHUB_RUN_NUMBER
           intValue=$((stringValue))
 
-          ((intValue + 50))
+           # Perform calculations with the integer value
+          calculated=$((intValue + 50))
+
+          # Set the result back as a string (you can convert it to an integer if needed)
+          CALCULATED_RESULT="${calculated}"
 
           echo "Original string value: ${stringValue}"
           echo "Converted integer value: ${intValue}"
+          echo "CALCULATED integer value: ${CALCULATED_RESULT}"
          
           # You can use the intValue in subsequent steps
           echo "GITHUB_RUNNER_PARSED=${intValue}" >> $GITHUB_ENV
