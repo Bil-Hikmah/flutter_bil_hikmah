@@ -53,7 +53,8 @@ jobs:
           # Read the contents of the file into a variable
           MAJOR_VERSION=$(<version.dart)
           echo "major version value: ${MAJOR_VERSION}"
-         
+
+          echo "GITHUB_RUNNER_PARSED=$GITHUB_REF"
           # You can use the intValue in subsequent steps
           echo "GITHUB_RUNNER_PARSED=${intValue}" >> $GITHUB_ENV
       - name: Build APK and Deploy to firebase
