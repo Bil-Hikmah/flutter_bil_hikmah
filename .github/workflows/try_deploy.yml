@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - try-deploy
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: "The Release notes that will used for the apk file"
+        required: false
 
 jobs:
   deploy-android-apk-to-firebase:
