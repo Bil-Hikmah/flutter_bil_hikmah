@@ -26,6 +26,8 @@ jobs:
         run: cd android && bundle install && cd ..
       - name: Create keystore file
         run: |
+          # jalan cok 1
+          echo jalan cok echo
           cd android
           touch key.properties
           echo storePassword=${{ secrets.STORE_PASSWORD }} >> key.properties
@@ -36,6 +38,7 @@ jobs:
           cd ..
       - name: Convert Env Variable to Int
         run: |
+          # jalan cok 2
           # Use JavaScript to convert the string to an integer
           stringValue=$GITHUB_RUN_NUMBER
           intValue=$((stringValue))
