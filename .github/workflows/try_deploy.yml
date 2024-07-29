@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-android-apk-to-firebase:
     name: "Deploy Android APK to Firebase"
-    runs-on: ubuntu-latest
+    runs-on: [MacBook-Pro-Kiriminaja, macOS, ARM64]
     steps:
       - uses: actions/checkout@v2
       - name: Jalan Cok
